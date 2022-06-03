@@ -2,7 +2,7 @@
 
 ### Implemented games:
 
-- [ ] Tenzies
+- [x] Tenzies
 - [ ] Snake
 - [ ] 2048
 - [ ] Minesweeper
