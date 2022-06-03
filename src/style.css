@@ -41,6 +41,7 @@ ul {
 .section {
   max-width: 480px;
   margin: 0 auto;
+  margin-bottom: 6px;
 }
 
 .section-title {
@@ -61,4 +62,10 @@ ul {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.instruction-text {
+  max-width: 35ch;
+  margin: 1.34rem auto;
+  text-align: center;
 }

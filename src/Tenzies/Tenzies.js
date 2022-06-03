@@ -3,11 +3,13 @@ import { allNewDice, checkWin, getNewDie } from './lib/utils';
 import Die from './components/Die';
 import Confetti from 'react-confetti';
 import './tenzies.css';
+import { useWindowSize } from 'react-use';
 
 export default function Tenzies() {
 	const [dice, setDice] = useState(() => allNewDice());
 	const [rollCount, setRollCount] = useState(0);
 	const [tenzies, setTenzies] = useState(false);
+	const { width, height } = useWindowSize();
 
 	useEffect(() => {
 		setTenzies(checkWin(dice));
@@ -53,7 +55,7 @@ export default function Tenzies() {
 		<section className='bordered section'>
 			<h3 className='section-title'>Tenzies</h3>
 			<div className='tenzies-container'>
-				{tenzies && <Confetti />}
+				{tenzies && <Confetti width={width} height={height} />}
 				<span>{`ROLLS: ${rollCount}`}</span>
 				<div className='dice-container'>{diceElements}</div>
 				<button
