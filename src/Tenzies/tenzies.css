@@ -1,0 +1,43 @@
+.tenzies-container {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.875rem 0;
+  height: 100%;
+  background-color: #E9E9E9;
+}
+
+.die-box {
+  background-color: white;
+  position: relative;
+  height: 3rem;
+  width: 3rem;
+  user-select: none;
+}
+
+.dice-container {
+  display: grid;
+  grid-template: auto auto / repeat(2, 5fr);
+  gap: 1rem;
+}
+
+.die-text {
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+
+.roll-button {
+  cursor: pointer;
+  font-family: 'Comfortaa', cursive;
+  border: none;
+  background-color: black;
+  color: white;
+  width: 6.9rem;
+  /* vertically centers text regardless of element height */
+  line-height: calc((var(--header-height) - (var(--header-padding-v) * 2)));
+  text-align: center;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 300;
+}
