@@ -35,9 +35,7 @@
   background-color: black;
   color: white;
   width: 6.9rem;
-  /* vertically centers text regardless of element height */
-  line-height: calc((var(--header-height) - (var(--header-padding-v) * 2)));
-  text-align: center;
+  height: 2.2rem;
   border-radius: 6px;
   font-size: 0.8125rem;
   font-weight: 300;

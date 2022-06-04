@@ -49,6 +49,7 @@ export default function Tenzies() {
 	function newGame() {
 		setDice(allNewDice());
 		setTenzies(false);
+		setRollCount(0);
 	}
 
 	return (
