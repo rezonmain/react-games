@@ -1,4 +1,4 @@
 import './footer.css';
 export default function Footer() {
-	return <footer>FOOTER</footer>;
+	return <footer className='bordered'>FOOTER</footer>;
 }
