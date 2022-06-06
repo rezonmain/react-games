@@ -1,14 +1,26 @@
 const BLOCK_SIZE = 35;
 // const HEADER_OFFSET = 48;
 const GREEN = 'green';
+let canvas;
+let ctx;
+let grid;
 
 export function setUpCanvas() {
-	const canvas = document.getElementById('snake-board');
-	const grid = getGridSize(canvas);
+	canvas = document.getElementById('snake-board');
+	grid = getGridSize(canvas);
 	drawBorder(grid, canvas);
 }
 
-export function updateCanvas(state) {}
+export function updateCanvas(setGame) {
+	setGame((oldGame) => ({ xPos: oldGame.xPos + BLOCK_SIZE, yPos: 0 }));
+}
+
+export function newGame() {
+	return {
+		xPos: 0,
+		yPos: 0,
+	};
+}
 
 function getGridSize(canvas) {
 	// Calculate how many blocks can you fit in current canvas size (-1)
@@ -18,8 +30,8 @@ function getGridSize(canvas) {
 	const yBlocks = height / BLOCK_SIZE;
 
 	// Adds 0.5 block to each size
-	const borderX = (xBlocks - Math.floor(xBlocks) + BLOCK_SIZE) / 2;
-	const borderY = (yBlocks - Math.floor(yBlocks) + BLOCK_SIZE) / 2;
+	const borderX = xBlocks - Math.floor(xBlocks);
+	const borderY = yBlocks - Math.floor(yBlocks);
 
 	return {
 		x: Math.floor(xBlocks) - 1,
@@ -29,9 +41,9 @@ function getGridSize(canvas) {
 	};
 }
 
-function drawBorder(grid, canvas) {
+function drawBorder() {
 	const { width, height } = canvas.getBoundingClientRect();
-	const ctx = canvas.getContext('2d');
+	ctx = canvas.getContext('2d');
 	// Draw side borders:
 	ctx.fillStyle = GREEN;
 	ctx.fillRect(0, 0, grid.borderX, height);
@@ -42,4 +54,9 @@ function drawBorder(grid, canvas) {
 	ctx.fillRect(0, height - grid.borderY, width, grid.borderY);
 }
 
-export function drawBackground() {}
+export function drawCanvas(game) {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	drawBorder();
+	ctx.fillStyle = 'red';
+	ctx.fillRect(game.xPos + grid.borderX, game.yPos + grid.borderY, 35, 35);
+}

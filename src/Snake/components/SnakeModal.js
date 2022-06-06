@@ -1,12 +1,25 @@
-import { useEffect } from 'react';
-import { setUpCanvas } from '../lib/utils';
+import { useEffect, useState } from 'react';
+import { setUpCanvas, newGame, updateCanvas, drawCanvas } from '../lib/utils';
 
 export default function SnakeModal(props) {
-	// const [start, setStart] = useState(false);
+	const [start, setStart] = useState(false);
+	const [game, setGame] = useState(newGame());
 
 	useEffect(() => {
 		setUpCanvas();
 	}, [props.canvasSize]);
+
+	useEffect(() => {
+		const intervalId = setInterval(handleUpdate, 100);
+		return () => clearInterval(intervalId);
+	});
+
+	function handleUpdate() {
+		updateCanvas(setGame);
+		drawCanvas(game);
+	}
+
+	console.log(game);
 	return (
 		<aside
 			id='modal-close'
