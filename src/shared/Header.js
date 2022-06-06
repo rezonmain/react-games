@@ -1,7 +1,7 @@
 import './header.css';
 export default function Header() {
 	return (
-		<header>
+		<header className='main-header'>
 			<a href='https://twitter.com/home' className='home-link'>
 				<span>RG</span>
 			</a>

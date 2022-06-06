@@ -4,7 +4,7 @@
   --header-padding-v: 0.75rem;
 }
 
-header {
+.main-header {
   position: sticky;
   top: 0;
   height: var(--header-height);
@@ -17,7 +17,7 @@ header {
   margin-bottom: 6px;
 }
 
-header>span {
+.main-header>span {
   font-size: 1.3rem;
   width: 2ch;
 }
@@ -69,7 +69,7 @@ header>span {
 }
 
 /* Tablet */
-@media only screen and (min-width: 780px) {
+@media only screen and (min-width: 820px) {
 
   .main-nav>li:last-child {
     display: flex;
@@ -109,13 +109,13 @@ header>span {
     display: none;
   }
 
-  header {
+  .main-header {
     justify-content: center;
   }
 }
 
-@media only screen and (min-width: 1024px) {
-  header>span {
+@media only screen and (min-width: 1300px) {
+  .main-header>span {
     display: none;
   }
 

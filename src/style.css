@@ -6,7 +6,7 @@
   --green: #24BF4B;
   --yellow: #F2CB05;
   --br: 6px;
-  --tr: 0.1s ease-in-out;
+  --tr: all 0.1s ease-in-out;
 }
 
 * {
@@ -40,7 +40,7 @@ ul {
 }
 
 .section {
-  max-width: 480px;
+  max-width: 580px;
   margin: 0 auto;
   margin-bottom: 6px;
 }
