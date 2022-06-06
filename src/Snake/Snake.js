@@ -7,6 +7,7 @@ export default function Snake() {
 	const [modal, setModal] = useState(false);
 
 	function handleCloseModal(e) {
+		// Only close modal y element id is modal-close
 		setModal(e.target.id === 'modal-close' ? false : true);
 	}
 

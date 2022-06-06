@@ -10,12 +10,14 @@
 }
 
 .die-box {
+  display: flex;
   background-color: white;
-  position: relative;
   height: 3rem;
   width: 3rem;
   user-select: none;
   transition: var(--tr);
+  justify-content: center;
+  align-items: center;
 }
 
 .dice-container {

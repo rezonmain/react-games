@@ -2,13 +2,11 @@
   --header-height: 3.75rem;
   --header-padding: 0.75rem 1rem;
   --header-padding-v: 0.75rem;
-
 }
 
 header {
   position: sticky;
   top: 0;
-  z-index: 1;
   height: var(--header-height);
   background-color: black;
   padding: var(--header-padding);

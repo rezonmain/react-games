@@ -7,7 +7,7 @@ export default function Die(props) {
 			style={styles}
 			onClick={props.handleClick}
 			className='die-box bordered'>
-			<span className='centered die-text'>{props.value}</span>
+			<span className='die-text'>{props.value}</span>
 		</div>
 	);
 }
