@@ -1,11 +1,11 @@
 import Header from './shared/Header';
 import HowTo from './shared/HowTo';
-import Tenzies from './Tenzies/Tenzies';
+import Snake from './Snake/Snake';
 function App() {
 	return (
 		<main>
 			<Header />
-			<Tenzies />
+			<Snake />
 			<HowTo />
 		</main>
 	);
