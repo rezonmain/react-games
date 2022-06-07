@@ -1,4 +1,10 @@
+import { useEffect } from 'react';
+import { setUpCanvas } from '../lib/utils';
+
 export default function SnakeModal(props) {
+	useEffect(() => {
+		return setUpCanvas();
+	}, []);
 	return (
 		<aside
 			id='modal-close'

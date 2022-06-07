@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import SnakeModal from './components/SnakeModal';
 import './snake.css';
 
@@ -9,26 +9,18 @@ export default function Snake() {
 	const [isWide, setIsWide] = useState(false);
 	const [windowSize, setWindowSize] = useState();
 
-	/* 	Determine which canvas size to show,
-	this only runs once everytime modal changes 
-  and not everytime the window changes,
-  this is so when the canvas renders it stays
-  the same size when resizing*/
-	useEffect(() => {
-		const query = '(min-width: 600px)';
-		setIsWide(window.matchMedia(query).matches);
-		setWindowSize({
-			width: window.innerWidth,
-			height: window.innerHeight - HEADER_OFFSET,
-		});
-	}, [modal]);
-
 	function handleCloseModal(e) {
 		// Only close modal if element id is modal-close
 		setModal(e.target.id === 'modal-close' ? false : true);
 	}
 
 	function handleShowModal() {
+		const query = '(min-width: 600px)';
+		setIsWide(window.matchMedia(query).matches);
+		setWindowSize({
+			width: window.innerWidth,
+			height: window.innerHeight - HEADER_OFFSET,
+		});
 		setModal(true);
 	}
 
