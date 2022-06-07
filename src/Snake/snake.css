@@ -18,11 +18,6 @@
 
 .modal {
   z-index: 1;
-  position: fixed;
-  height: 100vh;
-  width: 100vw;
-  top: 0;
-  left: 0;
   background-color: white;
 }
 
@@ -34,6 +29,11 @@
   background-color: var(--green);
 }
 
+.modal>canvas {
+  display: block;
+  margin: 0 auto;
+}
+
 .ui-icon {
   padding: 8px;
   height: 100%;
@@ -41,10 +41,12 @@
   cursor: pointer;
 }
 
-@media only screen and (min-width: 600px) {
-  .modal {
-    height: 600px;
-    width: 600px;
-  }
+.modal-narrow {
+  width: 100vw;
+  height: 100vh;
+}
 
+.modal-wide {
+  width: 600px;
+  height: 600px;
 }

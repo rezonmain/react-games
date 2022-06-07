@@ -12,7 +12,10 @@ export function setUpCanvas() {
 }
 
 export function updateCanvas(setGame) {
-	setGame((oldGame) => ({ xPos: oldGame.xPos + BLOCK_SIZE, yPos: 0 }));
+	setGame((oldGame) => ({
+		xPos: oldGame.xPos + BLOCK_SIZE,
+		yPos: 0,
+	}));
 }
 
 export function newGame() {
@@ -22,7 +25,7 @@ export function newGame() {
 	};
 }
 
-function getGridSize(canvas) {
+function getGridSize() {
 	// Calculate how many blocks can you fit in current canvas size (-1)
 	// Calculate the excess border
 	const { width, height } = canvas.getBoundingClientRect();
@@ -34,8 +37,8 @@ function getGridSize(canvas) {
 	const borderY = yBlocks - Math.floor(yBlocks);
 
 	return {
-		x: Math.floor(xBlocks) - 1,
-		y: Math.floor(yBlocks) - 1,
+		x: Math.floor(xBlocks),
+		y: Math.floor(yBlocks),
 		borderX,
 		borderY,
 	};
@@ -58,5 +61,5 @@ export function drawCanvas(game) {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	drawBorder();
 	ctx.fillStyle = 'red';
-	ctx.fillRect(game.xPos + grid.borderX, game.yPos + grid.borderY, 35, 35);
+	ctx.fillRect(game.xPos, game.yPos, 35, 35);
 }
