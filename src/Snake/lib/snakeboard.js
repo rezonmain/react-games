@@ -1,12 +1,15 @@
-const GREEN = 'green';
-const GREEN_ACCENT = '#24BF4B';
-const BLOCK = 35;
+import { Snake } from './game';
 
 export function setUpBoard() {
+	const GREEN = 'green';
+	const GREEN_ACCENT = '#24BF4B';
+	const LIGHT_GREEN = 'lightgreen';
+	const BLOCK = 35;
 	const canvas = document.getElementById('snake-board');
 	const ctx = canvas.getContext('2d');
 	const width = canvas.width;
 	const height = canvas.height;
+	let snake;
 
 	// Calculate grid
 	const grid = (() => {
@@ -18,6 +21,7 @@ export function setUpBoard() {
 		const xOffset = (width - xSize * BLOCK) / 2;
 		const yOffset = (height - ySize * BLOCK) / 2;
 
+		// Where each block start
 		let xCords = Array.from({ length: xSize }, (_, i) => i * BLOCK + xOffset);
 		let yCords = Array.from({ length: yOffset }, (_, i) => i * BLOCK + yOffset);
 
@@ -28,6 +32,9 @@ export function setUpBoard() {
 			yCords,
 			xOffset,
 			yOffset,
+			width,
+			height,
+			blockSize: BLOCK,
 		};
 	})();
 
@@ -47,9 +54,18 @@ export function setUpBoard() {
 		for (let i = 0; i < grid.xSize; i++) {
 			for (let j = 0; j < grid.ySize; j++) {
 				// Alternate colors
-				ctx.fillStyle = (i + j) % 2 ? GREEN_ACCENT : 'lightgreen';
+				ctx.fillStyle = (i + j) % 2 ? GREEN_ACCENT : LIGHT_GREEN;
 				ctx.fillRect(grid.xCords[i], grid.yCords[j], BLOCK, BLOCK);
 			}
 		}
 	})();
+
+	(function createSnake() {
+		snake = new Snake(grid, ctx);
+		snake.draw();
+	})();
+
+	return snake;
 }
+
+export function updateBoard() {}

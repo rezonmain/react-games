@@ -1,11 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { setUpBoard } from '../lib/snakeboard';
 
 export default function SnakeModal(props) {
-	useEffect(() => setUpBoard(), []);
+	const [snake, setSnake] = useState(null);
+	useEffect(() => setSnake(setUpBoard()), []);
 
 	// useEffect(() => {
-	// 	const id = setInterval(() => updateCanvas(setSnake, snake), 900);
+	// 	const id = setInterval(() => updateBoard(setSnake, snake), 1000 / 15);
 	// 	return () => clearInterval(id);
 	// });
 
