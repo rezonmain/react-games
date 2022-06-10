@@ -21,7 +21,7 @@ export function setUpBoard() {
 		const xOffset = (width - xSize * BLOCK) / 2;
 		const yOffset = (height - ySize * BLOCK) / 2;
 
-		// Where each block start
+		// Where each block starts
 		let xCords = Array.from({ length: xSize }, (_, i) => i * BLOCK + xOffset);
 		let yCords = Array.from({ length: ySize }, (_, i) => i * BLOCK + yOffset);
 

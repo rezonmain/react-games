@@ -5,7 +5,7 @@ import './snake.css';
 const HEADER_OFFSET = 48;
 
 /* WARNING: Strict mode breaks game,
-  this is only and issue in development 
+  this is only an issue in development 
   TODO: - Styling, 
         - better graphics, 
         - score keeping */

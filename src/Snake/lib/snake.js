@@ -22,11 +22,11 @@ export function setDirection(prev, dir) {
 	let newDir;
 	let newBuffer = prev.inputBuffer;
 
-	/* Get latest item in the input buffer
+	/* Get latest item in the input buffer,
   if buffer is empty use current direction */
 	let prevInput = prev.inputBuffer[prev.inputBuffer.length - 1] || prev.dir;
 
-	// Disallow oposite inputs
+	// Disallow opposite inputs
 	switch (dir) {
 		case 'Up':
 			newDir = prevInput !== 'Down' ? 'Up' : 'Down';
@@ -61,7 +61,7 @@ export function move(prev) {
 	let food = prev.food;
 	let moveIt = true;
 
-	/*   Set direction as first input in Buffer,
+	/*   Set direction as first input in buffer,
   if buffer is empty use current direction */
 	let newDir = newBuff[0] || prev.dir;
 	switch (newDir) {
@@ -83,7 +83,7 @@ export function move(prev) {
 		default:
 			break;
 	}
-	// Remove first item in buffer
+	// Remove first item in buffer (already referenced)
 	newBuff.shift();
 
 	// Move snake head
