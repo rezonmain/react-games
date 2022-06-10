@@ -1,10 +1,10 @@
-import { newFood } from './game';
+import { setFood } from './game';
 
 export function newSnakes() {
 	let snakes = [
 		{
 			x: 3,
-			y: 3,
+			y: 1,
 		},
 		{
 			x: 3,
@@ -12,7 +12,7 @@ export function newSnakes() {
 		},
 		{
 			x: 3,
-			y: 1,
+			y: 3,
 		},
 	];
 	return snakes;
@@ -20,18 +20,25 @@ export function newSnakes() {
 
 export function setDirection(prev, dir) {
 	let newDir;
+	let newBuffer = prev.inputBuffer;
+
+	/* Get latest item in the input buffer
+  if buffer is empty use current direction */
+	let prevInput = prev.inputBuffer[prev.inputBuffer.length - 1] || prev.dir;
+
+	// Disallow oposite inputs
 	switch (dir) {
 		case 'Up':
-			newDir = prev.dir !== 'Down' ? 'Up' : 'Down';
+			newDir = prevInput !== 'Down' ? 'Up' : 'Down';
 			break;
 		case 'Down':
-			newDir = prev.dir !== 'Up' ? 'Down' : 'Up';
+			newDir = prevInput !== 'Up' ? 'Down' : 'Up';
 			break;
 		case 'Right':
-			newDir = prev.dir !== 'Left' ? 'Right' : 'Left';
+			newDir = prevInput !== 'Left' ? 'Right' : 'Left';
 			break;
 		case 'Left':
-			newDir = prev.dir !== 'Right' ? 'Left' : 'Right';
+			newDir = prevInput !== 'Right' ? 'Left' : 'Right';
 			break;
 		case 'Stop':
 			newDir = 'Stop';
@@ -39,17 +46,24 @@ export function setDirection(prev, dir) {
 		default:
 			break;
 	}
+	newBuffer.push(newDir);
+
 	return {
 		...prev,
-		dir: newDir,
+		inputBuffer: newBuffer,
 	};
 }
 
 export function move(prev) {
 	let newSnake = prev.snake;
 	let newHead = { ...newSnake[newSnake.length - 1] };
+	let newBuff = prev.inputBuffer;
 	let food = prev.food;
-	switch (prev.dir) {
+
+	/*   Set direction as first input in Buffer,
+  if buffer is empty use current direction */
+	let newDir = newBuff[0] || prev.dir;
+	switch (newDir) {
 		case 'Up':
 			newHead.y = newHead.y - 1;
 			break;
@@ -67,19 +81,26 @@ export function move(prev) {
 		default:
 			break;
 	}
+	// Remove first item in buffer
+	newBuff.shift();
 
+	// Move snake head
 	newSnake.push(newHead);
+
+	// Remove tail
 	newSnake.shift();
 
 	if (testAte(newSnake, food)) {
 		const ateHead = { ...newSnake[newSnake.length - 1] };
 		newSnake.unshift(ateHead);
-		food = newFood();
+		food = setFood(prev);
 	}
 
 	return {
 		...prev,
+		dir: newDir,
 		snake: newSnake,
+		inputBuffer: newBuff,
 		food,
 	};
 }

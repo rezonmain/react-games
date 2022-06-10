@@ -9,7 +9,6 @@ import { useSwipeable } from 'react-swipeable';
 export default function SnakeModal(props) {
 	const [showModal, setShowModal] = useState(true);
 	const [game, setGame] = useState();
-	const allowInputRef = useRef(true);
 	const intRef = useRef();
 
 	// After first render
@@ -39,11 +38,8 @@ export default function SnakeModal(props) {
 	// Keyboard controls
 	const handleKeyDown = ({ key }) => {
 		const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
-		if (keys.includes(key) && allowInputRef.current) {
+		if (keys.includes(key)) {
 			setGame((prev) => setDirection(prev, key.split('Arrow').pop()));
-			/* Prevent another input until board updates,
-      also prevents snake hit when turning to fast */
-			allowInputRef.current = false;
 		}
 		setShowModal(false);
 	};
@@ -51,8 +47,6 @@ export default function SnakeModal(props) {
 	// Callback triggered by the setInterval
 	const update = () => {
 		setGame((prev) => move(prev));
-		// Allow input after update
-		allowInputRef.current = true;
 	};
 
 	// Keyboard hook
