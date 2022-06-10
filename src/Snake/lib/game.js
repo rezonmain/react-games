@@ -1,20 +1,21 @@
 import { newSnakes } from './snake';
+let _grid;
 
 export function newGame(grid) {
-	const getRandomPos = () => {
-		return {
-			x: Math.floor(Math.random() * grid.xSize),
-			y: Math.floor(Math.random() * grid.ySize),
-		};
-	};
-
+	_grid = grid;
 	const game = {
 		grid,
 		snake: newSnakes(),
 		dir: 'Stop',
 		hit: false,
-		food: getRandomPos(),
+		food: newFood(),
 	};
-
 	return game;
+}
+
+export function newFood() {
+	return {
+		x: Math.floor(Math.random() * grid.xSize),
+		y: Math.floor(Math.random() * grid.ySize),
+	};
 }

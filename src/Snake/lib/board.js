@@ -66,7 +66,7 @@ function drawGrid(grid) {
 	}
 }
 
-export function drawSnake(game) {
+function drawSnake(game) {
 	ctx.fillStyle = 'red';
 	const g = game.grid;
 	game.snake.forEach((s) => {
@@ -79,9 +79,17 @@ export function drawSnake(game) {
 	});
 }
 
+function drawFood(game) {
+	const g = game.grid;
+	const f = game.food;
+	ctx.fillStyle = 'blue';
+	ctx.fillRect(g.xCords[f.x] + 3.5, g.yCords[f.y] + 3.5, BLOCK - 7, BLOCK - 7);
+}
+
 export function updateBoard(game) {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	drawBorders(game.grid);
 	drawGrid(game.grid);
 	drawSnake(game);
+	drawFood(game);
 }

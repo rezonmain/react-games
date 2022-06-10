@@ -74,10 +74,7 @@ export function move(prev) {
 	};
 }
 
-function testCollision(x, y) {
-	return x >= this.grid.xSize || x < 0 || y >= this.grid.ySize || y < 0;
+export function testAte(game) {
+	const head = { ...game.snake[game.snake.length - 1] };
+	return head.x === game.food.x && head.y === game.food.y;
 }
-
-function testAte() {}
-
-function handleAte() {}

@@ -2,8 +2,9 @@ import { useEffect, useState, useRef } from 'react';
 import { setUpBoard, updateBoard } from '../lib/board';
 import ControlsModal from './ControlsModal';
 import { useKey } from 'react-use';
-import { newGame } from '../lib/game';
-import { move, setDirection } from '../lib/snake';
+import { newGame, getRandomPos } from '../lib/game';
+import { move, setDirection, testAte } from '../lib/snake';
+import { useSwipeable } from 'react-swipeable';
 
 export default function SnakeModal(props) {
 	const [showModal, setShowModal] = useState(true);
@@ -22,6 +23,13 @@ export default function SnakeModal(props) {
 	useEffect(() => {
 		!showModal && updateBoard(game);
 		console.log(game);
+	});
+
+	const handlers = useSwipeable({
+		onSwiped: (e) => {
+			setGame((prev) => setDirection(prev, e.dir));
+			setShowModal(false);
+		},
 	});
 
 	const handleKeyDown = ({ key }) => {
@@ -61,6 +69,7 @@ export default function SnakeModal(props) {
 					</svg>
 				</header>
 				<canvas
+					{...handlers}
 					id='snake-board'
 					width={props.canvasSize.width}
 					height={props.canvasSize.height}
