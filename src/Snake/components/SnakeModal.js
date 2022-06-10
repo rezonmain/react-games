@@ -2,15 +2,17 @@ import { useEffect, useState, useRef } from 'react';
 import { setUpBoard, updateBoard } from '../lib/board';
 import ControlsModal from './ControlsModal';
 import { useKey } from 'react-use';
-import { newGame, getRandomPos } from '../lib/game';
-import { move, setDirection, testAte } from '../lib/snake';
+import { newGame } from '../lib/game';
+import { move, setDirection } from '../lib/snake';
 import { useSwipeable } from 'react-swipeable';
 
 export default function SnakeModal(props) {
 	const [showModal, setShowModal] = useState(true);
 	const [game, setGame] = useState();
+	const allowInputRef = useRef(true);
 	const intRef = useRef();
 
+	// After first render
 	useEffect(() => {
 		const grid = setUpBoard();
 		setGame(newGame(grid));
@@ -20,11 +22,13 @@ export default function SnakeModal(props) {
 		};
 	}, []);
 
+	// After every render
 	useEffect(() => {
 		!showModal && updateBoard(game);
 		console.log(game);
 	});
 
+	// Swipe controls
 	const handlers = useSwipeable({
 		onSwiped: (e) => {
 			setGame((prev) => setDirection(prev, e.dir));
@@ -32,17 +36,26 @@ export default function SnakeModal(props) {
 		},
 	});
 
+	// Keyboard controls
 	const handleKeyDown = ({ key }) => {
 		const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
-		keys.includes(key) &&
+		if (keys.includes(key) && allowInputRef.current) {
 			setGame((prev) => setDirection(prev, key.split('Arrow').pop()));
+			/* Prevent another input until board updates,
+      also prevents snake hit when turning to fast */
+			allowInputRef.current = false;
+		}
 		setShowModal(false);
 	};
 
+	// Callback triggered by the setInterval
 	const update = () => {
 		setGame((prev) => move(prev));
+		// Allow input after update
+		allowInputRef.current = true;
 	};
 
+	// Keyboard hook
 	useKey([], handleKeyDown);
 
 	return (

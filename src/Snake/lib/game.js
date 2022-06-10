@@ -15,7 +15,7 @@ export function newGame(grid) {
 
 export function newFood() {
 	return {
-		x: Math.floor(Math.random() * grid.xSize),
-		y: Math.floor(Math.random() * grid.ySize),
+		x: Math.floor(Math.random() * _grid.xSize),
+		y: Math.floor(Math.random() * _grid.ySize),
 	};
 }

@@ -1,3 +1,5 @@
+import { newFood } from './game';
+
 export function newSnakes() {
 	let snakes = [
 		{
@@ -46,6 +48,7 @@ export function setDirection(prev, dir) {
 export function move(prev) {
 	let newSnake = prev.snake;
 	let newHead = { ...newSnake[newSnake.length - 1] };
+	let food = prev.food;
 	switch (prev.dir) {
 		case 'Up':
 			newHead.y = newHead.y - 1;
@@ -68,13 +71,20 @@ export function move(prev) {
 	newSnake.push(newHead);
 	newSnake.shift();
 
+	if (testAte(newSnake, food)) {
+		const ateHead = { ...newSnake[newSnake.length - 1] };
+		newSnake.unshift(ateHead);
+		food = newFood();
+	}
+
 	return {
 		...prev,
 		snake: newSnake,
+		food,
 	};
 }
 
-export function testAte(game) {
-	const head = { ...game.snake[game.snake.length - 1] };
-	return head.x === game.food.x && head.y === game.food.y;
+function testAte(snake, food) {
+	const head = { ...snake[snake.length - 1] };
+	return head.x === food.x && head.y === food.y;
 }
