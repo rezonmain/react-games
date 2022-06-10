@@ -4,6 +4,12 @@ import './snake.css';
 
 const HEADER_OFFSET = 48;
 
+/* WARNING: Strict mode breaks game,
+  this is only and issue in development 
+  TODO: - Styling, 
+        - better graphics, 
+        - score keeping */
+
 export default function Snake() {
 	const [modal, setModal] = useState(false);
 	const [isWide, setIsWide] = useState(false);

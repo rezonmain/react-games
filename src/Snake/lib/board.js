@@ -23,7 +23,7 @@ export function setUpBoard() {
 
 		// Where each block start
 		let xCords = Array.from({ length: xSize }, (_, i) => i * BLOCK + xOffset);
-		let yCords = Array.from({ length: yOffset }, (_, i) => i * BLOCK + yOffset);
+		let yCords = Array.from({ length: ySize }, (_, i) => i * BLOCK + yOffset);
 
 		return {
 			xSize,
