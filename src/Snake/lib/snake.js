@@ -59,6 +59,7 @@ export function move(prev) {
 	let newHead = { ...newSnake[newSnake.length - 1] };
 	let newBuff = prev.inputBuffer;
 	let food = prev.food;
+	let moveIt = true;
 
 	/*   Set direction as first input in Buffer,
   if buffer is empty use current direction */
@@ -77,6 +78,7 @@ export function move(prev) {
 			newHead.x = newHead.x + 1;
 			break;
 		case 'Stop':
+			moveIt = false;
 			break;
 		default:
 			break;
@@ -85,10 +87,12 @@ export function move(prev) {
 	newBuff.shift();
 
 	// Move snake head
-	newSnake.push(newHead);
+	moveIt && newSnake.push(newHead);
 
 	// Remove tail
-	newSnake.shift();
+	moveIt && newSnake.shift();
+
+	const newHit = testCollision(newSnake, prev.grid);
 
 	if (testAte(newSnake, food)) {
 		const ateHead = { ...newSnake[newSnake.length - 1] };
@@ -100,9 +104,32 @@ export function move(prev) {
 		...prev,
 		dir: newDir,
 		snake: newSnake,
+		hit: newHit,
 		inputBuffer: newBuff,
 		food,
 	};
+}
+
+function testCollision(snake, grid) {
+	let collision = false;
+	const head = snake[snake.length - 1];
+
+	// Self collision
+	for (let i = 0; i < snake.length - 1; i++) {
+		collision = head.x === snake[i].x && head.y === snake[i].y;
+		if (collision) {
+			break;
+		}
+	}
+	// Border collision
+	collision =
+		collision ||
+		head.x >= grid.xSize ||
+		head.x < 0 ||
+		head.y >= grid.ySize ||
+		head.y < 0;
+
+	return collision;
 }
 
 function testAte(snake, food) {

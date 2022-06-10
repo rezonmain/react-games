@@ -15,16 +15,29 @@ export default function SnakeModal(props) {
 	useEffect(() => {
 		const grid = setUpBoard();
 		setGame(newGame(grid));
+		setShowModal(true);
 		intRef.current = setInterval(update, 100);
 		return () => {
 			clearInterval(intRef.current);
 		};
 	}, []);
 
+	const reset = () => {
+		const grid = setUpBoard();
+		setGame(newGame(grid));
+		setShowModal(true);
+		intRef.current = setInterval(update, 100);
+	};
+
 	// After every render
 	useEffect(() => {
-		!showModal && updateBoard(game);
-		console.log(game);
+		if (!showModal) {
+			updateBoard(game);
+			if (game.hit) {
+				clearInterval(intRef.current);
+				reset();
+			}
+		}
 	});
 
 	// Swipe controls
@@ -33,15 +46,18 @@ export default function SnakeModal(props) {
 			setGame((prev) => setDirection(prev, e.dir));
 			setShowModal(false);
 		},
+		preventScrollOnSwipe: true,
 	});
 
 	// Keyboard controls
 	const handleKeyDown = ({ key }) => {
 		const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
-		if (keys.includes(key)) {
+		if (showModal) {
+			setGame((prev) => setDirection(prev, 'Down'));
+			setShowModal(false);
+		} else if (keys.includes(key)) {
 			setGame((prev) => setDirection(prev, key.split('Arrow').pop()));
 		}
-		setShowModal(false);
 	};
 
 	// Callback triggered by the setInterval
