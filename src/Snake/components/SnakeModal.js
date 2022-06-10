@@ -1,38 +1,38 @@
-import { useEffect, useRef, useState } from 'react';
-import {
-	drawSnake,
-	moveSnake,
-	newSnake,
-	setUpBoard,
-	updateBoard,
-} from '../lib/snakeboard';
-import useRaf from '../../hooks/useRaf';
+import { useEffect, useState, useRef } from 'react';
+import { setUpBoard, updateBoard } from '../lib/board';
 import ControlsModal from './ControlsModal';
-import { handleDirChange } from '../lib/utils';
 import { useKey } from 'react-use';
+import { newGame } from '../lib/game';
+import { move, setDirection } from '../lib/snake';
 
 export default function SnakeModal(props) {
 	const [showModal, setShowModal] = useState(true);
-	let snake = useRef();
+	const [game, setGame] = useState();
+	const intRef = useRef();
 
 	useEffect(() => {
-		setUpBoard();
-		snake.current = newSnake();
+		const grid = setUpBoard();
+		setGame(newGame(grid));
+		intRef.current = setInterval(update, 100);
+		return () => {
+			clearInterval(intRef.current);
+		};
 	}, []);
 
-	useRaf(700, () => {
-		snake.current = moveSnake(snake.current);
-		updateBoard(snake.current);
+	useEffect(() => {
+		!showModal && updateBoard(game);
+		console.log(game);
 	});
 
 	const handleKeyDown = ({ key }) => {
 		const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
-		if (keys.includes(key)) {
-			snake.current.dir = handleDirChange(
-				snake.current.dir,
-				key.split('Arrow').pop()
-			);
-		}
+		keys.includes(key) &&
+			setGame((prev) => setDirection(prev, key.split('Arrow').pop()));
+		setShowModal(false);
+	};
+
+	const update = () => {
+		setGame((prev) => move(prev));
 	};
 
 	useKey([], handleKeyDown);
@@ -65,7 +65,7 @@ export default function SnakeModal(props) {
 					width={props.canvasSize.width}
 					height={props.canvasSize.height}
 				/>
-				{/* {showModal && <ControlsModal count={count} />} */}
+				{showModal && <ControlsModal />}
 			</div>
 		</aside>
 	);

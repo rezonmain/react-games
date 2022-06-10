@@ -4,7 +4,6 @@ const LIGHT_GREEN = 'lightgreen';
 const BLOCK = 35;
 let canvas;
 let ctx;
-export let grid;
 
 export function setUpBoard() {
 	canvas = document.getElementById('snake-board');
@@ -13,7 +12,7 @@ export function setUpBoard() {
 	const height = canvas.height;
 
 	// Calculate grid
-	grid = (() => {
+	const grid = (() => {
 		// Amount of blocks that fit in current canvas size
 		const xSize = Math.floor(width / BLOCK) - 1;
 		const ySize = Math.floor(height / BLOCK) - 1;
@@ -39,52 +38,13 @@ export function setUpBoard() {
 		};
 	})();
 
-	drawBorders();
-	drawGrid();
+	drawBorders(grid);
+	drawGrid(grid);
+
+	return grid;
 }
 
-export function newSnake() {
-	return {
-		x: 3,
-		y: 3,
-		xPix: grid.xCords[3],
-		yPix: grid.yCords[3],
-		dir: 'Down',
-	};
-}
-
-export function moveSnake(snake) {
-	let xDir, yDir;
-	switch (snake.dir) {
-		case 'Up':
-			xDir = 0;
-			yDir = -1;
-			break;
-		case 'Down':
-			xDir = 0;
-			yDir = 1;
-			break;
-		case 'Left':
-			xDir = -1;
-			yDir = 0;
-			break;
-		case 'Right':
-			xDir = 1;
-			yDir = 0;
-			break;
-		default:
-			break;
-	}
-	return {
-		...snake,
-		x: snake.x + xDir,
-		y: snake.y + yDir,
-		xPix: grid.xCords[snake.x + xDir],
-		yPix: grid.yCords[snake.y + yDir],
-	};
-}
-
-function drawBorders() {
+function drawBorders(grid) {
 	ctx.fillStyle = GREEN;
 
 	// Left and right borders:
@@ -96,7 +56,7 @@ function drawBorders() {
 	ctx.fillRect(0, canvas.height - grid.yOffset, canvas.width, grid.yOffset);
 }
 
-function drawGrid() {
+function drawGrid(grid) {
 	for (let i = 0; i < grid.xSize; i++) {
 		for (let j = 0; j < grid.ySize; j++) {
 			// Alternate colors
@@ -106,14 +66,22 @@ function drawGrid() {
 	}
 }
 
-export function drawSnake(snake) {
+export function drawSnake(game) {
 	ctx.fillStyle = 'red';
-	ctx.fillRect(snake.xPix + 3.5, snake.yPix + 3.5, BLOCK - 7, BLOCK - 7);
+	const g = game.grid;
+	game.snake.forEach((s) => {
+		ctx.fillRect(
+			g.xCords[s.x] + 3.5,
+			g.yCords[s.y] + 3.5,
+			BLOCK - 7,
+			BLOCK - 7
+		);
+	});
 }
 
-export function updateBoard(snake) {
-	// ctx.clearRect(0, 0, canvas.width, canvas.height);
-	// drawBorders();
-	// drawGrid();
-	drawSnake(snake);
+export function updateBoard(game) {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	drawBorders(game.grid);
+	drawGrid(game.grid);
+	drawSnake(game);
 }
