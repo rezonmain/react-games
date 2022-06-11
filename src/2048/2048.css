@@ -11,3 +11,11 @@
   background-color: #cdc0b4;
   border-radius: var(--br);
 }
+
+._2048-cell {
+  position: relative;
+  border-radius: var(--br);
+  height: 100%;
+  width: 100%;
+  font-size: min(5vw, 1.85rem);
+}
