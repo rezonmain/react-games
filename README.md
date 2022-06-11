@@ -3,7 +3,7 @@
 ### Implemented games:
 
 - [x] Tenzies
-- [x] Snake (%80)
+- [x] Snake (80%)
 - [ ] 2048
 - [ ] Minesweeper
 - [ ] Nonograms

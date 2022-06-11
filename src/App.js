@@ -1,11 +1,11 @@
 import Header from './shared/Header';
 import HowTo from './shared/HowTo';
-import Snake from './Snake/Snake';
+import G2048 from './2048/2048';
 function App() {
 	return (
 		<main>
 			<Header />
-			<Snake />
+			<G2048 />
 			<HowTo />
 		</main>
 	);
