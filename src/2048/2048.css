@@ -1,15 +1,13 @@
 ._2048-board-container {
   background-color: #bbada0;
   display: grid;
-  grid-auto-columns: auto;
-  grid-auto-rows: auto;
-
+  aspect-ratio: 1;
+  gap: 1rem;
+  padding: 1rem;
 }
 
 ._2048-tile {
   position: relative;
-  background-color: white;
+  background-color: #cdc0b4;
   border-radius: var(--br);
-  width: 20px;
-  height: 20px;
 }

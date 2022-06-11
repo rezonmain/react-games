@@ -1,19 +1,18 @@
 import { useState } from 'react';
-import { newTiles } from '../lib/tiles';
-import Tile from './Tile';
+import { newTiles, newTilesElements, newCells } from '../lib/tiles';
 
 export default function Board(props) {
-	const [tiles, setTiles] = useState(() => newTiles(props.size));
+	const [cells, setCells] = useState(() => newCells(props.size));
+	const bgTiles = newTiles(props.size);
 
-	const tileElements = tiles.map((tile) => {
-		return tile.map((til) => <Tile key={til.id} value={til.value} />);
-	});
+	// Dynamic square grid
+	const boardStyle = {
+		gridTemplateColumns: `repeat(${props.size}, 1fr)`,
+	};
 
-	function displayTiles() {
-		let arr = [];
-		tileElements.forEach((tile) => tile.forEach((t) => arr.push(t)));
-		return arr;
-	}
-
-	return <div className='_2048-board-container'>{displayTiles()}</div>;
+	return (
+		<div style={boardStyle} className='_2048-board-container'>
+			{newTilesElements(bgTiles)}
+		</div>
+	);
 }
