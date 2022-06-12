@@ -21,7 +21,6 @@ export function newTiles(size) {
 				id: nanoid(),
 				x: i,
 				y: j,
-				value,
 				cell: <Cell value={value} />,
 			};
 		});
@@ -40,6 +39,11 @@ export function displayTileElements(tiles) {
 	);
 
 	return tileElements;
+}
+
+export function moveTiles(pre, key) {
+	const dir = key.split('Arrow').pop();
+	// Move down for testing
 }
 
 function getInitialCells(size) {

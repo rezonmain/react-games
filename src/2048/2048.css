@@ -1,14 +1,27 @@
+._2048-section {
+  --lightBrown: #faf8ef;
+  --bgColor: #bbada0;
+  --empyTileColor: #cdc0b4;
+  --2048tr: 100ms ease-in-out;
+}
+
+._2048-header {
+  background-color: var(--bgColor);
+}
+
 ._2048-board-container {
-  background-color: #bbada0;
+  background-color: var(--bgColor);
   display: grid;
   aspect-ratio: 1;
   gap: 1rem;
   padding: 1rem;
+  border-bottom-left-radius: var(--br);
+  border-bottom-right-radius: var(--br);
 }
 
 ._2048-tile {
   position: relative;
-  background-color: #cdc0b4;
+  background-color: var(--empyTileColor);
   border-radius: var(--br);
 }
 

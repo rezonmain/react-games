@@ -1,18 +1,29 @@
 import { useState } from 'react';
-import { newTiles, displayTileElements } from '../lib/tiles';
+import { useKey } from 'react-use';
+import { newTiles, displayTileElements, moveTiles } from '../lib/tiles';
 
 export default function Board(props) {
 	const [tiles, setTiles] = useState(() => newTiles(props.size));
+	const [game, setGame] = useState();
 
 	const boardStyle = {
 		gridTemplateColumns: `repeat(${props.size}, 1fr)`,
 	};
 
-	console.log(tiles);
+	const handleKeyPress = ({ key }) => {
+		setTiles((pre) => moveTiles(pre, key));
+	};
+
+	useKey([], handleKeyPress);
 
 	return (
-		<div style={boardStyle} className='_2048-board-container'>
-			{displayTileElements(tiles)}
-		</div>
+		<article>
+			<header className='_2048-header'>
+				<p>Score:</p>
+			</header>
+			<div style={boardStyle} className='_2048-board-container'>
+				{displayTileElements(tiles)}
+			</div>
+		</article>
 	);
 }

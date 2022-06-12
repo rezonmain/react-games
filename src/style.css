@@ -19,6 +19,10 @@ body {
   font-family: 'Comfortaa', cursive;
 }
 
+main {
+  padding: 0 2vw;
+}
+
 a {
   text-transform: none;
   text-decoration: none;
