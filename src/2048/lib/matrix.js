@@ -26,7 +26,6 @@ export function shiftMatrix(matrix, key) {
 				rowCondition: (startRow, endRow) => startRow < endRow,
 				colCondition: (startCol, endCol) => startCol < endCol,
 			};
-			m = shift(shiftParams, m);
 			break;
 		case 'Down':
 			shiftParams = {
@@ -41,7 +40,6 @@ export function shiftMatrix(matrix, key) {
 				rowCondition: (startRow, endRow) => startRow >= endRow,
 				colCondition: (startCol, endCol) => startCol < endCol,
 			};
-			m = shift(shiftParams, m);
 			break;
 		case 'Left':
 			shiftParams = {
@@ -56,7 +54,6 @@ export function shiftMatrix(matrix, key) {
 				rowCondition: (startRow, endRow) => startRow < endRow,
 				colCondition: (startCol, endCol) => startCol < endCol,
 			};
-			m = shift(shiftParams, m);
 			break;
 		case 'Right':
 			shiftParams = {
@@ -71,11 +68,15 @@ export function shiftMatrix(matrix, key) {
 				rowCondition: (startRow, endRow) => startRow < endRow,
 				colCondition: (startCol, endCol) => startCol >= endCol,
 			};
-			m = shift(shiftParams, m);
 			break;
 		default:
 			break;
 	}
+
+	// This weird calling is to get the merging behavior of the original game
+	m = shift(shiftParams, m);
+	m = merge(shiftParams, m);
+	m = shift(shiftParams, m);
 	return m;
 }
 
@@ -97,6 +98,23 @@ function shift(p, m) {
 				/* Recursive call to shift all the way to-
         array boundry or a number AT array boundry*/
 				shift(p, m);
+			}
+		}
+	}
+	return m;
+}
+
+function merge(p, m) {
+	for (let i = p.startRow; p.rowCondition(i, p.endRow); i += p.rowStep) {
+		for (let j = p.startCol; p.colCondition(j, p.endCol); j += p.colStep) {
+			// 'Look' towards adjacent index
+			const nxtRow = i + p.rF;
+			const nxtCol = j + p.cF;
+
+			// If adjacent value is equal to current, merge values
+			if (m[nxtRow][nxtCol] === m[i][j] && m[i][j] !== null) {
+				m[nxtRow][nxtCol] += m[i][j];
+				m[i][j] = null;
 			}
 		}
 	}

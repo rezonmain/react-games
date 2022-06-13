@@ -52,7 +52,7 @@ function getInitialCells(size) {
 	let areEqual = false;
 
 	// Number of initial cells
-	const nInit = 2;
+	const nInit = 6;
 
 	// Maximum value an initial cell can have, in power of 2
 	const maxInit = 2;

@@ -2,7 +2,7 @@
   --lightBrown: #faf8ef;
   --bgColor: #bbada0;
   --empyTileColor: #cdc0b4;
-  --2048tr: 100ms ease-in-out;
+  --thistr: all 100ms ease-in-out;
 }
 
 ._2048-header {
