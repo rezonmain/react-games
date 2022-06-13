@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { useKey } from 'react-use';
-import { newTiles, displayTileElements, moveCells } from '../lib/tiles';
-import { newMatrix, shiftMatrix } from '../lib/matrix';
+import { newTiles, displayTileElements, updateCells } from '../lib/tiles';
+import { newMatrix, updateMatrix } from '../lib/matrix';
 
 export default function Board(props) {
 	const [tiles, setTiles] = useState(() => newTiles(props.size));
@@ -15,14 +15,12 @@ export default function Board(props) {
 	const handleKeyPress = ({ key }) => {
 		const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
 		if (keys.includes(key)) {
-			matrixRef.current = shiftMatrix(matrixRef.current, key);
-			setTiles((prev) => moveCells(prev, matrixRef.current));
+			matrixRef.current = updateMatrix(matrixRef.current, key);
+			setTiles((prev) => updateCells(prev, matrixRef.current));
 		}
 	};
 
 	useKey([], handleKeyPress);
-
-	console.log(tiles);
 
 	return (
 		<article>

@@ -1,3 +1,5 @@
+import { getRandomCells } from './tiles';
+
 export function newMatrix(tiles) {
 	const matrix = tiles.map((tile) => {
 		return tile.map((t) => {
@@ -7,7 +9,7 @@ export function newMatrix(tiles) {
 	return matrix;
 }
 
-export function shiftMatrix(matrix, key) {
+export function updateMatrix(matrix, key) {
 	const dir = key.split('Arrow').pop();
 	let m = matrix;
 	let shiftParams = {};
@@ -77,6 +79,8 @@ export function shiftMatrix(matrix, key) {
 	m = shift(shiftParams, m);
 	m = merge(shiftParams, m);
 	m = shift(shiftParams, m);
+	addValue(m);
+
 	return m;
 }
 
@@ -118,5 +122,19 @@ function merge(p, m) {
 			}
 		}
 	}
+	return m;
+}
+
+function addValue(m) {
+	const amountToAdd = 1;
+	const prevCoords = [];
+	m.forEach((_, i) =>
+		_.forEach((e, j) => {
+			e && prevCoords.push({ x: i, y: j });
+		})
+	);
+
+	const value = getRandomCells(m.length, amountToAdd, prevCoords);
+	value.forEach((v) => (m[v.x][v.y] = v.value));
 	return m;
 }

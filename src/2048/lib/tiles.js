@@ -1,9 +1,10 @@
 import { nanoid } from 'nanoid';
 import Cell from '../components/Cell';
 import Tile from '../components/Tile';
+import { getColor } from './colors';
 
 export function newTiles(size) {
-	const initCells = getInitialCells(size);
+	const initCells = getRandomCells(size);
 	const tiles = Array.from({ length: size }, (_, i) => {
 		return Array.from({ length: size }, (_, j) => {
 			let value = null;
@@ -21,7 +22,7 @@ export function newTiles(size) {
 				x: i,
 				y: j,
 				value,
-				element: <Cell key={nanoid()} value={value} />,
+				element: <Cell key={nanoid()} value={value} style={getColor(value)} />,
 			};
 			return {
 				id: nanoid(),
@@ -45,20 +46,16 @@ export function displayTileElements(tiles) {
 	return tileElements;
 }
 
-function getInitialCells(size) {
-	let initialCells = [];
+export function getRandomCells(size, amount = 2, prevCoords = []) {
+	let cells = [];
 	let x, y, value;
-	let prevCoords = [];
 	let areEqual = false;
-
-	// Number of initial cells
-	const nInit = 6;
 
 	// Maximum value an initial cell can have, in power of 2
 	const maxInit = 2;
 
 	// Generate unique cells
-	while (initialCells.length < nInit) {
+	while (cells.length < amount) {
 		x = Math.floor(Math.random() * size);
 		y = Math.floor(Math.random() * size);
 		value = Math.pow(2, Math.floor(Math.random() * maxInit) + 1);
@@ -75,7 +72,7 @@ function getInitialCells(size) {
 		}
 
 		if (!areEqual) {
-			initialCells.push({
+			cells.push({
 				x,
 				y,
 				value,
@@ -83,15 +80,21 @@ function getInitialCells(size) {
 			prevCoords.push({ x, y });
 		}
 	}
-	return initialCells;
+	return cells;
 }
 
-export function moveCells(tiles, matrix) {
+export function updateCells(tiles, matrix) {
 	return tiles.map((tile, i) =>
 		tile.map((t, j) => {
 			const cell = {
 				value: matrix[i][j],
-				element: <Cell key={nanoid()} value={matrix[i][j]} />,
+				element: (
+					<Cell
+						key={nanoid()}
+						value={matrix[i][j]}
+						style={getColor(matrix[i][j])}
+					/>
+				),
 			};
 			return {
 				...t,
