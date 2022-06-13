@@ -17,11 +17,10 @@ export function newTiles(size) {
 					break;
 				}
 			}
+			const cell = { x: i, y: j, value, element: <Cell value={value} /> };
 			return {
 				id: nanoid(),
-				x: i,
-				y: j,
-				cell: <Cell value={value} />,
+				cell: cell,
 			};
 		});
 	});
@@ -34,16 +33,11 @@ export function displayTileElements(tiles) {
 
 	tiles.map((tile) =>
 		tile.map((t) =>
-			tileElements.push(<Tile key={t.id} x={t.x} y={t.y} cell={t.cell} />)
+			tileElements.push(<Tile key={t.id} cell={t.cell.element} />)
 		)
 	);
 
 	return tileElements;
-}
-
-export function moveTiles(pre, key) {
-	const dir = key.split('Arrow').pop();
-	// Move down for testing
 }
 
 function getInitialCells(size) {
@@ -53,7 +47,7 @@ function getInitialCells(size) {
 	let areEqual = false;
 
 	// Number of initial cells
-	const nInit = 5;
+	const nInit = 2;
 
 	// Maximum value an initial cell can have, in power of 2
 	const maxInit = 2;
@@ -86,3 +80,5 @@ function getInitialCells(size) {
 	}
 	return initialCells;
 }
+
+export function moveCells(tiles, matrix) {}

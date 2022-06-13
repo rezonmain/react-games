@@ -1,17 +1,23 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useKey } from 'react-use';
-import { newTiles, displayTileElements, moveTiles } from '../lib/tiles';
+import { newTiles, displayTileElements, moveCells } from '../lib/tiles';
+import { newMatrix, shiftMatrix } from '../lib/matrix';
 
 export default function Board(props) {
 	const [tiles, setTiles] = useState(() => newTiles(props.size));
-	const [game, setGame] = useState();
+	const matrixRef = useRef(() => newMatrix(tiles));
 
+	// Dynamically adjust grid according to board size
 	const boardStyle = {
 		gridTemplateColumns: `repeat(${props.size}, 1fr)`,
 	};
 
 	const handleKeyPress = ({ key }) => {
-		setTiles((pre) => moveTiles(pre, key));
+		const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+		if (keys.includes(key)) {
+			matrixRef.current = shiftMatrix(matrixRef.current, key);
+			setTiles((prev) => moveCells(prev, matrixRef.current));
+		}
 	};
 
 	useKey([], handleKeyPress);
