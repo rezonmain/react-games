@@ -17,7 +17,12 @@ export function newTiles(size) {
 					break;
 				}
 			}
-			const cell = { x: i, y: j, value, element: <Cell value={value} /> };
+			const cell = {
+				x: i,
+				y: j,
+				value,
+				element: <Cell key={nanoid()} value={value} />,
+			};
 			return {
 				id: nanoid(),
 				cell: cell,
@@ -81,4 +86,17 @@ function getInitialCells(size) {
 	return initialCells;
 }
 
-export function moveCells(tiles, matrix) {}
+export function moveCells(tiles, matrix) {
+	return tiles.map((tile, i) =>
+		tile.map((t, j) => {
+			const cell = {
+				value: matrix[i][j],
+				element: <Cell key={nanoid()} value={matrix[i][j]} />,
+			};
+			return {
+				...t,
+				cell,
+			};
+		})
+	);
+}

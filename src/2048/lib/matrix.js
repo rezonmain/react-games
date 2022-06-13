@@ -73,6 +73,8 @@ export function shiftMatrix(matrix, key) {
 			};
 			m = shift(shiftParams, m);
 			break;
+		default:
+			break;
 	}
 	return m;
 }
@@ -94,7 +96,7 @@ function shift(p, m) {
 
 				/* Recursive call to shift all the way to-
         array boundry or a number AT array boundry*/
-				shift(m, p);
+				shift(p, m);
 			}
 		}
 	}

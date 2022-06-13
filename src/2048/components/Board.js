@@ -5,7 +5,7 @@ import { newMatrix, shiftMatrix } from '../lib/matrix';
 
 export default function Board(props) {
 	const [tiles, setTiles] = useState(() => newTiles(props.size));
-	const matrixRef = useRef(() => newMatrix(tiles));
+	const matrixRef = useRef(newMatrix(tiles));
 
 	// Dynamically adjust grid according to board size
 	const boardStyle = {
@@ -21,6 +21,8 @@ export default function Board(props) {
 	};
 
 	useKey([], handleKeyPress);
+
+	console.log(tiles);
 
 	return (
 		<article>
