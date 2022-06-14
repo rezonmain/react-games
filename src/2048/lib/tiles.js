@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 import Cell from '../components/Cell';
 import Tile from '../components/Tile';
-import { getColor } from './colors';
+import { getColor } from './styles';
 
 export function newTiles(size) {
 	const initCells = getRandomCells(size);

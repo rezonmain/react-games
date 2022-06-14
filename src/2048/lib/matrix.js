@@ -9,19 +9,30 @@ export function newMatrix(tiles) {
 	return matrix;
 }
 
-export function handleShift(matrix, key) {
+export function handleShift(matrix, dir) {
 	let m = structuredClone(matrix);
-	m = updateMatrix(m, key);
+	m = updateMatrix(m, dir);
+
 	/* If matrix stays the same (didn't move), 
   don't add a new value */
 	m = !isSame(matrix, m) ? addValue(m) : m;
 	return m;
 }
 
-function updateMatrix(matrix, key) {
-	const dir = key.split('Arrow').pop();
+export function testLose(prev) {
+	let resultingMatrix = structuredClone(prev);
+	const dirs = ['Up', 'Down', 'Left', 'Right'];
+
+	// Test every direction to determine if matrix can no longer move
+	dirs.forEach((dir) => {
+		resultingMatrix = updateMatrix(resultingMatrix, dir);
+	});
+
+	return isSame(prev, resultingMatrix);
+}
+
+function updateMatrix(matrix, dir) {
 	// Deep coppy arr
-	let m = structuredClone(matrix);
 	let shiftParams = {};
 
 	switch (dir) {
@@ -30,9 +41,9 @@ function updateMatrix(matrix, key) {
 				rF: -1,
 				cF: 0,
 				startRow: 1,
-				endRow: m.length,
+				endRow: matrix.length,
 				startCol: 0,
-				endCol: m.length,
+				endCol: matrix.length,
 				rowStep: 1,
 				colStep: 1,
 				rowCondition: (startRow, endRow) => startRow < endRow,
@@ -43,10 +54,10 @@ function updateMatrix(matrix, key) {
 			shiftParams = {
 				rF: 1,
 				cF: 0,
-				startRow: m.length - 2,
+				startRow: matrix.length - 2,
 				endRow: 0,
 				startCol: 0,
-				endCol: m.length,
+				endCol: matrix.length,
 				rowStep: -1,
 				colStep: 1,
 				rowCondition: (startRow, endRow) => startRow >= endRow,
@@ -58,9 +69,9 @@ function updateMatrix(matrix, key) {
 				rF: 0,
 				cF: -1,
 				startRow: 0,
-				endRow: m.length,
+				endRow: matrix.length,
 				startCol: 1,
-				endCol: m.length,
+				endCol: matrix.length,
 				rowStep: 1,
 				colStep: 1,
 				rowCondition: (startRow, endRow) => startRow < endRow,
@@ -72,8 +83,8 @@ function updateMatrix(matrix, key) {
 				rF: 0,
 				cF: 1,
 				startRow: 0,
-				endRow: m.length,
-				startCol: m.length - 2,
+				endRow: matrix.length,
+				startCol: matrix.length - 2,
 				endCol: 0,
 				rowStep: 1,
 				colStep: -1,
@@ -86,11 +97,11 @@ function updateMatrix(matrix, key) {
 	}
 
 	// This weird calling is to get the merging behavior of the original game
-	m = shift(shiftParams, m);
-	m = merge(shiftParams, m);
-	m = shift(shiftParams, m);
+	matrix = shift(shiftParams, matrix);
+	matrix = merge(shiftParams, matrix);
+	matrix = shift(shiftParams, matrix);
 
-	return m;
+	return matrix;
 }
 
 function shift(p, m) {
@@ -156,16 +167,4 @@ function isSame(prev, current) {
 	});
 
 	return same;
-}
-
-export function testLose(prev) {
-	let resultingMatrix = structuredClone(prev);
-	const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
-
-	// Test every direction to determine if matrix can no longer move
-	keys.forEach((k) => {
-		resultingMatrix = updateMatrix(resultingMatrix, k);
-	});
-
-	return isSame(prev, resultingMatrix);
 }

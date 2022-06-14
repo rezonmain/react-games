@@ -1,4 +1,5 @@
 const colors = {
+	null: { color: 'inherit', backgroundColor: 'inherit' },
 	2: { color: '#776e65', backgroundColor: '#eee4da' },
 	4: { color: '#776e65', backgroundColor: '#eee1c9' },
 	8: { color: '#f9f6f2', backgroundColor: '#f3b27a' },
@@ -13,5 +14,5 @@ const colors = {
 };
 
 export function getColor(value) {
-	return colors[value] || { text: '#f9f6f2', back: '#3d3a33' };
+	return colors[value] || { color: '#f9f6f2', backgroundColor: '#3d3a33' };
 }
