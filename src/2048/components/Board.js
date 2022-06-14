@@ -1,11 +1,16 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useKey } from 'react-use';
 import { newTiles, displayTileElements, updateCells } from '../lib/tiles';
-import { newMatrix, updateMatrix } from '../lib/matrix';
+import { newMatrix, testLose, handleShift } from '../lib/matrix';
 
 export default function Board(props) {
+	// TODO: VERY IMPORTANT ANIMATIONS ANIMATIONS ANIMATIONS!!!
 	const [tiles, setTiles] = useState(() => newTiles(props.size));
 	const matrixRef = useRef(newMatrix(tiles));
+
+	useEffect(() => {
+		testLose(matrixRef.current) && alert('You lost');
+	});
 
 	// Dynamically adjust grid according to board size
 	const boardStyle = {
@@ -15,7 +20,7 @@ export default function Board(props) {
 	const handleKeyPress = ({ key }) => {
 		const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
 		if (keys.includes(key)) {
-			matrixRef.current = updateMatrix(matrixRef.current, key);
+			matrixRef.current = handleShift(matrixRef.current, key);
 			setTiles((prev) => updateCells(prev, matrixRef.current));
 		}
 	};

@@ -9,9 +9,19 @@ export function newMatrix(tiles) {
 	return matrix;
 }
 
-export function updateMatrix(matrix, key) {
+export function handleShift(matrix, key) {
+	let m = structuredClone(matrix);
+	m = updateMatrix(m, key);
+	/* If matrix stays the same (didn't move), 
+  don't add a new value */
+	m = !isSame(matrix, m) ? addValue(m) : m;
+	return m;
+}
+
+function updateMatrix(matrix, key) {
 	const dir = key.split('Arrow').pop();
-	let m = matrix;
+	// Deep coppy arr
+	let m = structuredClone(matrix);
 	let shiftParams = {};
 
 	switch (dir) {
@@ -79,7 +89,6 @@ export function updateMatrix(matrix, key) {
 	m = shift(shiftParams, m);
 	m = merge(shiftParams, m);
 	m = shift(shiftParams, m);
-	addValue(m);
 
 	return m;
 }
@@ -137,4 +146,26 @@ function addValue(m) {
 	const value = getRandomCells(m.length, amountToAdd, prevCoords);
 	value.forEach((v) => (m[v.x][v.y] = v.value));
 	return m;
+}
+
+function isSame(prev, current) {
+	let same = true;
+
+	prev.forEach((arr, i) => {
+		same = same && arr.every((v, j) => v === current[i][j]);
+	});
+
+	return same;
+}
+
+export function testLose(prev) {
+	let resultingMatrix = structuredClone(prev);
+	const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+
+	// Test every direction to determine if matrix can no longer move
+	keys.forEach((k) => {
+		resultingMatrix = updateMatrix(resultingMatrix, k);
+	});
+
+	return isSame(prev, resultingMatrix);
 }
