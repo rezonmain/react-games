@@ -1,6 +1,6 @@
 import { getRandomCells } from './tiles';
 
-export function newMatrix(tiles) {
+export function matrixFromTiles(tiles) {
 	const matrix = tiles.map((tile) => {
 		return tile.map((t) => {
 			return t.cell.value;
@@ -11,11 +11,11 @@ export function newMatrix(tiles) {
 
 export function handleShift(matrix, dir) {
 	let m = structuredClone(matrix);
-	m = updateMatrix(m, dir);
+	m = shiftMatrix(m, dir);
 
 	/* If matrix stays the same (didn't move), 
   don't add a new value */
-	m = !isSame(matrix, m) ? addValue(m) : m;
+	//m = !isSame(matrix, m) ? addValue(m) : m;
 	return m;
 }
 
@@ -25,13 +25,13 @@ export function testLose(prev) {
 
 	// Test every direction to determine if matrix can no longer move
 	dirs.forEach((dir) => {
-		resultingMatrix = updateMatrix(resultingMatrix, dir);
+		resultingMatrix = shiftMatrix(resultingMatrix, dir);
 	});
 
 	return isSame(prev, resultingMatrix);
 }
 
-function updateMatrix(matrix, dir) {
+function shiftMatrix(matrix, dir) {
 	// Deep coppy arr
 	let shiftParams = {};
 
@@ -147,14 +147,19 @@ function merge(p, m) {
 
 function addValue(m) {
 	const amountToAdd = 1;
-	const prevCoords = [];
+	let prevCoords = [];
+
+	// Get occupied tiles coordinates
 	m.forEach((_, i) =>
 		_.forEach((e, j) => {
 			e && prevCoords.push({ x: i, y: j });
 		})
 	);
 
+	// Get a new value
 	const value = getRandomCells(m.length, amountToAdd, prevCoords);
+
+	// Add the new value to matrix
 	value.forEach((v) => (m[v.x][v.y] = v.value));
 	return m;
 }

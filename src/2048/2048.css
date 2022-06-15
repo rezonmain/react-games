@@ -26,6 +26,8 @@
 }
 
 ._2048-cell {
+  z-index: 1;
+  background-color: transparent;
   position: relative;
   border-radius: var(--br);
   height: 100%;

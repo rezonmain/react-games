@@ -1,6 +1,8 @@
 import { nanoid } from 'nanoid';
 import Cell from '../components/Cell';
 import Tile from '../components/Tile';
+import { getTranslateMatrix } from './animate';
+import { matrixFromTiles } from './matrix';
 import { getColor } from './styles';
 
 export function newTiles(size) {
@@ -22,7 +24,10 @@ export function newTiles(size) {
 				x: i,
 				y: j,
 				value,
-				element: <Cell key={nanoid()} value={value} style={getColor(value)} />,
+				// if value != null, create a cell element
+				element: value ? (
+					<Cell key={nanoid()} value={value} style={getColor(value)} />
+				) : null,
 			};
 			return {
 				id: nanoid(),
@@ -86,15 +91,17 @@ export function getRandomCells(size, amount = 2, prevCoords = []) {
 export function updateCells(tiles, matrix) {
 	return tiles.map((tile, i) =>
 		tile.map((t, j) => {
+			const value = matrix[i][j];
 			const cell = {
-				value: matrix[i][j],
-				element: (
+				value,
+				// if value != null, create a cell element
+				element: value ? (
 					<Cell
 						key={nanoid()}
 						value={matrix[i][j]}
 						style={getColor(matrix[i][j])}
 					/>
-				),
+				) : null,
 			};
 			return {
 				...t,

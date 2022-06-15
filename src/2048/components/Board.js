@@ -1,45 +1,50 @@
 import { useState, useRef, useEffect } from 'react';
 import { useKey } from 'react-use';
-import { newTiles, displayTileElements, updateCells } from '../lib/tiles';
-import { newMatrix, testLose, handleShift } from '../lib/matrix';
 import { useSwipeable } from 'react-swipeable';
+import { newTiles, displayTileElements, updateCells } from '../lib/tiles';
+import { matrixFromTiles, testLose, handleShift } from '../lib/matrix';
+import { getAnimatedCells } from '../lib/animate';
 
 export default function Board(props) {
 	// TODO: VERY IMPORTANT ANIMATIONS ANIMATIONS ANIMATIONS!!!
 	const [boardSize, setBoardSize] = useState(4);
 	const [tiles, setTiles] = useState(() => newTiles(boardSize));
-	const matrixRef = useRef(newMatrix(tiles));
+	const matrixRef = useRef();
+
+	useEffect(() => {
+		matrixRef.current = matrixFromTiles(tiles);
+	}, []);
 
 	// Dynamically adjust grid according to board size
 	const boardStyle = {
 		gridTemplateColumns: `repeat(${boardSize}, 1fr)`,
 	};
 
+	const moveCells = (dir) => {
+		setTiles((prev) => getAnimatedCells(prev, dir, animationDone));
+		matrixRef.current = handleShift(matrixRef.current, dir);
+	};
+
+	const animationDone = () => {
+		setTiles((prev) => updateCells(prev, matrixRef.current));
+	};
+
 	const handleKeyPress = ({ key }) => {
 		const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
 		if (keys.includes(key)) {
-			updateBoard(key.split('Arrow').pop());
+			moveCells(key.split('Arrow').pop());
 		}
 	};
 
 	// Swipe controls
 	const handlers = useSwipeable({
 		onSwiped: (e) => {
-			updateBoard(e.dir);
+			moveCells(e.dir);
 		},
 		preventScrollOnSwipe: true,
 	});
 
 	useKey([], handleKeyPress);
-
-	const updateBoard = (dir) => {
-		if (!testLose(matrixRef.current)) {
-			matrixRef.current = handleShift(matrixRef.current, dir);
-			setTiles((prev) => updateCells(prev, matrixRef.current));
-		} else {
-			alert('You lost');
-		}
-	};
 
 	return (
 		<article>
