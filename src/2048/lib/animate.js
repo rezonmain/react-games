@@ -6,7 +6,6 @@ import { getColor } from './styles';
 export function getAnimatedCells(tiles, dir, handler) {
 	const GAP = remToPixels(1);
 	const cellSize = document.getElementsByClassName('_2048-tile')[0].clientWidth;
-	const axis = dir === 'Up' || 'Down' ? 'y' : 'x';
 	let matrix = matrixFromTiles(tiles);
 
 	/* The shifts  array containes how many times did a value shift
@@ -32,7 +31,6 @@ export function getAnimatedCells(tiles, dir, handler) {
 				element: value ? (
 					<Cell
 						onDone={handler}
-						axis={axis}
 						sX={shifts[i][j].x}
 						sY={shifts[i][j].y}
 						key={nanoid()}
@@ -82,17 +80,18 @@ function shift(matrix, dir) {
 		if (next === undefined || current === undefined) {
 			return;
 		}
-
+		/* FIXME: fix bug where down and right directions dont count 
+    the shifts correctly */
 		// If the next spot is free, shift
 		if (current && next === null) {
 			matrix[x + dir.x][y + dir.y] = current;
 			matrix[x][y] = null;
+			shifts[i][j] = { x: shifts[i][j].x + dir.y, y: shifts[i][j].y + dir.x };
 			/* Make sure you shift value all the way,
       until it reaches array bounds or another value */
 			shiftValue(x + dir.x, y + dir.y);
 			/*Increment shift count, used to determine
       position to animate to */
-			shifts[i][j] = { x: shifts[i][j].x + dir.y, y: shifts[i][j].y + dir.x };
 		} else {
 			return;
 		}
@@ -131,7 +130,8 @@ function getTranslateMatrix(prev, dir) {
 			break;
 	}
 
-	return shift(structuredClone(prev), vector);
+	let s = shift(structuredClone(prev), vector);
+	return s;
 }
 
 function remToPixels(rem) {

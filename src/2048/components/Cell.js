@@ -1,7 +1,7 @@
 import { animated, useSpring } from '@react-spring/web';
 
 export default function Cell(props) {
-	const config = { mass: 1, tension: 2000, friction: 120 };
+	const config = { mass: 1, tension: 2500, friction: 120 };
 
 	const animation = useSpring({
 		config,
