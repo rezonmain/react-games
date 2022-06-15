@@ -7,6 +7,7 @@ export function getAnimatedCells(tiles, dir, handler) {
 	const GAP = remToPixels(1);
 	const cellSize = document.getElementsByClassName('_2048-tile')[0].clientWidth;
 	let matrix = matrixFromTiles(tiles);
+	matrix = appendIndexesToMatrix(matrix);
 
 	/* The shifts  array containes how many times did a value shift
     with this I can calculate how much does a cell needs to move,
@@ -68,30 +69,30 @@ function shift(matrix, dir) {
 	function shiftValue(x, y) {
 		let [next, current] = getValues(x, y);
 
-		/* If next has a value it means there's another
-    value to be shifted first */
-		if (next && current) {
-			shiftValue(x + dir.x, y + dir.y);
-			// Update values when function returns
-			[next, current] = getValues(x, y);
-		}
-
 		// Out of bounds
 		if (next === undefined || current === undefined) {
 			return;
 		}
-		/* FIXME: fix bug where down and right directions dont count 
-    the shifts correctly */
+		/* If next has a value it means there's another
+    value to be shifted first */
+		if (next.v && current.v) {
+			// Update values when function returns
+			[next, current] = getValues(x, y);
+		}
+
 		// If the next spot is free, shift
-		if (current && next === null) {
+		if (current.v && next.v === null) {
 			matrix[x + dir.x][y + dir.y] = current;
-			matrix[x][y] = null;
-			shifts[i][j] = { x: shifts[i][j].x + dir.y, y: shifts[i][j].y + dir.x };
+			matrix[x][y].v = null;
+			/*Increment shift count, used to determine
+      position to animate to */
+			shifts[current.x][current.y] = {
+				x: shifts[current.x][current.y].x + dir.y,
+				y: shifts[current.x][current.y].y + dir.x,
+			};
 			/* Make sure you shift value all the way,
       until it reaches array bounds or another value */
 			shiftValue(x + dir.x, y + dir.y);
-			/*Increment shift count, used to determine
-      position to animate to */
 		} else {
 			return;
 		}
@@ -106,6 +107,7 @@ function shift(matrix, dir) {
 		let next =
 			nx < 0 || ny < 0 || nx >= l || ny >= l ? undefined : matrix[nx][ny];
 		let current = x < 0 || y < 0 || x >= l || y >= l ? undefined : matrix[x][y];
+
 		return [next, current];
 	}
 	return shifts;
@@ -136,4 +138,15 @@ function getTranslateMatrix(prev, dir) {
 
 function remToPixels(rem) {
 	return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+}
+
+function appendIndexesToMatrix(matrix) {
+	/*  Append an object with the origin indexes;
+  these indexes are used to determine how much
+  the shifted from their original position  */
+	return matrix.map((rows, i) =>
+		rows.map((value, j) => {
+			return { v: value, x: i, y: j };
+		})
+	);
 }

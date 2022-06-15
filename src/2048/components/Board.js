@@ -2,10 +2,10 @@ import { useState, useRef, useEffect } from 'react';
 import { useKey } from 'react-use';
 import { useSwipeable } from 'react-swipeable';
 import { newTiles, displayTileElements, updateCells } from '../lib/tiles';
-import { matrixFromTiles, testLose, handleShift } from '../lib/matrix';
+import { matrixFromTiles, handleShift } from '../lib/matrix';
 import { getAnimatedCells } from '../lib/animate';
 
-export default function Board(props) {
+export default function Board() {
 	// TODO: VERY IMPORTANT ANIMATIONS ANIMATIONS ANIMATIONS!!!
 	const [boardSize, setBoardSize] = useState(4);
 	const [tiles, setTiles] = useState(() => newTiles(boardSize));
@@ -21,8 +21,9 @@ export default function Board(props) {
 	};
 
 	const moveCells = (dir) => {
-		setTiles((prev) => getAnimatedCells(prev, dir, animationDone));
+		console.clear();
 		matrixRef.current = handleShift(matrixRef.current, dir);
+		setTiles((prev) => getAnimatedCells(prev, dir, animationDone));
 	};
 
 	const animationDone = () => {
