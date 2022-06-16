@@ -6,34 +6,47 @@ import { matrixFromTiles, handleShift } from '../lib/matrix';
 import { getAnimatedCells } from '../lib/animate';
 
 export default function Board() {
-	// TODO: VERY IMPORTANT ANIMATIONS ANIMATIONS ANIMATIONS!!!
+	/* 	TODO: 1. Merge animation,
+          2. new cell animationDone,
+          3. INPUT BUFFER!!! */
 	const [boardSize, setBoardSize] = useState(4);
 	const [tiles, setTiles] = useState(() => newTiles(boardSize));
+	const [animation, setAnimation] = useState(false);
 	const matrixRef = useRef();
+	const bufferRef = useRef([]);
 
 	useEffect(() => {
 		matrixRef.current = matrixFromTiles(tiles);
 	}, []);
+
+	useEffect(() => {
+		console.log('animation');
+		if (!animation) {
+			setTiles((prev) => updateCells(prev, matrixRef.current));
+		}
+	}, [animation]);
 
 	// Dynamically adjust grid according to board size
 	const boardStyle = {
 		gridTemplateColumns: `repeat(${boardSize}, 1fr)`,
 	};
 
-	const moveCells = (dir) => {
-		console.clear();
-		matrixRef.current = handleShift(matrixRef.current, dir);
+	const moveCells = () => {
+		const dir = bufferRef.current[0];
 		setTiles((prev) => getAnimatedCells(prev, dir, animationDone));
+		setAnimation(() => true);
+		bufferRef.current.shift();
 	};
 
 	const animationDone = () => {
-		setTiles((prev) => updateCells(prev, matrixRef.current));
+		setAnimation(() => false);
 	};
 
 	const handleKeyPress = ({ key }) => {
 		const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
 		if (keys.includes(key)) {
-			moveCells(key.split('Arrow').pop());
+			const input = key.split('Arrow').pop();
+			bufferRef.current.push(input);
 		}
 	};
 

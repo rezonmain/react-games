@@ -77,6 +77,7 @@ function shift(matrix, dir) {
     value to be shifted first */
 		if (next.v && current.v) {
 			// Update values when function returns
+			shiftValue(x + dir.x, y + dir.y);
 			[next, current] = getValues(x, y);
 		}
 
