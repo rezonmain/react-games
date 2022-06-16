@@ -82,7 +82,7 @@ function shift(matrix, dir) {
 
 		// If the next spot is free, shift
 		if (current.v && next.v === null) {
-			matrix[x + dir.x][y + dir.y] = current;
+			matrix[x + dir.x][y + dir.y] = { ...current };
 			matrix[x][y].v = null;
 			/*Increment shift count, used to determine
       position to animate to */
