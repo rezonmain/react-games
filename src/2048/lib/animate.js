@@ -3,7 +3,7 @@ import Cell from '../components/Cell';
 import { matrixFromTiles } from './matrix';
 import { getColor } from './styles';
 
-export function setAnimatedTiles(tiles, dir, handler) {
+export function getAnimatedTiles(tiles, dir, handler) {
 	const gap = remToPixels(1);
 	const cellSize = document.getElementsByClassName('_2048-tile')[0].clientWidth;
 	let matrix = matrixFromTiles(tiles);

@@ -9,7 +9,7 @@ export function matrixFromTiles(tiles) {
 	return matrix;
 }
 
-export function handleShift(matrix, dir) {
+export function getShiftedMatrix(matrix, dir) {
 	let m = structuredClone(matrix);
 	m = shiftMatrix(m, dir);
 

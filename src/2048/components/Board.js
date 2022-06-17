@@ -5,16 +5,18 @@
 
 // FIXME: animation never gets set to false
 
-import { useState, useReducer, useRef } from 'react';
+import { useState, useReducer, useRef, useEffect } from 'react';
 import { useKey } from 'react-use';
 import { useSwipeable } from 'react-swipeable';
 import Tile from './Tile';
 import { gameReducer, newGame } from '../lib/game';
+import { getAnimatedTiles } from '../lib/animate';
+import { getShiftedMatrix } from '../lib/matrix';
 
 export default function Board() {
 	const [boardSize, setBoardSize] = useState(4);
 	const [game, dispatch] = useReducer(gameReducer, newGame(boardSize));
-	const buffer = useRef([]);
+	const queue = useRef({ matrix: [], tiles: [] });
 
 	function handleInput(key) {
 		/* Always return a direction regardless if 
@@ -22,6 +24,25 @@ export default function Board() {
 		const input = key.split('Arrow').pop();
 		const inputs = ['Up', 'Down', 'Left', 'Right'];
 		if (inputs.includes(input)) {
+			queue.current.matrix.push(getShiftedMatrix(game.matrix, input));
+			queue.current.tiles.push(
+				getAnimatedTiles(game.tiles, input, onAnimationEnd)
+			);
+			if (!game.animation) {
+				dispatch({ type: 'setAnimation', payload: true });
+				dispatch({ type: 'animate', payload: queue.current.tiles[0] });
+				queue.current.tiles.shift();
+			}
+		}
+	}
+
+	function onAnimationEnd() {
+		dispatch({ type: 'updateTiles', matrix: queue.current.matrix[0] });
+		queue.current.matrix.shift();
+		if (queue.current.tiles.length) {
+			dispatch({ type: 'animate', payload: queue.current.tiles[0] });
+		} else {
+			dispatch({ type: 'setAnimation', payload: false });
 		}
 	}
 
@@ -38,8 +59,6 @@ export default function Board() {
 		preventScrollOnSwipe: true,
 	});
 
-	function onAnimationEnd() {}
-
 	const tileElements = game.tiles.map((rows) =>
 		rows.map((tile) => <Tile key={tile.id} cell={tile.cell.element} />)
 	);
@@ -47,8 +66,6 @@ export default function Board() {
 	const boardStyle = {
 		gridTemplateColumns: `repeat(${boardSize}, 1fr)`,
 	};
-
-	console.log('I rendered!');
 
 	return (
 		<article>
