@@ -166,10 +166,8 @@ function addValue(m) {
 
 function isSame(prev, current) {
 	let same = true;
-
 	prev.forEach((arr, i) => {
 		same = same && arr.every((v, j) => v === current[i][j]);
 	});
-
 	return same;
 }

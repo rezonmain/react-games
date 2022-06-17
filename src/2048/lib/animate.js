@@ -4,26 +4,50 @@ import { matrixFromTiles } from './matrix';
 import { getColor } from './styles';
 
 export function getAnimatedCells(tiles, dir, handler) {
-	const GAP = remToPixels(1);
+	const gap = remToPixels(1);
 	const cellSize = document.getElementsByClassName('_2048-tile')[0].clientWidth;
 	let matrix = matrixFromTiles(tiles);
 	matrix = appendIndexesToMatrix(matrix);
 
 	/* The shifts  array containes how many times did a value shift
-    with this I can calculate how much does a cell needs to move,
+    with this it can calculate how much does a cell needs to move (in pxs),
     used to animate the cells */
 	let shifts = getTranslateMatrix(matrix, dir);
 
-	// Multiply by cellSize and GAP to get the amount of pixels to move
+	// Multiply by cellSize and gap to get the amount of pixels to move
 	shifts = shifts.map((rows) =>
 		rows.map((shift) => {
 			return {
-				x: shift.x * GAP + shift.x * cellSize,
-				y: shift.y * GAP + shift.y * cellSize,
+				x: shift.x * gap + shift.x * cellSize,
+				y: shift.y * gap + shift.y * cellSize,
 			};
 		})
 	);
 
+	function getTranslateMatrix(prev, dir) {
+		let vector = { x: 0, y: 0 };
+		switch (dir) {
+			case 'Up':
+				vector = { x: -1, y: 0 };
+				break;
+			case 'Down':
+				vector = { x: 1, y: 0 };
+				break;
+			case 'Left':
+				vector = { x: 0, y: -1 };
+				break;
+			case 'Right':
+				vector = { x: 0, y: 1 };
+				break;
+			default:
+				break;
+		}
+
+		let s = shift(structuredClone(prev), vector);
+		return s;
+	}
+	let f = true;
+	/* Return new tile state */
 	return tiles.map((rows, i) =>
 		rows.map((v, j) => {
 			const value = v.cell.value;
@@ -31,7 +55,7 @@ export function getAnimatedCells(tiles, dir, handler) {
 				...v.cell,
 				element: value ? (
 					<Cell
-						onDone={handler}
+						onDone={f ? handler : () => {}}
 						sX={shifts[i][j].x}
 						sY={shifts[i][j].y}
 						key={nanoid()}
@@ -112,29 +136,6 @@ function shift(matrix, dir) {
 		return [next, current];
 	}
 	return shifts;
-}
-
-function getTranslateMatrix(prev, dir) {
-	let vector = { x: 0, y: 0 };
-	switch (dir) {
-		case 'Up':
-			vector = { x: -1, y: 0 };
-			break;
-		case 'Down':
-			vector = { x: 1, y: 0 };
-			break;
-		case 'Left':
-			vector = { x: 0, y: -1 };
-			break;
-		case 'Right':
-			vector = { x: 0, y: 1 };
-			break;
-		default:
-			break;
-	}
-
-	let s = shift(structuredClone(prev), vector);
-	return s;
 }
 
 function remToPixels(rem) {

@@ -1,8 +1,6 @@
 import { nanoid } from 'nanoid';
 import Cell from '../components/Cell';
 import Tile from '../components/Tile';
-import { getTranslateMatrix } from './animate';
-import { matrixFromTiles } from './matrix';
 import { getColor } from './styles';
 
 export function newTiles(size) {

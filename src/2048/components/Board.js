@@ -1,3 +1,9 @@
+/* 	TODO: 
+[ ]. Merge animation,
+[ ]. New cell animation,
+[x]. INPUT BUFFER!!!
+[ ]. MAKE ANIMATIONS ASYNCHRONOUS*/
+
 import { useState, useRef, useEffect } from 'react';
 import { useKey } from 'react-use';
 import { useSwipeable } from 'react-swipeable';
@@ -6,49 +12,47 @@ import { matrixFromTiles, handleShift } from '../lib/matrix';
 import { getAnimatedCells } from '../lib/animate';
 
 export default function Board() {
-	/* 	TODO: 1. Merge animation,
-          2. new cell animationDone,
-          3. INPUT BUFFER!!! */
 	const [boardSize, setBoardSize] = useState(4);
 	const [tiles, setTiles] = useState(() => newTiles(boardSize));
-	const [animation, setAnimation] = useState(false);
-	const matrixRef = useRef();
-	const bufferRef = useRef([]);
-
-	useEffect(() => {
-		matrixRef.current = matrixFromTiles(tiles);
-	}, []);
-
-	useEffect(() => {
-		console.log('animation');
-		if (!animation) {
-			setTiles((prev) => updateCells(prev, matrixRef.current));
-		}
-	}, [animation]);
+	const matrixRef = useRef(matrixFromTiles(tiles));
+	const animation = useRef(false);
+	const buffer = useRef([]);
 
 	// Dynamically adjust grid according to board size
 	const boardStyle = {
 		gridTemplateColumns: `repeat(${boardSize}, 1fr)`,
 	};
 
-	const moveCells = () => {
-		const dir = bufferRef.current[0];
-		setTiles((prev) => getAnimatedCells(prev, dir, animationDone));
-		setAnimation(() => true);
-		bufferRef.current.shift();
-	};
-
-	const animationDone = () => {
-		setAnimation(() => false);
-	};
-
 	const handleKeyPress = ({ key }) => {
 		const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
 		if (keys.includes(key)) {
 			const input = key.split('Arrow').pop();
-			bufferRef.current.push(input);
+			buffer.current.push(input);
+		}
+		if (!animation.current) {
+			animation.current = true;
+			moveCells();
 		}
 	};
+
+	const moveCells = () => {
+		const dir = buffer.current[0];
+		matrixRef.current = handleShift(matrixRef.current, dir);
+		setTiles((prev) => getAnimatedCells(prev, dir, animationDone));
+		buffer.current.shift();
+	};
+
+	const animationDone = () => {
+		if (buffer.current.length) {
+			moveCells();
+		} else {
+			animation.current = false;
+			setTiles((prev) => updateCells(prev, matrixRef.current));
+		}
+	};
+
+	// Arrow key controls
+	useKey([], handleKeyPress);
 
 	// Swipe controls
 	const handlers = useSwipeable({
@@ -57,8 +61,6 @@ export default function Board() {
 		},
 		preventScrollOnSwipe: true,
 	});
-
-	useKey([], handleKeyPress);
 
 	return (
 		<article>
