@@ -15,7 +15,7 @@ export function handleShift(matrix, dir) {
 
 	/* If matrix stays the same (didn't move), 
   don't add a new value */
-	// m = !isSame(matrix, m) ? addValue(m) : m;
+	m = !isSame(matrix, m) ? addValue(m) : m;
 	return m;
 }
 

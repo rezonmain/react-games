@@ -4,6 +4,8 @@
 [x]. INPUT BUFFER!!!
 [ ]. MAKE ANIMATIONS ASYNCHRONOUS*/
 
+// FIXME: animation never gets set to false
+
 import { useState, useRef, useEffect } from 'react';
 import { useKey } from 'react-use';
 import { useSwipeable } from 'react-swipeable';
@@ -24,6 +26,11 @@ export default function Board() {
 	};
 
 	const handleKeyPress = ({ key }) => {
+		/* FIXME: input buffer issue, this is a temporary measure,
+    it disables input while animation is running */
+		if (animation.current) {
+			return;
+		}
 		const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
 		if (keys.includes(key)) {
 			const input = key.split('Arrow').pop();
@@ -43,10 +50,10 @@ export default function Board() {
 	};
 
 	const animationDone = () => {
+		animation.current = false;
 		if (buffer.current.length) {
 			moveCells();
 		} else {
-			animation.current = false;
 			setTiles((prev) => updateCells(prev, matrixRef.current));
 		}
 	};
