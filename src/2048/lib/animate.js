@@ -3,7 +3,7 @@ import Cell from '../components/Cell';
 import { matrixFromTiles } from './matrix';
 import { getColor } from './styles';
 
-export function getAnimatedCells(tiles, dir, handler) {
+export function setAnimatedTiles(tiles, dir, handler) {
 	const gap = remToPixels(1);
 	const cellSize = document.getElementsByClassName('_2048-tile')[0].clientWidth;
 	let matrix = matrixFromTiles(tiles);
@@ -42,20 +42,17 @@ export function getAnimatedCells(tiles, dir, handler) {
 			default:
 				break;
 		}
-
-		let s = shift(structuredClone(prev), vector);
-		return s;
+		return shift(structuredClone(prev), vector);
 	}
-	let f = true;
 	/* Return new tile state */
 	return tiles.map((rows, i) =>
-		rows.map((v, j) => {
-			const value = v.cell.value;
+		rows.map((tile, j) => {
+			const value = tile.cell.value;
 			const cell = {
-				...v.cell,
+				...tile.cell,
 				element: value ? (
 					<Cell
-						onDone={f ? handler : () => {}}
+						onDone={handler}
 						sX={shifts[i][j].x}
 						sY={shifts[i][j].y}
 						key={nanoid()}
@@ -65,7 +62,7 @@ export function getAnimatedCells(tiles, dir, handler) {
 				) : null,
 			};
 			return {
-				...v,
+				...tile,
 				cell,
 			};
 		})
