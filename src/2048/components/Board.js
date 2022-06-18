@@ -3,47 +3,33 @@
 [ ]. New cell animation,
 [ ]. INPUT BUFFER!!! */
 
-// FIXME: animation never gets set to false
-
-import { useState, useReducer, useRef, useEffect } from 'react';
+import { useState, useReducer, useEffect } from 'react';
 import { useKey } from 'react-use';
 import { useSwipeable } from 'react-swipeable';
-import Tile from './Tile';
 import { gameReducer, newGame } from '../lib/game';
-import { getAnimatedTiles } from '../lib/animate';
-import { getShiftedMatrix } from '../lib/matrix';
+import Tile from './Tile';
 
 export default function Board() {
 	const [boardSize, setBoardSize] = useState(4);
 	const [game, dispatch] = useReducer(gameReducer, newGame(boardSize));
-	const queue = useRef({ matrix: [], tiles: [] });
+
+	useEffect(() => {}, []);
 
 	function handleInput(key) {
-		/* Always return a direction regardless if 
+		/* Always returns a direction regardless if 
     string contains 'Arrow' */
 		const input = key.split('Arrow').pop();
 		const inputs = ['Up', 'Down', 'Left', 'Right'];
 		if (inputs.includes(input)) {
-			queue.current.matrix.push(getShiftedMatrix(game.matrix, input));
-			queue.current.tiles.push(
-				getAnimatedTiles(game.tiles, input, onAnimationEnd)
-			);
-			if (!game.animation) {
-				dispatch({ type: 'setAnimation', payload: true });
-				dispatch({ type: 'animate', payload: queue.current.tiles[0] });
-				queue.current.tiles.shift();
-			}
+			dispatch({ type: 'pushBuffer', input });
+			dispatch({ type: 'updateMatrix' });
+			dispatch({ type: 'animate', handler: onAnimationEnd });
+			dispatch({ type: 'shiftBuffer' });
 		}
 	}
 
 	function onAnimationEnd() {
-		dispatch({ type: 'updateTiles', matrix: queue.current.matrix[0] });
-		queue.current.matrix.shift();
-		if (queue.current.tiles.length) {
-			dispatch({ type: 'animate', payload: queue.current.tiles[0] });
-		} else {
-			dispatch({ type: 'setAnimation', payload: false });
-		}
+		dispatch({ type: 'updateTiles' });
 	}
 
 	// Arrow key controls

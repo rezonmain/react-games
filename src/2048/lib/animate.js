@@ -76,7 +76,7 @@ animate each tile */
 function shift(matrix, dir) {
 	// Used to keep track how many times a value shifted
 	let shifts = Array.from({ length: matrix.length }, () =>
-		Array.from({ length: matrix.length }, () => ({ x: 0, y: 0 }))
+		Array.from({ length: matrix.length }, () => ({ x: 0, y: 0, merged: false }))
 	);
 
 	let i, j;
@@ -94,9 +94,13 @@ function shift(matrix, dir) {
 		if (next === undefined || current === undefined) {
 			return;
 		}
+
 		/* If next has a value it means there's another
     value to be shifted first */
 		if (next.v && current.v) {
+			if (next.v === current.v) {
+				incrementShifts(current, true);
+			}
 			// Update values when function returns
 			shiftValue(x + dir.x, y + dir.y);
 			[next, current] = getValues(x, y);
@@ -108,15 +112,36 @@ function shift(matrix, dir) {
 			matrix[x][y].v = null;
 			/*Increment shift count, used to determine
       position to animate to */
-			shifts[current.x][current.y] = {
-				x: shifts[current.x][current.y].x + dir.y,
-				y: shifts[current.x][current.y].y + dir.x,
-			};
+			incrementShifts(current);
 			/* Make sure you shift value all the way,
       until it reaches array bounds or another value */
 			shiftValue(x + dir.x, y + dir.y);
 		} else {
 			return;
+		}
+	}
+
+	function incrementShifts(current, merge = false) {
+		const x = current.x;
+		const y = current.y;
+		if (merge) {
+			/* Do not increment if the 'merge' shift 
+      already has been counted (do this by settin,
+      the merged flag to true), this avoids the cell to
+      translate more than it needs to during animation */
+			const merged = shifts[x][y].merged;
+			if (!merged) {
+				shifts[x][y] = {
+					x: shifts[x][y].x + dir.y,
+					y: shifts[x][y].y + dir.x,
+					merged: true,
+				};
+			}
+		} else {
+			shifts[x][y] = {
+				x: shifts[x][y].x + dir.y,
+				y: shifts[x][y].y + dir.x,
+			};
 		}
 	}
 
