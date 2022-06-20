@@ -4,7 +4,7 @@
 
 - [x] Tenzies
 - [x] Snake (80%)
-- [x] 2048 (Missing animations)
+- [x] 2048 (80%)
 - [ ] Minesweeper
 - [ ] Nonograms
 - [ ] Endless runner

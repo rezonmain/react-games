@@ -12,7 +12,7 @@ export function getAnimatedTiles(tiles, dir, handler) {
 	/* The shifts  array containes how many times did a value shift
     with this it can calculate how much does a cell needs to move (in pxs),
     used to animate the cells */
-	let shifts = getTranslateMatrix(matrix, dir);
+	let shifts = getTranslateMatrix(matrix, dir)[0];
 
 	// Multiply by cellSize and gap to get the amount of pixels to move
 	shifts = shifts.map((rows) =>
@@ -79,7 +79,21 @@ function shift(matrix, dir) {
 		Array.from({ length: matrix.length }, () => ({ x: 0, y: 0, merged: false }))
 	);
 
+	let doubled = [];
+
 	let i, j;
+
+	for (i = 0; i < matrix.length; i++) {
+		for (j = 0; j < matrix.length; j++) {
+			shiftValue(i, j);
+		}
+	}
+
+	for (i = 0; i < matrix.length; i++) {
+		for (j = 0; j < matrix.length; j++) {
+			merges(i, j);
+		}
+	}
 
 	for (i = 0; i < matrix.length; i++) {
 		for (j = 0; j < matrix.length; j++) {
@@ -98,9 +112,6 @@ function shift(matrix, dir) {
 		/* If next has a value it means there's another
     value to be shifted first */
 		if (next.v && current.v) {
-			if (next.v === current.v) {
-				incrementShifts(current, true);
-			}
 			// Update values when function returns
 			shiftValue(x + dir.x, y + dir.y);
 			[next, current] = getValues(x, y);
@@ -121,28 +132,30 @@ function shift(matrix, dir) {
 		}
 	}
 
-	function incrementShifts(current, merge = false) {
+	function merges(x, y) {
+		const [next, current] = getValues(x, y);
+
+		// Out of bounds
+		if (next === undefined || current === undefined) {
+			return;
+		}
+
+		if (current.v === next.v && next.v !== null) {
+			matrix[x + dir.x][y + dir.y] = { ...current, v: current.v * 2 };
+			matrix[x][y].v = null;
+			incrementShifts(current, true);
+			doubled.push({ x: next.x, y: next.y });
+		}
+	}
+
+	function incrementShifts(current) {
 		const x = current.x;
 		const y = current.y;
-		if (merge) {
-			/* Do not increment if the 'merge' shift 
-      already has been counted (do this by settin,
-      the merged flag to true), this avoids the cell to
-      translate more than it needs to during animation */
-			const merged = shifts[x][y].merged;
-			if (!merged) {
-				shifts[x][y] = {
-					x: shifts[x][y].x + dir.y,
-					y: shifts[x][y].y + dir.x,
-					merged: true,
-				};
-			}
-		} else {
-			shifts[x][y] = {
-				x: shifts[x][y].x + dir.y,
-				y: shifts[x][y].y + dir.x,
-			};
-		}
+		shifts[x][y] = {
+			x: shifts[x][y].x + dir.y,
+			y: shifts[x][y].y + dir.x,
+			merged: false,
+		};
 	}
 
 	function getValues(x, y) {
@@ -157,7 +170,9 @@ function shift(matrix, dir) {
 
 		return [next, current];
 	}
-	return shifts;
+	console.log(doubled);
+
+	return [shifts, doubled];
 }
 
 function remToPixels(rem) {
