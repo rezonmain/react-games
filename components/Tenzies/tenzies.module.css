@@ -18,6 +18,8 @@
   transition: var(--tr);
   justify-content: center;
   align-items: center;
+  border-radius: var(--br);
+  border: 1px solid black;
 }
 
 .dice-container {
@@ -32,6 +34,7 @@
 }
 
 .roll-button {
+  user-select: none;
   cursor: pointer;
   font-family: 'Comfortaa', cursive;
   border: none;

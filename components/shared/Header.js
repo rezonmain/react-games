@@ -1,21 +1,25 @@
-import './header.css';
+import styles from './header.module.css';
 export default function Header() {
 	return (
-		<header className='main-header'>
-			<a href='https://twitter.com/home' className='home-link'>
+		<header className={styles['main-header']}>
+			<a href='https://twitter.com/home' className={styles['home-link']}>
 				<span>RG</span>
 			</a>
-			<nav>
-				<ul className='main-nav'>
+			<nav className={styles.nav}>
+				<ul className={styles['main-nav']}>
 					<li>
-						<a href='https://twitter.com/home' className='nav-element'>
+						<a
+							href='https://twitter.com/home'
+							className={styles['nav-element']}>
 							HOME
 						</a>
 					</li>
 					<li>
-						<a href='https://twitter.com/home' className='nav-element'>
+						<a
+							href='https://twitter.com/home'
+							className={styles['nav-element']}>
 							<svg
-								className='nav-icon'
+								className={styles['nav-icon']}
 								width='24'
 								height='18'
 								viewBox='0 0 24 18'
@@ -27,9 +31,11 @@ export default function Header() {
 						</a>
 					</li>
 					<li>
-						<a href='https://twitter.com/home' className='nav-element'>
+						<a
+							href='https://twitter.com/home'
+							className={styles['nav-element']}>
 							<svg
-								className='nav-icon'
+								className={styles['nav-icon']}
 								width='20'
 								height='20'
 								viewBox='0 0 20 20'
@@ -43,9 +49,9 @@ export default function Header() {
 					<li>
 						<a
 							href='https://github.com/rezonmain/react-games'
-							className='nav-element'>
+							className={styles['nav-element']}>
 							<svg
-								className='nav-icon'
+								className={styles['nav-icon']}
 								width='20'
 								height='19'
 								viewBox='0 0 20 19'

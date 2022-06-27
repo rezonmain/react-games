@@ -1,10 +1,7 @@
-:root {
+.main-header {
   --header-height: 3.75rem;
   --header-padding: 0.75rem 1rem;
   --header-padding-v: 0.75rem;
-}
-
-.main-header {
   position: sticky;
   top: 0;
   height: var(--header-height);
@@ -119,7 +116,7 @@
     display: none;
   }
 
-  nav,
+  .nav,
   .home-link {
     flex-grow: 1;
   }

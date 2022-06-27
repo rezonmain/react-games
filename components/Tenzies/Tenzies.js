@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { allNewDice, checkWin, getNewDie } from './lib/utils';
 import Die from './components/Die';
 import Confetti from 'react-confetti';
-import './tenzies.css';
+import styles from './tenzies.module.css';
 import { useWindowSize } from 'react-use';
 
 export default function Tenzies() {
@@ -55,13 +55,13 @@ export default function Tenzies() {
 	return (
 		<section className='bordered section'>
 			<h3 className='section-title'>Tenzies</h3>
-			<div className='tenzies-container'>
+			<div className={styles['tenzies-container']}>
 				{tenzies && <Confetti width={width} height={height} />}
 				<span>{`ROLLS: ${rollCount}`}</span>
-				<div className='dice-container'>{diceElements}</div>
+				<div className={styles['dice-container']}>{diceElements}</div>
 				<button
 					onClick={tenzies ? newGame : handleRoll}
-					className='roll-button'>
+					className={styles['roll-button']}>
 					{tenzies ? 'NEW GAME' : 'ROLL'}
 				</button>
 			</div>
