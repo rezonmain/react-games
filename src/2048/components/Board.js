@@ -33,8 +33,10 @@ export default function Board() {
 	}
 
 	// Arrow key controls
-	useKey([], ({ key }) => {
-		handleInput(key);
+	useKey([], (e) => {
+		e.preventDefault();
+
+		handleInput(e.key);
 	});
 
 	// Swipe controls

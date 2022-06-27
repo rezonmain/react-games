@@ -1,3 +1,10 @@
+/* TODO: 
+[ ]  Migrate to Nextjs
+[ ] Create homepage
+[ ] Install tailwind css and style homepage with it
+
+*/
+
 import Header from './shared/Header';
 import HowTo from './shared/HowTo';
 import React2048 from './2048/2048';

@@ -3,6 +3,7 @@
   --bgColor: #bbada0;
   --empyTileColor: #cdc0b4;
   --thistr: all 100ms ease-in-out;
+  user-select: none;
 }
 
 ._2048-header {
