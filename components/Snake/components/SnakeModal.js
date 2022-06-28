@@ -6,7 +6,6 @@ import { newGame } from '../lib/game';
 import { move, setDirection } from '../lib/snake';
 import { useSwipeable } from 'react-swipeable';
 import styles from '../snake.module.css';
-import { clear } from '@testing-library/user-event/dist/clear';
 
 export default function SnakeModal(props) {
 	const [showModal, setShowModal] = useState(true);
@@ -89,7 +88,6 @@ export default function SnakeModal(props) {
 
 	// Keyboard hook
 	useKey([], handleKeyDown);
-	console.log(allowInput);
 	return (
 		<aside
 			id='modal-close'
