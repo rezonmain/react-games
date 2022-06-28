@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import SnakeModal from './components/SnakeModal';
-import './snake.css';
+import styles from './snake.module.css';
 
 const HEADER_OFFSET = 48;
 
@@ -31,9 +31,9 @@ export default function Snake() {
 	}
 
 	return (
-		<section className='snake-section bordered section'>
+		<section className={styles['snake-section'] + ' bordered section'}>
 			<h3 className='section-title'>snake</h3>
-			<div className='snake-container'>
+			<div className={styles['snake-container']}>
 				{modal && (
 					<SnakeModal
 						handleClose={handleCloseModal}

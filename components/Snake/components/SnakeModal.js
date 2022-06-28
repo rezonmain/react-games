@@ -5,6 +5,7 @@ import { useKey } from 'react-use';
 import { newGame } from '../lib/game';
 import { move, setDirection } from '../lib/snake';
 import { useSwipeable } from 'react-swipeable';
+import styles from '../snake.module.css';
 
 export default function SnakeModal(props) {
 	const [showModal, setShowModal] = useState(true);
@@ -71,13 +72,13 @@ export default function SnakeModal(props) {
 	return (
 		<aside
 			id='modal-close'
-			className='modal-bg'
+			className={styles['modal-bg']}
 			onClick={(e) => props.handleClose(e)}>
-			<div className={`modal centered ${props.style}`}>
+			<div className={styles.modal + ` centered ${props.style}`}>
 				<header>
 					<svg
 						id='modal-close'
-						className='ui-icon'
+						className={styles['ui-icon']}
 						onClick={(e) => props.handleClose(e)}
 						clipRule='evenodd'
 						fillRule='evenodd'

@@ -19,6 +19,11 @@ body {
   font-family: 'Comfortaa', cursive;
 }
 
+html,
+body {
+  overscroll-behavior-y: contain;
+}
+
 main {
   padding: 0 2vw;
 }
