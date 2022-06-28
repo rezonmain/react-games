@@ -7,7 +7,7 @@ export default function Home() {
 				<title>React Games</title>
 			</Head>
 			<main>
-				<h1>React??</h1>
+				<h1>Play simple games made in react</h1>
 			</main>
 		</>
 	);

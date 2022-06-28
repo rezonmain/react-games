@@ -48,8 +48,16 @@
   transition: var(--tr);
 }
 
-.roll-button:hover {
+.roll-button:active {
   background-color: white;
   color: black;
   border: 1px solid black;
+}
+
+@media(hover: hover) and (pointer: fine) {
+  .roll-button:hover {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+  }
 }

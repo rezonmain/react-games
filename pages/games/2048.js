@@ -12,7 +12,7 @@ export default function _2048Page() {
 	return (
 		<>
 			<React2048 />
-			<HowTo />
+			<HowTo text='Swipe or use arrow keys to move tiles, merge them by moving tiles of equal value together.' />
 		</>
 	);
 }

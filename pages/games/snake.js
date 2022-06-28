@@ -1,18 +1,10 @@
-import dynamic from 'next/dynamic';
 import Snake from '../../components/Snake/Snake';
 import HowTo from '../../components/shared/HowTo';
 export default function _2048Page() {
-	/* Due to generating random numbers, component text change on refresh
-  so if we ssr this component it throws a hydration error, so disable ssr for
-  the tenzies component
-   */
-	// const React2048 = dynamic(() => import('../../components/2048/2048'), {
-	// 	ssr: false,
-	// });
 	return (
 		<>
 			<Snake />
-			<HowTo />
+			<HowTo text='Swipe or use arrow keys to control snake, eat the fruit without hitting the walls or running into yourself.' />
 		</>
 	);
 }

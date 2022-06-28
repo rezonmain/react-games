@@ -12,6 +12,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 6px;
+  z-index: 1;
 }
 
 .main-header>span {
@@ -59,13 +60,26 @@
   height: 24px;
 }
 
-.nav-element:hover {
+.nav-element:active {
   background-color: white;
   color: black;
 }
 
-.nav-element:hover .nav-icon {
+.nav-element:active .nav-icon {
   fill: black
+}
+
+
+
+@media(hover: hover) and (pointer: fine) {
+  .nav-element:hover {
+    background-color: white;
+    color: black;
+  }
+
+  .nav-element:hover .nav-icon {
+    fill: black
+  }
 }
 
 /* Tablet */
