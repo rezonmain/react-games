@@ -1,3 +1,4 @@
+import styles from '../2048.module.css';
 import { animated, useSpring } from '@react-spring/web';
 
 export default function Cell(props) {
@@ -12,8 +13,8 @@ export default function Cell(props) {
 	return (
 		<animated.div
 			style={{ ...animation, ...props.style }}
-			className='_2048-cell'>
-			<span className='_2048-text centered'>{props.value}</span>
+			className={styles['_2048-cell']}>
+			<span className={styles['_2048-text'] + ' centered'}>{props.value}</span>
 		</animated.div>
 	);
 }

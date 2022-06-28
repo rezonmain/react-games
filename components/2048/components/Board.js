@@ -8,6 +8,7 @@ import { useKey } from 'react-use';
 import { useSwipeable } from 'react-swipeable';
 import { gameReducer, newGame } from '../lib/game';
 import Tile from './Tile';
+import styles from '../2048.module.css';
 
 export default function Board() {
 	const [boardSize, setBoardSize] = useState(4);
@@ -57,10 +58,13 @@ export default function Board() {
 
 	return (
 		<article>
-			<header className='_2048-header'>
+			<header className={styles['_2048-header']}>
 				<p>Score:</p>
 			</header>
-			<div {...handlers} style={boardStyle} className='_2048-board-container'>
+			<div
+				{...handlers}
+				style={boardStyle}
+				className={styles['_2048-board-container']}>
 				{tileElements}
 			</div>
 		</article>

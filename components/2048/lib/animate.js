@@ -5,7 +5,7 @@ import { getColor } from './styles';
 
 export function getAnimatedTiles(tiles, dir, handler) {
 	const gap = remToPixels(1);
-	const cellSize = document.getElementsByClassName('_2048-tile')[0].clientWidth;
+	const cellSize = document.getElementById('2048-tile').clientWidth;
 	let matrix = matrixFromTiles(tiles);
 	matrix = appendIndexesToMatrix(matrix);
 
