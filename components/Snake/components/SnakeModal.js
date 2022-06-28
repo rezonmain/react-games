@@ -9,10 +9,11 @@ import styles from '../snake.module.css';
 
 export default function SnakeModal(props) {
 	const [showModal, setShowModal] = useState(true);
-	const [game, setGame] = useState();
+	const [game, setGame] = useState(0);
 	const [allowInput, setAllowInput] = useState(false);
 	const intRef = useRef();
 	const timRef = useRef();
+	const scoreRef = useRef();
 
 	// After first render
 	useEffect(() => {
@@ -33,9 +34,10 @@ export default function SnakeModal(props) {
 	};
 
 	const reset = () => {
+		scoreRef.current = game.score;
+		setShowModal(true);
 		const grid = setUpBoard();
 		setGame(newGame(grid));
-		setShowModal(true);
 		intRef.current = setInterval(update, 100);
 	};
 
@@ -88,6 +90,7 @@ export default function SnakeModal(props) {
 
 	// Keyboard hook
 	useKey([], handleKeyDown);
+	console.log(game);
 	return (
 		<aside
 			id='modal-close'
@@ -95,6 +98,7 @@ export default function SnakeModal(props) {
 			onClick={(e) => props.handleClose(e)}>
 			<div className={styles.modal + ` centered ${props.style}`}>
 				<header>
+					<span className={styles.score}>SCORE: {game.score || 0}</span>
 					<svg
 						id='modal-close'
 						className={styles['ui-icon']}
@@ -117,7 +121,7 @@ export default function SnakeModal(props) {
 					width={props.canvasSize.width}
 					height={props.canvasSize.height}
 				/>
-				{showModal && <ControlsModal />}
+				{showModal && <ControlsModal score={scoreRef.current} />}
 			</div>
 		</aside>
 	);

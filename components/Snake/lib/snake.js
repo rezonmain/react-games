@@ -60,6 +60,7 @@ export function move(prev) {
 	let newBuff = prev.inputBuffer;
 	let food = prev.food;
 	let moveIt = true;
+	let score = prev.score;
 
 	/*   Set direction as first input in buffer,
   if buffer is empty use current direction */
@@ -98,6 +99,7 @@ export function move(prev) {
 		const ateHead = { ...newSnake[newSnake.length - 1] };
 		newSnake.unshift(ateHead);
 		food = setFood(prev);
+		score += 1;
 	}
 
 	return {
@@ -107,6 +109,7 @@ export function move(prev) {
 		hit: newHit,
 		inputBuffer: newBuff,
 		food,
+		score,
 	};
 }
 

@@ -11,6 +11,7 @@ export function newGame(grid) {
 		food: newFood(),
 		// First in first out buffer
 		inputBuffer: [],
+		score: 0,
 	};
 	return game;
 }

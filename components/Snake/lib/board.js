@@ -1,6 +1,8 @@
 const GREEN = 'green';
 const GREEN_ACCENT = '#24BF4B';
 const LIGHT_GREEN = 'lightgreen';
+const SNAKE_COLOR = 'red';
+const FOOD_COLOR = 'blue';
 const BLOCK = 35;
 let canvas;
 let ctx;
@@ -67,7 +69,7 @@ function drawGrid(grid) {
 }
 
 function drawSnake(game) {
-	ctx.fillStyle = 'red';
+	ctx.fillStyle = SNAKE_COLOR;
 	const g = game.grid;
 	game.snake.forEach((s) => {
 		ctx.fillRect(
@@ -82,8 +84,16 @@ function drawSnake(game) {
 function drawFood(game) {
 	const g = game.grid;
 	const f = game.food;
-	ctx.fillStyle = 'blue';
-	ctx.fillRect(g.xCords[f.x] + 3.5, g.yCords[f.y] + 3.5, BLOCK - 7, BLOCK - 7);
+	ctx.fillStyle = FOOD_COLOR;
+	ctx.beginPath();
+	ctx.arc(
+		g.xCords[f.x] + BLOCK / 2,
+		g.yCords[f.y] + BLOCK / 2,
+		(BLOCK - 10) / 2,
+		0,
+		2 * Math.PI
+	);
+	ctx.fill();
 }
 
 export function updateBoard(game) {
