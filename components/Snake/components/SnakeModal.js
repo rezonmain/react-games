@@ -10,6 +10,7 @@ import styles from '../snake.module.css';
 export default function SnakeModal(props) {
 	const [showModal, setShowModal] = useState(true);
 	const [game, setGame] = useState();
+	const [allowInput, setAllowInput] = useState(false);
 	const intRef = useRef();
 
 	// After first render
@@ -44,8 +45,7 @@ export default function SnakeModal(props) {
 	// Swipe controls
 	const handlers = useSwipeable({
 		onSwiped: (e) => {
-			setGame((prev) => setDirection(prev, e.dir));
-			setShowModal(false);
+			onInput(e.dir);
 		},
 		preventScrollOnSwipe: true,
 	});
@@ -53,11 +53,17 @@ export default function SnakeModal(props) {
 	// Keyboard controls
 	const handleKeyDown = ({ key }) => {
 		const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+		const dir = key.split('Arrow').pop();
+		keys.includes(key) && onInput(dir);
+	};
+
+	const onInput = (dir) => {
+		// First input
 		if (showModal) {
 			setGame((prev) => setDirection(prev, 'Down'));
 			setShowModal(false);
-		} else if (keys.includes(key)) {
-			setGame((prev) => setDirection(prev, key.split('Arrow').pop()));
+		} else {
+			setGame((prev) => setDirection(prev, dir));
 		}
 	};
 

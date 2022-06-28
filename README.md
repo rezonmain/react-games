@@ -17,13 +17,15 @@
 
 #### Snake:
 
-- [ ] FIX: up swipe on first swipe kills snake
+- [x] Add splash screen
+- [x] FIX: up swipe on first swipe kills snake
+- [ ] Add dealy to prevent immediate input on dead (or game start)
 - [ ] Score keeping
 - [ ] Better colors/graphics
 
 #### 2048:
 
-- [ ] Prevent or implement input buffer
+- [ ] Prevent input while animation or implement input buffer
 - [ ] Score keeping
 - [ ] Reset / lose state
 - [ ] Undo functionality

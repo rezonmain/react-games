@@ -49,9 +49,10 @@ ul {
 }
 
 .section {
+  width: clamp(20rem, 97vw, 36.25rem);
   max-width: 580px;
   margin: 0 auto;
-  margin-bottom: 6px;
+  margin-bottom: 0.375rem;
 }
 
 .section-title {

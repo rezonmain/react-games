@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import SnakeModal from './components/SnakeModal';
 import styles from './snake.module.css';
+import splashimg from '../../public/img/snakesplash.png';
+import Image from 'next/image';
 
 const HEADER_OFFSET = 48;
 
@@ -43,7 +45,12 @@ export default function Snake() {
 						style={isWide ? 'modal-wide' : 'modal-narrow'}
 					/>
 				)}
-				<button onClick={handleShowModal}>Open Game</button>
+				<Image className={styles.splash} src={splashimg} layout='responsive' />
+				<button
+					className={styles.button + ' centered'}
+					onClick={handleShowModal}>
+					START GAME
+				</button>
 			</div>
 		</section>
 	);
