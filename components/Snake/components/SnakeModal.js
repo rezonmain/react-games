@@ -6,12 +6,14 @@ import { newGame } from '../lib/game';
 import { move, setDirection } from '../lib/snake';
 import { useSwipeable } from 'react-swipeable';
 import styles from '../snake.module.css';
+import { clear } from '@testing-library/user-event/dist/clear';
 
 export default function SnakeModal(props) {
 	const [showModal, setShowModal] = useState(true);
 	const [game, setGame] = useState();
 	const [allowInput, setAllowInput] = useState(false);
 	const intRef = useRef();
+	const timRef = useRef();
 
 	// After first render
 	useEffect(() => {
@@ -19,10 +21,17 @@ export default function SnakeModal(props) {
 		setGame(newGame(grid));
 		setShowModal(true);
 		intRef.current = setInterval(update, 100);
+		// Disallow input for the first 800ms of being mounted
+		timRef.current = setTimeout(handleTimeout, 800);
 		return () => {
 			clearInterval(intRef.current);
 		};
 	}, []);
+
+	const handleTimeout = () => {
+		setAllowInput(true);
+		clearTimeout(timRef.current);
+	};
 
 	const reset = () => {
 		const grid = setUpBoard();
@@ -37,6 +46,10 @@ export default function SnakeModal(props) {
 			updateBoard(game);
 			if (game.hit) {
 				clearInterval(intRef.current);
+				/* Disallow input for 800ms, this prevents 
+        immediately restaring the game when dead */
+				setAllowInput(false);
+				timRef.current = setTimeout(handleTimeout, 800);
 				reset();
 			}
 		}
@@ -59,11 +72,13 @@ export default function SnakeModal(props) {
 
 	const onInput = (dir) => {
 		// First input
-		if (showModal) {
-			setGame((prev) => setDirection(prev, 'Down'));
-			setShowModal(false);
-		} else {
-			setGame((prev) => setDirection(prev, dir));
+		if (allowInput) {
+			if (showModal) {
+				setGame((prev) => setDirection(prev, 'Down'));
+				setShowModal(false);
+			} else {
+				setGame((prev) => setDirection(prev, dir));
+			}
 		}
 	};
 
@@ -74,7 +89,7 @@ export default function SnakeModal(props) {
 
 	// Keyboard hook
 	useKey([], handleKeyDown);
-
+	console.log(allowInput);
 	return (
 		<aside
 			id='modal-close'

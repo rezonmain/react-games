@@ -19,7 +19,7 @@
 
 - [x] Add splash screen
 - [x] FIX: up swipe on first swipe kills snake
-- [ ] Add dealy to prevent immediate input on dead (or game start)
+- [x] Add delay to prevent immediate input on dead (or game start)
 - [ ] Score keeping
 - [ ] Better colors/graphics
 
