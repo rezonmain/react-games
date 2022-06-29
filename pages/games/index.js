@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import GameCard from '../../components/layout/GameCard';
+import GameCard from '../../components/GamesPage/GameCard';
 import _2048img from '../../public/img/2048.png';
 import snakeimg from '../../public/img/snake.png';
 import tenziesimg from '../../public/img/tenzies.png';
@@ -10,6 +10,7 @@ export default function Games() {
 		flexDirection: 'column',
 		gap: '1rem',
 	};
+
 	return (
 		<div style={styles}>
 			<div>

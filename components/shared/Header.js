@@ -31,14 +31,14 @@ export default function Header() {
 							<NavElement text='games' icon={<IoGameController size='24' />} />
 						</Link>
 					</li>
-					<li>
+					{/* <li>
 						<Link href='/about' passHref>
 							<NavElement
 								text='about'
 								icon={<BsFillQuestionCircleFill size='24' />}
 							/>
 						</Link>
-					</li>
+					</li> */}
 					<li>
 						{' '}
 						<Link href='https://github.com/rezonmain/react-games' passHref>

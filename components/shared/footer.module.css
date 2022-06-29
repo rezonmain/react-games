@@ -1,5 +1,64 @@
 .footer {
+  font-weight: 300;
   color: white;
   background-color: black;
-  height: 200px
+  padding: 62px 40px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: 3ch;
+  margin-top: 2rem;
+}
+
+.about {
+  max-width: 40ch;
+}
+
+.about>h4 {
+  font-size: 1.5rem;
+  line-height: 5ch;
+}
+
+.about>p {
+  font-size: 0.875rem;
+
+}
+
+.links {
+  width: 100%;
+  max-width: 40ch;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5ch;
+}
+
+.iconLinks>a {
+  display: block;
+  height: 1.5rem;
+}
+
+.iconLinks {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 2rem
+}
+
+
+
+@media only screen and (min-width: 820px) {
+  .footer {
+    padding: 20px 100px;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 0;
+  }
+
+  .links {
+    width: auto;
+  }
+
+  .links>h5 {
+    margin-top: 3ch;
+  }
 }

@@ -42,9 +42,6 @@
   font-weight: 300;
 }
 
-.main-nav>li:last-child {
-  display: none;
-}
 
 .nav-element {
   display: block;
@@ -137,12 +134,16 @@
 
 @media only screen and (min-width: 1300px) {
   .main-header>span {
-    display: none;
+    width: 10rem;
   }
 
-  .nav,
+  /* .nav,
   .home-link {
     flex-grow: 1;
+  } */
+
+  .main-header {
+    justify-content: space-between;
   }
 
   .main-nav {
@@ -155,9 +156,9 @@
     border: 1px solid white;
   }
 
-  .main-nav>li:last-of-type {
+  /* .main-nav>li:last-of-type {
     margin-left: auto;
-  }
+  } */
 
   .nav-element:hover {
     border: none;
