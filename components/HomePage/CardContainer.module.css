@@ -1,8 +1,8 @@
-.menu {
+.overflowMenu {
   display: flex;
   flex-direction: row;
   max-width: 100%;
-  gap: 1.25rem;
+  gap: 2rem;
   overflow: auto;
   scroll-behavior: smooth;
   padding: 0 1rem;
@@ -21,7 +21,7 @@
   }
 }
 
-.gameMenu {
+.cardContainer {
   padding: 1.5625rem 0;
   gap: 2.3rem;
   background-color: #E9E9E9;
@@ -31,11 +31,23 @@
   align-items: center;
 }
 
-.gameMenu>h2 {
+.cardContainer>h2 {
   font-weight: 300;
   font-size: 1.5rem;
 }
 
 .link {
   text-decoration: underline;
+}
+
+@media only screen and (min-width: 800px) {
+  .overflowMenu {
+    gap: 5rem;
+  }
+}
+
+@media only screen and (min-width: 1300px) {
+  .overflowMenu {
+    gap: 7rem;
+  }
 }

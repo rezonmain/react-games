@@ -1,15 +1,15 @@
-import styles from './GameMenu.module.css';
+import styles from './CardContainer.module.css';
 import Link from 'next/link';
-import GameCard from '../../components/GamesPage/GameCard';
+import GameCard from '../GamesPage/GameCard';
 import _2048img from '../../public/img/2048.png';
 import snakeimg from '../../public/img/snake.png';
 import tenziesimg from '../../public/img/tenzies.png';
 
 export default function GameMenu() {
 	return (
-		<section className={styles.gameMenu}>
+		<section className={styles.cardContainer}>
 			<h2>Current selection</h2>
-			<div className={styles.menu}>
+			<div className={styles.overflowMenu}>
 				<div>
 					<Link href={'/games/2048'}>
 						<GameCard

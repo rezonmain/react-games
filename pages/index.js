@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import GameMenu from '../components/HomePage/GameMenu';
+import CardContainer from '../components/HomePage/CardContainer';
 import Hero from '../components/HomePage/Hero';
 
 export default function Home() {
@@ -9,7 +9,7 @@ export default function Home() {
 				<title>React Games</title>
 			</Head>
 			<Hero />
-			<GameMenu />
+			<CardContainer />
 		</>
 	);
 }
