@@ -6,7 +6,7 @@
   display: block;
   cursor: pointer;
   position: relative;
-  width: clamp(20rem, 90vw, 22.5rem);
+  width: 20rem;
   aspect-ratio: 1;
   margin: 0 auto;
 }

@@ -9,6 +9,7 @@ export default function Games() {
 		display: 'flex',
 		flexDirection: 'column',
 		gap: '1rem',
+		marginBottom: '2rem',
 	};
 
 	return (

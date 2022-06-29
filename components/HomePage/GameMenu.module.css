@@ -1,0 +1,41 @@
+.menu {
+  display: flex;
+  flex-direction: row;
+  max-width: 100%;
+  gap: 1.25rem;
+  overflow: auto;
+  scroll-behavior: smooth;
+  padding: 0 1rem;
+  scrollbar-width: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .menu::-webkit-scrollbar {
+    height: 0.5rem;
+    background-color: transparent
+  }
+
+  .menu::-webkit-scrollbar-thumb {
+    border-radius: 10rem;
+    background-color: rgb(0, 0, 0, 0.25);
+  }
+}
+
+.gameMenu {
+  padding: 1.5625rem 0;
+  gap: 2.3rem;
+  background-color: #E9E9E9;
+  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gameMenu>h2 {
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+.link {
+  text-decoration: underline;
+}

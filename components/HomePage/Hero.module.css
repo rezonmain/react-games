@@ -1,0 +1,49 @@
+.hero {
+  color: black;
+  display: flex;
+  flex-direction: column;
+  margin: 3.125rem auto;
+  gap: 1.875rem;
+  max-width: 35ch;
+}
+
+.heroText {
+  height: 100%;
+}
+
+.heroText>h1 {
+  font-size: 2.3rem;
+  font-weight: 300;
+}
+
+.heroText>h4 {
+  margin-top: 0.74rem;
+  font-weight: bold;
+  font-size: 0.8125rem;
+}
+
+.heroImg>* {
+  border-radius: 8px;
+  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.5);
+}
+
+.b {
+  font-weight: 900;
+}
+
+@media only screen and (min-width: 1300px) {
+  .heroImg {
+    width: 17.375rem;
+  }
+
+  .heroText {
+    max-width: 35ch;
+  }
+
+  .hero {
+    max-width: none;
+    width: fit-content;
+    flex-direction: row;
+    align-items: center;
+  }
+}

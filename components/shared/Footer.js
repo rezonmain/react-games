@@ -11,7 +11,7 @@ export default function Footer() {
 				</p>
 			</section>
 			<section className={styles.links}>
-				<h5>Tell me what you think:</h5>
+				<h5>Let me know what you think:</h5>
 				<div className={styles.iconLinks}>
 					<a href='https://github.com/rezonmain/react-games'>
 						<BsGithub size='1.5rem' />
