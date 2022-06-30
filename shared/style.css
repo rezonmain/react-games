@@ -80,3 +80,7 @@ ul {
   margin: 1.34rem auto;
   text-align: center;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

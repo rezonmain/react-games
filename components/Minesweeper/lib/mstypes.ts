@@ -34,4 +34,5 @@ export interface Board {
 	mines: number;
 	flags: number;
 	board3BV: number;
+	element: JSX.Element;
 }

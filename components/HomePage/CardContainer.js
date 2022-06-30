@@ -40,6 +40,16 @@ export default function GameMenu() {
 						/>
 					</Link>
 				</div>
+				<div>
+					<Link href={'/games/minesweeper'}>
+						<GameCard
+							className={styles.gameCard}
+							title={'minesweeper'}
+							desc={'Play the best minsweeper clone'}
+							src={tenziesimg}
+						/>
+					</Link>
+				</div>
 			</div>
 
 			<Link href={'/games'}>
