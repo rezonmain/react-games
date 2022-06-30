@@ -28,7 +28,7 @@ export default function Menu(): JSX.Element {
 					gridSpan={2}
 					handleClick={(name) => console.log(name)}
 				/>
-				<span className=' h-3'></span>
+				<span className=' h-1'></span>
 				<MenuButton
 					name='stats'
 					text='Show stats'
