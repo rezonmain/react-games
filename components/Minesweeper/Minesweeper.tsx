@@ -1,21 +1,28 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import Menu from './components/Menu/Menu';
 import Modal from './components/Modal/Modal';
 import Options from './components/Options';
 import Stats from './components/Stats';
-import { Coordinates, MenuAction } from './lib/mstypes';
+import { newGame } from './lib/init';
+import { Coordinates, Game, MenuAction } from './lib/mstypes';
+import gameReducer from './lib/reducer';
 
 export default function Minesweeper(): JSX.Element {
 	const [modal, setModal] = useState<JSX.Element | undefined>(undefined);
+	const [game, dispatch] = useReducer(gameReducer, undefined);
 
 	const handleModalExit = () => {
 		setModal(undefined);
 	};
 
-	const handleMenuAction = (action: MenuAction, size?: Coordinates): void => {
+	const handleMenuAction = (
+		action: MenuAction,
+		size?: Coordinates,
+		diff?: string
+	): void => {
 		switch (action) {
-			case 'initBoard':
-				console.log(size);
+			case 'initGame':
+				console.log(size, diff);
 				break;
 			case 'openOptions':
 				setModal(

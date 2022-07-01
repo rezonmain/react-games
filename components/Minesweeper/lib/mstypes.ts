@@ -37,4 +37,4 @@ export interface Board {
 	element: JSX.Element;
 }
 
-export type MenuAction = 'initBoard' | 'openOptions' | 'openStats' | 'exit';
+export type MenuAction = 'initGame' | 'openOptions' | 'openStats' | 'exit';

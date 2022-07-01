@@ -13,7 +13,6 @@ export default function TitleBar(props: TitleBarProps): JSX.Element {
 			<div className='handle grow'>
 				<h3 className='font-tahoma text-white'>{props.title}</h3>
 			</div>
-
 			<button
 				onClick={props.onExit}
 				className='windows-style-button text-center font-bold w-5 p-0 flex justify-center items-center'>

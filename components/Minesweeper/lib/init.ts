@@ -1,3 +1,5 @@
-import * as types from './mstypes';
+import { Coordinates, Game } from './mstypes';
 
-export function newGame(size: types.Coordinates) {}
+export function newGame(size: Coordinates, diff: string): Game {
+	return;
+}
