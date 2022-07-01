@@ -38,10 +38,10 @@ export default function Modal(props: ModalProps): JSX.Element {
 			break;
 	}
 	return (
-		<div onClick={props.exit} className='modal-bg'>
+		<div className='modal-bg'>
 			<div className='centered'>
 				<Draggable handle='.handle'>
-					<div>
+					<div className='windows-style-box'>
 						<TitleBar title={title} onExit={props.exit} /> {el}
 					</div>
 				</Draggable>

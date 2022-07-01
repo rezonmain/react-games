@@ -7,6 +7,7 @@ module.exports = {
 	theme: {
 		fontFamily: {
 			mono: ['Roboto Mono', 'monospace'],
+			tahoma: ['Tahoma', 'sans-serif'],
 		},
 		extend: {
 			transitionDuration: {
