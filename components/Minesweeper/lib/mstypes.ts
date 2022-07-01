@@ -36,3 +36,12 @@ export interface Board {
 	board3BV: number;
 	element: JSX.Element;
 }
+
+export type MenuAction =
+	| 'beginner'
+	| 'intermediate'
+	| 'expert'
+	| 'custom'
+	| 'options'
+	| 'stats'
+	| 'exit';

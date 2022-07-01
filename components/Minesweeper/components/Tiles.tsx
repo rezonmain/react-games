@@ -1,3 +1,3 @@
-export default function (): JSX.Element {
+export default function Tiles(): JSX.Element {
 	return <div>hello</div>;
 }

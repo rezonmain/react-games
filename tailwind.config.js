@@ -5,10 +5,15 @@ module.exports = {
 		'./components/**/*.{js,ts,jsx,tsx}',
 	],
 	theme: {
-		extend: {},
+		fontFamily: {
+			mono: ['Roboto Mono', 'monospace'],
+		},
+		extend: {
+			transitionDuration: {
+				5: '5ms',
+			},
+		},
 	},
-	fontFamily: {
-		mono: ['Roboto Mono', 'monospace'],
-	},
+
 	plugins: [],
 };
