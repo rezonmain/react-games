@@ -5,7 +5,7 @@ interface TitleBarProps {
 	onExit: () => void;
 }
 
-export default function TitleBar(props: TitleBarProps): JSX.Element {
+export default function TitleBar(props: TitleBarProps) {
 	// handle class name makes it draggable
 	return (
 		<header className='h-7 bg-gradient-to-r from-blue-900 flex justify-between p-1 items-center'>

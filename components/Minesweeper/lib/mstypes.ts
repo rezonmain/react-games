@@ -28,13 +28,44 @@ export interface Stats {
 	completed3BV: number;
 }
 
-export interface Board {
-	tiles: [Tile] | undefined;
+export interface BoardSpec {
 	size: Coordinates;
 	mines: number;
+}
+
+export interface Board {
+	tiles: [Tile] | undefined;
+	spec: BoardSpec;
 	flags: number;
 	board3BV: number;
 	element: JSX.Element;
 }
 
-export type MenuAction = 'initGame' | 'openOptions' | 'openStats' | 'exit';
+export enum ActionType {
+	InitGame,
+	OpenOptions,
+	OpenStats,
+	Exit,
+}
+
+export enum Difficulty {
+	Beginner,
+	Intermediate,
+	Expert,
+	Custom,
+}
+
+export interface MenuAction {
+	type: ActionType;
+	board?: BoardSpec;
+	difficulty?: Difficulty;
+}
+
+export enum DispatchActionType {
+	NewGame,
+}
+
+export interface DispatchAction {
+	type: DispatchActionType;
+	payload?: any;
+}

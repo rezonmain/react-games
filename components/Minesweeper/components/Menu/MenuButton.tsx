@@ -1,11 +1,9 @@
-import { Coordinates, MenuAction } from '../../lib/mstypes';
-
 interface MenuButtonProps {
 	text: string;
 	colSpan: number;
 	handleClick: () => void;
 }
-export default function MenuButton(props: MenuButtonProps): JSX.Element {
+export default function MenuButton(props: MenuButtonProps) {
 	const colSpan = props.colSpan === 1 ? 'col-span-1' : 'col-span-2';
 	return (
 		<button

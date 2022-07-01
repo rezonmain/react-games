@@ -1,11 +1,11 @@
-import { Coordinates, MenuAction } from '../../lib/mstypes';
+import { ActionType, Difficulty, MenuAction } from '../../lib/mstypes';
 import MenuButton from './MenuButton';
 
 interface MenuProps {
-	handleClick: (action: MenuAction, size?: Coordinates, diff?: string) => void;
+	handleClick: (action: MenuAction) => void;
 }
 
-export default function Menu(props: MenuProps): JSX.Element {
+export default function Menu(props: MenuProps) {
 	return (
 		<div className='bg-neutral-300 p-4'>
 			<div className=' w-52 my-0 mx-auto grid grid-cols-2 gap-4'>
@@ -13,21 +13,33 @@ export default function Menu(props: MenuProps): JSX.Element {
 					text='Beginner'
 					colSpan={2}
 					handleClick={() =>
-						props.handleClick('initGame', { x: 9, y: 9 }, 'beginner')
+						props.handleClick({
+							type: ActionType.InitGame,
+							board: { size: { x: 9, y: 9 }, mines: 10 },
+							difficulty: Difficulty.Beginner,
+						})
 					}
 				/>
 				<MenuButton
 					text='Intermediate'
 					colSpan={2}
 					handleClick={() =>
-						props.handleClick('initGame', { x: 16, y: 16 }, 'intermediate')
+						props.handleClick({
+							type: ActionType.InitGame,
+							board: { size: { x: 16, y: 16 }, mines: 40 },
+							difficulty: Difficulty.Intermediate,
+						})
 					}
 				/>
 				<MenuButton
 					text='Expert'
 					colSpan={2}
 					handleClick={() =>
-						props.handleClick('initGame', { x: 30, y: 16 }, 'expert')
+						props.handleClick({
+							type: ActionType.InitGame,
+							board: { size: { x: 30, y: 16 }, mines: 99 },
+							difficulty: Difficulty.Expert,
+						})
 					}
 				/>
 				{/* <MenuButton
@@ -40,17 +52,19 @@ export default function Menu(props: MenuProps): JSX.Element {
 				<MenuButton
 					text='Show stats'
 					colSpan={2}
-					handleClick={() => props.handleClick('openStats')}
+					handleClick={() => props.handleClick({ type: ActionType.OpenStats })}
 				/>
 				<MenuButton
 					text='Options'
 					colSpan={1}
-					handleClick={() => props.handleClick('openOptions')}
+					handleClick={() =>
+						props.handleClick({ type: ActionType.OpenOptions })
+					}
 				/>
 				<MenuButton
 					text='Exit'
 					colSpan={1}
-					handleClick={() => props.handleClick('exit')}
+					handleClick={() => props.handleClick({ type: ActionType.Exit })}
 				/>
 			</div>
 		</div>

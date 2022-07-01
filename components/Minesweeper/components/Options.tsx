@@ -1,3 +1,3 @@
-export default function Options(): JSX.Element {
+export default function Options() {
 	return <div></div>;
 }

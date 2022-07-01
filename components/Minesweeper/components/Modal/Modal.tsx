@@ -10,7 +10,7 @@ interface ModalProps {
 	onExit: () => void;
 }
 
-export default function Modal(props: ModalProps): JSX.Element {
+export default function Modal(props: ModalProps) {
 	return (
 		<div className='modal-bg'>
 			<div className='centered'>

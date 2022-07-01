@@ -1,3 +1,12 @@
-//TYPE REDUCER PARAMETERS!!!
+//T YPE REDUCER PARAMETERS!!!
 
-export default function gameReducer(state, action) {}
+import { newGame } from './init';
+import { DispatchAction, DispatchActionType, Game } from './mstypes';
+
+export default function gameReducer(state: Game, action: DispatchAction) {
+	const { type, payload } = action;
+	switch (type) {
+		case DispatchActionType.NewGame:
+			return newGame(payload);
+	}
+}

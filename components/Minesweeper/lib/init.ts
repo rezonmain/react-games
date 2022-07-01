@@ -1,5 +1,8 @@
-import { Coordinates, Game } from './mstypes';
+import { BoardSpec, Game } from './mstypes';
 
-export function newGame(size: Coordinates, diff: string): Game {
+export function newGame(boardSpec: BoardSpec): Game {
+	console.log(boardSpec);
 	return;
 }
+
+function newBoard() {}
