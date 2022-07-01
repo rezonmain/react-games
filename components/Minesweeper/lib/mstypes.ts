@@ -1,23 +1,30 @@
-export interface Game {
-	difficulty: 'beginner' | 'intermediate' | 'expert' | 'custom';
+export type Game = {
+	difficulty: Difficulty;
 	board: Board;
 	stats: Stats;
-}
+};
 
-export interface Coordinates {
+export type Coordinates = {
 	x: number;
 	y: number;
-}
+};
 
-export interface Tile {
-	state: 'hidden' | 'revealed' | 'clicked' | 'flagged';
+export type Tile = {
+	state: TileState;
 	mine: boolean;
 	value: number;
 	address: Coordinates;
 	element: JSX.Element;
+};
+
+export enum TileState {
+	Hidden,
+	Revealed,
+	Clicked,
+	Flagged,
 }
 
-export interface Stats {
+export type Stats = {
 	lClicks: number;
 	rClicks: number;
 	chords: number;
@@ -26,20 +33,22 @@ export interface Stats {
 	effectiveChords: number;
 	time: number;
 	completed3BV: number;
-}
+};
 
-export interface BoardSpec {
+export type BoardSpec = {
+	difficulty: Difficulty;
 	size: Coordinates;
 	mines: number;
-}
+};
 
-export interface Board {
-	tiles: [Tile] | undefined;
-	spec: BoardSpec;
+export type Board = {
+	tiles: Tile[] | undefined;
+	size: Coordinates;
+	mines: number;
 	flags: number;
-	board3BV: number;
+	board3BV: number | undefined;
 	element: JSX.Element;
-}
+};
 
 export enum ActionType {
 	InitGame,
@@ -58,7 +67,6 @@ export enum Difficulty {
 export interface MenuAction {
 	type: ActionType;
 	board?: BoardSpec;
-	difficulty?: Difficulty;
 }
 
 export enum DispatchActionType {

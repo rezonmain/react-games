@@ -1,7 +1,10 @@
 import { useReducer, useState } from 'react';
 import Menu from './components/Menu/Menu';
-import { getModalFromAction } from './lib/menu';
-import { MenuAction } from './lib/mstypes';
+import Modal from './components/Modal/Modal';
+import Options from './components/Options';
+import Stats from './components/Stats';
+import { newBoard } from './lib/init';
+import { ActionType, DispatchActionType, MenuAction } from './lib/mstypes';
 import gameReducer from './lib/reducer';
 
 export default function Minesweeper() {
@@ -13,8 +16,43 @@ export default function Minesweeper() {
 	};
 
 	const handleMenuAction = (action: MenuAction) => {
-		setModal(getModalFromAction(action, dispatch, handleModalExit));
+		switch (action.type) {
+			// If board is called, start a new game:
+			case ActionType.InitGame:
+				dispatch({
+					type: DispatchActionType.NewGame,
+					payload: action.board,
+				});
+				setModal(
+					<Modal
+						as={newBoard(action.board.size, action.board.mines).element}
+						title='Minesweeper'
+						onExit={handleModalExit}
+					/>
+				);
+				break;
+			case ActionType.OpenOptions:
+				setModal(
+					<Modal
+						as={<Options />}
+						title='Minesweeper | Options'
+						onExit={handleModalExit}
+					/>
+				);
+				break;
+			case ActionType.OpenStats:
+				setModal(
+					<Modal
+						as={<Stats />}
+						title='Minesweeper | Stats'
+						onExit={handleModalExit}
+					/>
+				);
+				break;
+		}
 	};
+
+	console.log(game);
 
 	return (
 		<section className='section'>

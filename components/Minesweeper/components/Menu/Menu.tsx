@@ -15,8 +15,11 @@ export default function Menu(props: MenuProps) {
 					handleClick={() =>
 						props.handleClick({
 							type: ActionType.InitGame,
-							board: { size: { x: 9, y: 9 }, mines: 10 },
-							difficulty: Difficulty.Beginner,
+							board: {
+								size: { x: 9, y: 9 },
+								mines: 10,
+								difficulty: Difficulty.Beginner,
+							},
 						})
 					}
 				/>
@@ -26,8 +29,11 @@ export default function Menu(props: MenuProps) {
 					handleClick={() =>
 						props.handleClick({
 							type: ActionType.InitGame,
-							board: { size: { x: 16, y: 16 }, mines: 40 },
-							difficulty: Difficulty.Intermediate,
+							board: {
+								size: { x: 16, y: 16 },
+								mines: 40,
+								difficulty: Difficulty.Intermediate,
+							},
 						})
 					}
 				/>
@@ -37,8 +43,11 @@ export default function Menu(props: MenuProps) {
 					handleClick={() =>
 						props.handleClick({
 							type: ActionType.InitGame,
-							board: { size: { x: 30, y: 16 }, mines: 99 },
-							difficulty: Difficulty.Expert,
+							board: {
+								size: { x: 30, y: 16 },
+								mines: 99,
+								difficulty: Difficulty.Expert,
+							},
 						})
 					}
 				/>

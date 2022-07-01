@@ -17,7 +17,10 @@ export function getModalFromAction(
 	switch (action.type) {
 		// If board is called, start a new game:
 		case ActionType.InitGame:
-			dispatch({ type: DispatchActionType.NewGame, payload: action.board });
+			dispatch({
+				type: DispatchActionType.NewGame,
+				payload: action.board,
+			});
 			break;
 		case ActionType.OpenOptions:
 			return (
