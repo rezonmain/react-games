@@ -12,29 +12,29 @@ interface ModalProps {
 }
 
 export default function Modal(props: ModalProps): JSX.Element {
-	let el: JSX.Element;
+	let element: JSX.Element;
 	let title = 'Minesweeper';
 	switch (props.type) {
 		case 'beginner':
-			el = <Board size={{ x: 9, y: 9 }} />;
+			element = <Board size={{ x: 9, y: 9 }} />;
 			break;
 		case 'intermediate':
-			el = <Board size={{ x: 16, y: 16 }} />;
+			element = <Board size={{ x: 16, y: 16 }} />;
 			break;
 		case 'expert':
-			el = <Board size={{ x: 16, y: 30 }} />;
+			element = <Board size={{ x: 16, y: 30 }} />;
 			break;
 		case 'custom':
-			el = <Board size={props.boardSize} />;
+			element = <Board size={props.boardSize} />;
 			title += ' | Custom';
 			break;
 		case 'stats':
-			el = <Stats />;
-			title += ' stats';
+			element = <Stats />;
+			title += ' Stats';
 			break;
 		case 'options':
-			el = <Options />;
-			title += ' options';
+			element = <Options />;
+			title += ' Options';
 			break;
 	}
 	return (
@@ -42,7 +42,8 @@ export default function Modal(props: ModalProps): JSX.Element {
 			<div className='centered'>
 				<Draggable handle='.handle'>
 					<div className='windows-style-box'>
-						<TitleBar title={title} onExit={props.exit} /> {el}
+						<TitleBar title={title} onExit={props.exit} />
+						{element}
 					</div>
 				</Draggable>
 			</div>
