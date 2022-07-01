@@ -1,8 +1,8 @@
-import { MenuAction } from '../../lib/mstypes';
+import { Coordinates, MenuAction } from '../../lib/mstypes';
 import MenuButton from './MenuButton';
 
 interface MenuProps {
-	handleClick: (name: MenuAction) => void;
+	handleClick: (action: MenuAction, size?: Coordinates) => void;
 }
 
 export default function Menu(props: MenuProps): JSX.Element {
@@ -10,47 +10,41 @@ export default function Menu(props: MenuProps): JSX.Element {
 		<div className='bg-neutral-300 p-4'>
 			<div className=' w-52 my-0 mx-auto grid grid-cols-2 gap-4'>
 				<MenuButton
-					name='beginner'
 					text='Beginner'
 					colSpan={2}
-					handleClick={props.handleClick}
+					handleClick={() => props.handleClick('initBoard', { x: 9, y: 9 })}
 				/>
 				<MenuButton
-					name='intermediate'
 					text='Intermediate'
 					colSpan={2}
-					handleClick={props.handleClick}
+					handleClick={() => props.handleClick('initBoard', { x: 16, y: 16 })}
 				/>
 				<MenuButton
-					name='expert'
 					text='Expert'
 					colSpan={2}
-					handleClick={props.handleClick}
+					handleClick={() => props.handleClick('initBoard', { x: 30, y: 16 })}
 				/>
-				<MenuButton
+				{/* <MenuButton
 					name='custom'
 					text='Custom'
 					colSpan={2}
 					handleClick={props.handleClick}
-				/>
+				/> */}
 				<span className=' h-1'></span>
 				<MenuButton
-					name='stats'
 					text='Show stats'
 					colSpan={2}
-					handleClick={props.handleClick}
+					handleClick={() => props.handleClick('openStats')}
 				/>
 				<MenuButton
-					name='options'
 					text='Options'
 					colSpan={1}
-					handleClick={props.handleClick}
+					handleClick={() => props.handleClick('openOptions')}
 				/>
 				<MenuButton
-					name='exit'
 					text='Exit'
 					colSpan={1}
-					handleClick={props.handleClick}
+					handleClick={() => props.handleClick('exit')}
 				/>
 			</div>
 		</div>

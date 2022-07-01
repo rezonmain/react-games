@@ -29,7 +29,7 @@ export interface Stats {
 }
 
 export interface Board {
-	tiles: [Tile];
+	tiles: [Tile] | undefined;
 	size: Coordinates;
 	mines: number;
 	flags: number;
@@ -37,11 +37,4 @@ export interface Board {
 	element: JSX.Element;
 }
 
-export type MenuAction =
-	| 'beginner'
-	| 'intermediate'
-	| 'expert'
-	| 'custom'
-	| 'options'
-	| 'stats'
-	| 'exit';
+export type MenuAction = 'initBoard' | 'openOptions' | 'openStats' | 'exit';
