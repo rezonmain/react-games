@@ -6,5 +6,6 @@ interface TileProps {
 	mine: boolean;
 }
 export default function TileElement(props: TileProps) {
-	return <div className='h-8 w-8 bg-neutral-400 rounded-sm'></div>;
+	const styles = props.state === TileState.Hidden ? 'windows-style-box' : '';
+	return <div className='windows-style-box aspect-square w-8'></div>;
 }

@@ -34,7 +34,7 @@ export default function Minesweeper() {
 			case ActionType.OpenOptions:
 				setModal(
 					<Modal
-						as={<Options />}
+						as={<Options from='menu' />}
 						title='Minesweeper | Options'
 						onExit={handleModalExit}
 					/>

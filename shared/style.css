@@ -104,14 +104,19 @@ ul {
 @layer components {
 	.windows-style-button {
 		@apply font-mono outline outline-1 outline-black
-  bg-neutral-300 border border-t-white border-r-neutral-700
-  border-b-neutral-700 border-l-white py-1
-  active:border-t-neutral-700 active:border-r-white active:border-b-white
-  active:border-l-neutral-700 active:translate-x-px active:translate-y-px transition-transform duration-5;
+  bg-neutral-300 border border-t-white border-r-neutral-500
+  border-b-neutral-500 border-l-white py-1
+  active:border-t-neutral-500 active:border-r-white active:border-b-white
+  active:border-l-neutral-500 active:translate-x-px active:translate-y-px transition-transform duration-5;
 	}
 
 	.windows-style-box {
-		@apply bg-neutral-300 border-2 border-t-white border-r-neutral-700
-    border-b-neutral-700 border-l-white;
+		@apply bg-neutral-300 border-4 border-t-white border-r-neutral-500
+    border-b-neutral-500 border-l-white drop-shadow;
+	}
+
+	.windows-style-deboss {
+		@apply bg-neutral-300 border-4 border-r-white border-t-neutral-500
+    border-l-neutral-500 border-b-white drop-shadow;
 	}
 }

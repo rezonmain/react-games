@@ -43,6 +43,7 @@ export type BoardSpec = {
 
 export type Board = {
 	tiles: Tile[] | undefined;
+	tileSize: number;
 	size: Coordinates;
 	mines: number;
 	flags: number;
