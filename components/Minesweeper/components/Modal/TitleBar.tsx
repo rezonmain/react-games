@@ -2,6 +2,7 @@ import { IoCloseSharp, IoSettingsSharp } from 'react-icons/io5';
 import { DispatchAction } from '../../lib/mstypes';
 import { Dispatch, useState } from 'react';
 import Options from '../Options';
+import Modal from './Modal';
 interface TitleBarProps {
 	title: string;
 	dispatch?: Dispatch<DispatchAction>;
@@ -36,7 +37,7 @@ export default function TitleBar(props: TitleBarProps) {
 				className='windows-style-button text-center w-5 p-0 flex justify-center items-center h-5'>
 				<IoCloseSharp width='20px' height='20px' />
 			</button>
-			{options && <Options from='titleBar' dispatch={props.dispatch} />}
+			{options && <Options from='menu' dispatch={props.dispatch} />}
 		</header>
 	);
 }
