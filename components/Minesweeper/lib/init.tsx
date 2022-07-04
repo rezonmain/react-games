@@ -1,22 +1,34 @@
+import { Dispatch } from 'react';
 import BoardElement from '../components/BoardElement';
+import Modal from '../components/Modal/Modal';
 import {
 	Board,
 	BoardSpec,
 	Coordinates,
+	DispatchAction,
 	Game,
 	Stats,
 	Tile,
 	TileState,
 } from './mstypes';
 
-import { getNewTileElement } from './tiles';
-
-export function newGame(payload: BoardSpec): Game {
-	const { difficulty, size, mines } = payload;
+export function newGame(
+	boardSpec: BoardSpec,
+	dispatch: Dispatch<DispatchAction>
+): Game {
+	const { difficulty, size, mines } = boardSpec;
+	const board = newBoard(size, mines);
 	return {
 		difficulty,
-		board: newBoard(size, mines),
+		board,
 		stats: newStats(),
+		modal: (
+			<Modal
+				as={<BoardElement board={board} />}
+				title={'Minesweeper'}
+				dispatch={dispatch}
+			/>
+		),
 	};
 }
 
@@ -24,11 +36,12 @@ export function newBoard(size: Coordinates, mines: number): Board {
 	const tiles = newTiles(size);
 	return {
 		tiles,
+		// GET TILE SIZE FROM LOCAL STORAGE OR USE DEFAULT WHICH IS 8
+		tileSize: 2,
 		size,
 		mines,
 		flags: 0,
 		board3BV: undefined,
-		element: <BoardElement size={size} tiles={tiles} />,
 	};
 }
 
@@ -54,7 +67,6 @@ function newTiles(size: Coordinates): Tile[] {
 				mine: false,
 				value: 0,
 				address: { x: column, y: row },
-				element: getNewTileElement(column, row),
 			});
 		});
 	});

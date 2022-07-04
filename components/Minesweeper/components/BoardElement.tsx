@@ -1,15 +1,27 @@
-import { Coordinates, Tile } from '../lib/mstypes';
+import { Board } from '../lib/mstypes';
+import TileElement from './TileElement';
 
 interface BoardProps {
-	size: Coordinates;
-	tiles: Tile[];
+	board: Board;
 }
 export default function BoardElement(props: BoardProps) {
-	const tileElements = props.tiles.map((tile) => {
-		return tile.element;
+	console.log('hello');
+	const tileElements = props.board.tiles.map((tile) => {
+		const addr =
+			'x' + tile.address.x.toString() + 'y' + tile.address.y.toString();
+		return (
+			<TileElement
+				key={addr}
+				value={tile.value}
+				state={tile.state}
+				mine={tile.mine}
+				size={props.board.tileSize}
+			/>
+		);
 	});
+
 	const styles = {
-		gridTemplateColumns: `repeat(${props.size.x}, 1fr)`,
+		gridTemplateColumns: `repeat(${props.board.size.x}, 1fr)`,
 	};
 	return (
 		<div

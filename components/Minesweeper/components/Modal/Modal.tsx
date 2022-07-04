@@ -9,28 +9,25 @@ import TitleBar from './TitleBar';
 interface ModalProps {
 	as: JSX.Element;
 	title: string;
-	onExit: () => void;
+	dispatch?: Dispatch<DispatchAction>;
 	exitOnBlur?: boolean;
 	noTitleBar?: boolean;
-	dispatch?: Dispatch<DispatchAction>;
 }
 
 export default function Modal(props: ModalProps) {
+	const handleExitOnBlur = () => {
+		props.dispatch({ type: 'exitModal' });
+	};
 	return (
 		<div
-			className='modal-bg select-none'
-			onClick={props.exitOnBlur && props.onExit}>
+			onClick={props.exitOnBlur && handleExitOnBlur}
+			className='modal-bg select-none'>
 			<div className='centered'>
 				<Draggable handle='.handle'>
 					<div className='windows-style-box flex flex-col gap-8'>
 						{!props.noTitleBar && (
-							<TitleBar
-								title={props.title}
-								onExit={props.onExit}
-								dispatch={props.dispatch}
-							/>
+							<TitleBar title={props.title} dispatch={props.dispatch} />
 						)}
-
 						{props.as}
 					</div>
 				</Draggable>

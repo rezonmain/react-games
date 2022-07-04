@@ -58,7 +58,7 @@ export default function Menu(props: MenuProps) {
 					handleClick={props.handleClick}
 				/> */}
 				<span className=' h-1'></span>
-				<MenuButton
+				{/* <MenuButton
 					text='Show stats'
 					colSpan={2}
 					handleClick={() => props.handleClick({ type: ActionType.OpenStats })}
@@ -69,10 +69,10 @@ export default function Menu(props: MenuProps) {
 					handleClick={() =>
 						props.handleClick({ type: ActionType.OpenOptions })
 					}
-				/>
+				/> */}
 				<MenuButton
 					text='Exit'
-					colSpan={1}
+					colSpan={2}
 					handleClick={() => props.handleClick({ type: ActionType.Exit })}
 				/>
 			</div>

@@ -2,6 +2,7 @@ export type Game = {
 	difficulty: Difficulty;
 	board: Board;
 	stats: Stats;
+	modal: JSX.Element | undefined;
 };
 
 export type Coordinates = {
@@ -14,7 +15,6 @@ export type Tile = {
 	mine: boolean;
 	value: number;
 	address: Coordinates;
-	element: JSX.Element;
 };
 
 export enum TileState {
@@ -48,13 +48,12 @@ export type Board = {
 	mines: number;
 	flags: number;
 	board3BV: number | undefined;
-	element: JSX.Element;
 };
 
 export enum ActionType {
 	InitGame,
-	OpenOptions,
-	OpenStats,
+	// OpenOptions,
+	// OpenStats,
 	Exit,
 }
 

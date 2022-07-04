@@ -4,14 +4,17 @@ import { Dispatch, useState } from 'react';
 import Options from '../Options';
 interface TitleBarProps {
 	title: string;
-	onExit: () => void;
 	dispatch?: Dispatch<DispatchAction>;
 }
 
 export default function TitleBar(props: TitleBarProps) {
-	const [options, setOption] = useState(false);
-	const onOptionsExit = () => {};
-	const onOptions = () => {};
+	const [options, setOptions] = useState(false);
+	const onOptionsExit = () => {
+		setOptions(false);
+	};
+	const onOptions = () => {
+		setOptions(true);
+	};
 	// handle class name makes it draggable
 	return (
 		<header className='h-7 bg-gradient-to-r from-blue-900 flex justify-between py-0.5 px-1.5 items-center gap-2'>
@@ -21,16 +24,19 @@ export default function TitleBar(props: TitleBarProps) {
 			</div>
 			{props.title === 'Minesweeper' && (
 				<button
+					id='options-button'
 					onClick={onOptions}
 					className='windows-style-button text-center w-5 p-0 flex justify-center items-center h-5'>
 					<IoSettingsSharp width='18px' height='18px' />
 				</button>
 			)}
 			<button
-				onClick={props.onExit}
+				id='exit-button'
+				onClick={() => props.dispatch({ type: 'exitModal' })}
 				className='windows-style-button text-center w-5 p-0 flex justify-center items-center h-5'>
 				<IoCloseSharp width='20px' height='20px' />
 			</button>
+			{options && <Options from='titleBar' dispatch={props.dispatch} />}
 		</header>
 	);
 }

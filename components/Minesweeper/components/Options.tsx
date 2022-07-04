@@ -3,15 +3,18 @@ import { DispatchAction } from '../lib/mstypes';
 
 interface OptionsProps {
 	from: 'menu' | 'titleBar';
-	dispatch?: Dispatch<DispatchAction>;
+	dispatch: Dispatch<DispatchAction>;
 }
 export default function Options(props: OptionsProps) {
 	const [form, setForm] = useState({
-		tileSize: 8,
+		tileSize: 2,
 	});
 	const handleChange = (event: ChangeEvent) => {
 		const { name, value } = event.target as HTMLInputElement;
-		props.dispatch({ type: 'changeTileSize', payload: value });
+		props.dispatch({
+			type: name,
+			payload: { tileSize: parseFloat(value), dispatch: props.dispatch },
+		});
 		setForm((prev) => {
 			return {
 				...prev,
@@ -27,9 +30,10 @@ export default function Options(props: OptionsProps) {
 					<input
 						type='range'
 						id='tile-sze'
-						name='TileSize'
-						min='6'
-						max='12'
+						name='tileSize'
+						min='1'
+						max='3'
+						step='0.1'
 						onChange={handleChange}
 						value={form.tileSize}
 					/>
