@@ -1,7 +1,7 @@
-import { Dispatch } from 'react';
 import { IoCloseSharp, IoSettingsSharp } from 'react-icons/io5';
 import { DispatchAction } from '../../lib/mstypes';
-
+import { Dispatch, useState } from 'react';
+import Options from '../Options';
 interface TitleBarProps {
 	title: string;
 	onExit: () => void;
@@ -9,6 +9,8 @@ interface TitleBarProps {
 }
 
 export default function TitleBar(props: TitleBarProps) {
+	const [options, setOption] = useState(false);
+	const onOptionsExit = () => {};
 	const onOptions = () => {};
 	// handle class name makes it draggable
 	return (
@@ -24,7 +26,6 @@ export default function TitleBar(props: TitleBarProps) {
 					<IoSettingsSharp width='18px' height='18px' />
 				</button>
 			)}
-
 			<button
 				onClick={props.onExit}
 				className='windows-style-button text-center w-5 p-0 flex justify-center items-center h-5'>

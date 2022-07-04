@@ -32,9 +32,7 @@ export default function BoardElement(props: BoardProps) {
 					counter
 				</div>
 			</header>
-			<div
-				id='board-tiles-container'
-				className=' max-w-[100vw] overflow-scroll'>
+			<div id='board-tiles-container' className=''>
 				<div
 					id='board-tiles'
 					style={styles}

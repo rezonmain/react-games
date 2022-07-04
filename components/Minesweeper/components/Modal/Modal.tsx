@@ -10,16 +10,27 @@ interface ModalProps {
 	as: JSX.Element;
 	title: string;
 	onExit: () => void;
+	exitOnBlur?: boolean;
+	noTitleBar?: boolean;
 	dispatch?: Dispatch<DispatchAction>;
 }
 
 export default function Modal(props: ModalProps) {
 	return (
-		<div className='modal-bg'>
+		<div
+			className='modal-bg select-none'
+			onClick={props.exitOnBlur && props.onExit}>
 			<div className='centered'>
 				<Draggable handle='.handle'>
 					<div className='windows-style-box flex flex-col gap-8'>
-						<TitleBar title={props.title} onExit={props.onExit} />
+						{!props.noTitleBar && (
+							<TitleBar
+								title={props.title}
+								onExit={props.onExit}
+								dispatch={props.dispatch}
+							/>
+						)}
+
 						{props.as}
 					</div>
 				</Draggable>

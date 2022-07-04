@@ -70,11 +70,7 @@ export interface MenuAction {
 	board?: BoardSpec;
 }
 
-export enum DispatchActionType {
-	NewGame,
-}
-
 export interface DispatchAction {
-	type: DispatchActionType;
+	type: string;
 	payload?: any;
 }
