@@ -23,7 +23,7 @@ export default function Options(props: OptionsProps) {
 		});
 	};
 	return (
-		<form className='p-3 font-tahoma fixed'>
+		<form className='p-3 font-tahoma absolute bg-neutral-300 -right-full'>
 			<fieldset className='border border-zinc-500 p-3'>
 				<legend className=' ml-4'>Board</legend>
 				<div>
