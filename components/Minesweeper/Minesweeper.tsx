@@ -11,11 +11,18 @@ export default function Minesweeper() {
 	useEffect(() => {
 		const game = JSON.parse(localStorage.getItem('game'));
 		if (game) {
+			// if game exists in localstorage use it to render the board
 			dispatch({ type: 'setSavedGame', payload: game });
 		} else {
+			// Otherwise crate a default board
 			dispatch({ type: 'newGame', payload: Difficulty.Beginner });
 		}
 	}, []);
+
+	// Save game to localstorage everytime it updates
+	useEffect(() => {
+		localStorage.setItem('game', JSON.stringify(game));
+	}, [game]);
 
 	return (
 		<section className='section bordered'>
@@ -25,6 +32,8 @@ export default function Minesweeper() {
 					title='Minesweeper'
 					content={<BoardElement board={game.board} />}
 					dispatch={dispatch}
+					showToolBar={true}
+					game={game}
 				/>
 			)}
 		</section>
