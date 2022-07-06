@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 import { DispatchAction } from '../../lib/mstypes';
 import TitleBar from './TitleBar';
-import ToolBar from './ToolBar';
+import ToolBar from './Toolbar/ToolBar';
 
 interface MsWindowProps {
 	content: JSX.Element;

@@ -17,8 +17,6 @@ export default function Minesweeper() {
 		}
 	}, []);
 
-	console.log(game);
-
 	return (
 		<section className='section bordered'>
 			<h3 className='section-title'>Minesweeper</h3>

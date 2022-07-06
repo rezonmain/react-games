@@ -5,7 +5,6 @@ interface BoardProps {
 	board: Board;
 }
 export default function BoardElement(props: BoardProps) {
-	console.log('hello');
 	const tileElements = props.board.tiles.map((tile) => {
 		const addr =
 			'x' + tile.address.x.toString() + 'y' + tile.address.y.toString();
