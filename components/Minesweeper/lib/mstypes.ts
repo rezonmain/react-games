@@ -2,7 +2,6 @@ export type Game = {
 	difficulty: Difficulty;
 	board: Board;
 	stats: Stats;
-	modal: JSX.Element | undefined;
 };
 
 export type Coordinates = {
@@ -36,7 +35,6 @@ export type Stats = {
 };
 
 export type BoardSpec = {
-	difficulty: Difficulty;
 	size: Coordinates;
 	mines: number;
 };

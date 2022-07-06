@@ -1,33 +1,34 @@
-import { useReducer } from 'react';
-import Menu from './components/Menu/Menu';
-import { ActionType, MenuAction } from './lib/mstypes';
+import { useEffect, useReducer } from 'react';
+import BoardElement from './components/BoardElement';
+import MsWindow from './components/MsWindow/MsWindow';
+import { Difficulty } from './lib/mstypes';
 import gameReducer from './lib/reducer';
 
 export default function Minesweeper() {
 	const [game, dispatch] = useReducer(gameReducer, undefined);
 
-	const handleMenuAction = (action: MenuAction) => {
-		switch (action.type) {
-			// If board is called, start a new game:
-			case ActionType.InitGame:
-				dispatch({
-					type: 'newGame',
-					payload: { board: action.board, dispatch: dispatch },
-				});
-				break;
-			case ActionType.Exit:
-				alert('Exit');
-				break;
+	// After first render
+	useEffect(() => {
+		const game = JSON.parse(localStorage.getItem('game'));
+		if (game) {
+			dispatch({ type: 'setSavedGame', payload: game });
+		} else {
+			dispatch({ type: 'newGame', payload: Difficulty.Beginner });
 		}
-	};
+	}, []);
 
 	console.log(game);
 
 	return (
-		<section className='section'>
+		<section className='section bordered'>
 			<h3 className='section-title'>Minesweeper</h3>
-			<Menu handleClick={handleMenuAction} />
-			{game && game.modal}
+			{game && (
+				<MsWindow
+					title='Minesweeper'
+					content={<BoardElement board={game.board} />}
+					dispatch={dispatch}
+				/>
+			)}
 		</section>
 	);
 }

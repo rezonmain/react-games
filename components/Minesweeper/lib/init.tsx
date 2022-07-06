@@ -1,45 +1,44 @@
-import { Dispatch } from 'react';
-import BoardElement from '../components/BoardElement';
-import Modal from '../components/Modal/Modal';
 import {
 	Board,
 	BoardSpec,
 	Coordinates,
-	DispatchAction,
+	Difficulty,
 	Game,
 	Stats,
 	Tile,
 	TileState,
 } from './mstypes';
 
-export function newGame(
-	boardSpec: BoardSpec,
-	dispatch: Dispatch<DispatchAction>
-): Game {
-	const { difficulty, size, mines } = boardSpec;
-	const board = newBoard(size, mines);
+export function newGame(diff: Difficulty, boardSpec?: BoardSpec): Game {
+	let board: Board;
+	switch (diff) {
+		case Difficulty.Beginner:
+			board = newBoard({ size: { x: 9, y: 9 }, mines: 10 });
+			break;
+		case Difficulty.Intermediate:
+			board = newBoard({ size: { x: 16, y: 16 }, mines: 40 });
+			break;
+		case Difficulty.Expert:
+			board = newBoard({ size: { x: 16, y: 30 }, mines: 99 });
+			break;
+		case Difficulty.Custom:
+			board = newBoard(boardSpec);
+			break;
+	}
 	return {
-		difficulty,
+		difficulty: diff,
 		board,
 		stats: newStats(),
-		modal: (
-			<Modal
-				as={<BoardElement board={board} />}
-				title={'Minesweeper'}
-				dispatch={dispatch}
-			/>
-		),
 	};
 }
 
-export function newBoard(size: Coordinates, mines: number): Board {
-	const tiles = newTiles(size);
+export function newBoard(spec: BoardSpec): Board {
+	const tiles = newTiles(spec.size);
 	return {
 		tiles,
-		// GET TILE SIZE FROM LOCAL STORAGE OR USE DEFAULT WHICH IS 8
 		tileSize: 2,
-		size,
-		mines,
+		size: spec.size,
+		mines: spec.mines,
 		flags: 0,
 		board3BV: undefined,
 	};

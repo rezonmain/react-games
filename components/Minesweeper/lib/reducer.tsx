@@ -8,29 +8,16 @@ export default function gameReducer(state: Game, action: DispatchAction) {
 	const { type, payload } = action;
 	switch (type) {
 		case 'newGame':
-			const boardSpec = payload.board as BoardSpec;
-			const dispatch = payload.dispatch as Dispatch<DispatchAction>;
-			return newGame(boardSpec, dispatch);
+			return newGame(payload);
+
+		case 'setSavedGame':
+			return payload;
+
+		case 'setDifficulty':
+
 		case 'tileSize':
-			const board: Board = {
-				...state.board,
-				tileSize: payload.tileSize,
-			};
-			return {
-				...state,
-				board,
-				modal: (
-					<Modal
-						as={<BoardElement board={board} />}
-						title={'Minesweeper'}
-						dispatch={payload.dispatch}
-					/>
-				),
-			};
+
 		case 'exitModal':
-			return {
-				...state,
-				modal: undefined,
-			};
+			return state;
 	}
 }
