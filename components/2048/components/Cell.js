@@ -14,7 +14,7 @@ export default function Cell(props) {
 		<animated.div
 			style={{ ...animation, ...props.style }}
 			className={styles['_2048-cell']}>
-			<span className={styles['_2048-text'] + ' centered'}>{props.value}</span>
+			<span className='centered'>{props.value}</span>
 		</animated.div>
 	);
 }

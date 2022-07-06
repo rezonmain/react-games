@@ -31,64 +31,70 @@ export default function ToolBar(props: ToolBarProps) {
 							<ListItem
 								selected={false}
 								text='New'
-								handleClick={() =>
+								handleClick={() => {
 									props.dispatch({
 										type: 'newGame',
 										payload: props.game.difficulty,
-									})
-								}
+									});
+									setShowDropDown(false);
+								}}
 							/>
 							<hr className='m-1'></hr>
 							<ListItem
 								selected={props.game.difficulty === Difficulty.Beginner}
 								text='Beginner'
-								handleClick={() =>
+								handleClick={() => {
 									props.dispatch({
 										type: 'newGame',
 										payload: Difficulty.Beginner,
-									})
-								}
+									});
+									setShowDropDown(false);
+								}}
 							/>
 							<ListItem
 								selected={props.game.difficulty === Difficulty.Intermediate}
 								text='Intermediate'
-								handleClick={() =>
+								handleClick={() => {
 									props.dispatch({
 										type: 'newGame',
 										payload: Difficulty.Intermediate,
-									})
-								}
+									});
+									setShowDropDown(false);
+								}}
 							/>
 							<ListItem
 								selected={props.game.difficulty === Difficulty.Expert}
 								text='Expert'
-								handleClick={() =>
+								handleClick={() => {
 									props.dispatch({
 										type: 'newGame',
 										payload: Difficulty.Expert,
-									})
-								}
+									});
+									setShowDropDown(false);
+								}}
 							/>
 							<ListItem
 								selected={props.game.difficulty === Difficulty.Custom}
 								text='Custom...'
-								handleClick={() =>
+								handleClick={() => {
 									props.dispatch({
 										type: 'newGame',
 										payload: Difficulty.Custom,
-									})
-								}
+									});
+									setShowDropDown(false);
+								}}
 							/>
 							<hr className='m-1'></hr>
 							<ListItem
 								selected={false}
 								text='Best times...'
-								handleClick={() =>
+								handleClick={() => {
 									props.dispatch({
 										type: 'newGame',
 										payload: Difficulty.Beginner,
-									})
-								}
+									});
+									setShowDropDown(false);
+								}}
 							/>
 							{/* <hr className='m-1'></hr>
 						<ListItem selected={false} text='Exit' /> */}

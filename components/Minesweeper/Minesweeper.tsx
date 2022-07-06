@@ -25,7 +25,7 @@ export default function Minesweeper() {
 	}, [game]);
 
 	return (
-		<section className='section bordered'>
+		<section className='bordered min-w-[580px] w-fit mb-3 mx-auto'>
 			<h3 className='section-title'>Minesweeper</h3>
 			{game && (
 				<MsWindow
