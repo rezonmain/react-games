@@ -61,11 +61,12 @@ function newTiles(size: Coordinates): Tile[] {
 	let tiles: Tile[] = [];
 	Array.from({ length: size.x }, (_, column) => {
 		Array.from({ length: size.y }, (_, row) => {
+			const address = 'x' + column.toString() + 'y' + row.toString();
 			tiles.push({
 				state: TileState.Hidden,
 				mine: false,
 				value: 0,
-				address: { x: column, y: row },
+				address,
 			});
 		});
 	});

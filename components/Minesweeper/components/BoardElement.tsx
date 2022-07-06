@@ -1,20 +1,23 @@
-import { Board } from '../lib/mstypes';
+import { Dispatch } from 'react';
+import { Board, DispatchAction } from '../lib/mstypes';
 import TileElement from './TileElement';
 
 interface BoardProps {
 	board: Board;
+	dispatch: Dispatch<DispatchAction>;
 }
+
 export default function BoardElement(props: BoardProps) {
 	const tileElements = props.board.tiles.map((tile) => {
-		const addr =
-			'x' + tile.address.x.toString() + 'y' + tile.address.y.toString();
 		return (
 			<TileElement
-				key={addr}
+				key={tile.address}
+				id={tile.address}
 				value={tile.value}
 				state={tile.state}
 				mine={tile.mine}
 				size={props.board.tileSize}
+				dispatch={props.dispatch}
 			/>
 		);
 	});

@@ -1,8 +1,6 @@
-import { Dispatch } from 'react';
 import { newGame } from './init';
-import { DispatchAction, Game, BoardSpec, Board } from './mstypes';
-import BoardElement from '../components/BoardElement';
-import Modal from '../components/Modal/Modal';
+import { DispatchAction, Game } from './mstypes';
+import { handleTileLogic } from './tile';
 
 export default function gameReducer(state: Game, action: DispatchAction) {
 	const { type, payload } = action;
@@ -16,6 +14,13 @@ export default function gameReducer(state: Game, action: DispatchAction) {
 		case 'setDifficulty':
 
 		case 'tileSize':
+
+		case 'mouseDown':
+			handleTileLogic(payload, state.board);
+			return state;
+		case 'mouseUp':
+			handleTileLogic(payload, state.board);
+			return state;
 
 		case 'exitModal':
 			return state;

@@ -30,7 +30,7 @@ export default function Minesweeper() {
 			{game && (
 				<MsWindow
 					title='Minesweeper'
-					content={<BoardElement board={game.board} />}
+					content={<BoardElement board={game.board} dispatch={dispatch} />}
 					dispatch={dispatch}
 					showToolBar={true}
 					game={game}

@@ -2,6 +2,7 @@ export type Game = {
 	difficulty: Difficulty;
 	board: Board;
 	stats: Stats;
+	firstClick: boolean;
 };
 
 export type Coordinates = {
@@ -13,7 +14,7 @@ export type Tile = {
 	state: TileState;
 	mine: boolean;
 	value: number;
-	address: Coordinates;
+	address: string;
 };
 
 export enum TileState {
@@ -40,7 +41,7 @@ export type BoardSpec = {
 };
 
 export type Board = {
-	tiles: Tile[] | undefined;
+	tiles: Tile[];
 	tileSize: number;
 	size: Coordinates;
 	mines: number;
