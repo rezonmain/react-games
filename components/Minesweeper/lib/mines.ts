@@ -64,20 +64,4 @@ function setTileProperties(mines: string[], tiles: Tile[], game: Game) {
 			}
 		});
 	})();
-
-	// Slow dont use
-	// (function setValues() {
-	// 	mines.forEach((addr) => {
-	// 		const adjacent = getAdjacentTiles(addr, game);
-	// 		tiles.forEach((tile) => {
-	// 			for (let i = 0; i < adjacent.length; i++) {
-	// 				const addr = adjacent[i].address;
-	// 				if (tile.address === addr) {
-	// 					tile.value += 1;
-	// 					break;
-	// 				}
-	// 			}
-	// 		});
-	// 	});
-	// })();
 }

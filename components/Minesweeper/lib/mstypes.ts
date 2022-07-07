@@ -15,12 +15,12 @@ export type Tile = {
 	mine: boolean;
 	value: number;
 	address: string;
+	active: boolean;
 };
 
 export enum TileState {
 	Hidden,
 	Revealed,
-	Clicked,
 	Flagged,
 }
 

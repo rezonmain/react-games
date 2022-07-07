@@ -1,7 +1,7 @@
 import { newGame } from './init';
 import { generateMines } from './mines';
 import { Difficulty, DispatchAction, Game, Input } from './mstypes';
-import { handleTileLogic } from './tile';
+import { handleTileLogic, updateTiles } from './tile';
 
 export default function gameReducer(state: Game, action: DispatchAction): Game {
 	const { type, payload } = action;
@@ -28,7 +28,7 @@ export default function gameReducer(state: Game, action: DispatchAction): Game {
 			return state;
 
 		case 'updateTiles':
-			return state;
+			return updateTiles(payload as Input, state);
 
 		case 'exitModal':
 			return state;

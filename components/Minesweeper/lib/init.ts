@@ -68,6 +68,7 @@ function newTiles(size: Coordinates): Tile[] {
 				mine: false,
 				value: 0,
 				address,
+				active: false,
 			});
 		});
 	});

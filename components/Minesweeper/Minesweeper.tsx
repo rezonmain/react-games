@@ -30,8 +30,6 @@ export default function Minesweeper() {
 	// 	localStorage.setItem('game', JSON.stringify(game));
 	// }, [game]);
 
-	console.log(game);
-
 	return (
 		<section className='bordered min-w-[580px] w-fit mb-3 mx-auto'>
 			<h3 className='section-title'>Minesweeper</h3>

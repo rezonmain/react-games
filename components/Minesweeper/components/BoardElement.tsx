@@ -2,6 +2,8 @@ import React, { Dispatch, useContext, useRef } from 'react';
 import { Board, DispatchAction, Input, MB } from '../lib/mstypes';
 import TileElement from './TileElement';
 import { GameContext } from '../Minesweeper';
+import useOutsideMouse from '../lib/hooks/useOutsideMouse';
+import { to } from '@react-spring/web';
 
 interface BoardProps {
 	board: Board;
@@ -10,6 +12,7 @@ interface BoardProps {
 
 export default function BoardElement(props: BoardProps) {
 	let game = useContext(GameContext);
+	let elementRef = useRef(null);
 	let inputRef = useRef<Input>({
 		activeTile: '',
 		prevTile: '',
@@ -33,15 +36,22 @@ export default function BoardElement(props: BoardProps) {
 		} else if (inputRef.current.buttons === MB.Left) {
 			props.dispatch({ type: 'tileMouseUp', payload: inputRef.current });
 		}
+		inputRef.current = {
+			...inputRef.current,
+			buttons: e.buttons,
+		};
 	};
 
 	const handleTileMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+		console.log(e.buttons);
 		const target = e.target as HTMLDivElement;
 		inputRef.current = {
 			...inputRef.current,
 			activeTile: target.id,
 		};
-		props.dispatch({ type: 'updateTiles', payload: inputRef.current });
+		if (inputRef.current.activeTile !== inputRef.current.prevTile) {
+			props.dispatch({ type: 'updateTiles', payload: inputRef.current });
+		}
 	};
 
 	const handleTileMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -52,6 +62,27 @@ export default function BoardElement(props: BoardProps) {
 		};
 	};
 
+	const handleBoardMouseLeave = () => {
+		inputRef.current = {
+			...inputRef.current,
+			prevTile: inputRef.current.activeTile,
+			activeTile: '',
+		};
+		props.dispatch({ type: 'updateTiles', payload: inputRef.current });
+	};
+
+	const handleOutsideMouse = (e: React.MouseEvent<HTMLDivElement>) => {
+		inputRef.current = {
+			...inputRef.current,
+			buttons: e.buttons,
+		};
+		if (inputRef.current.buttons !== 0) {
+			props.dispatch({ type: 'updateTiles', payload: inputRef.current });
+		}
+	};
+
+	useOutsideMouse(elementRef, (e) => handleOutsideMouse(e));
+
 	const tileElements = props.board.tiles.map((tile) => {
 		return (
 			<TileElement
@@ -61,6 +92,7 @@ export default function BoardElement(props: BoardProps) {
 				state={tile.state}
 				mine={tile.mine}
 				size={props.board.tileSize}
+				active={tile.active}
 				dispatch={props.dispatch}
 				handleMouseEnter={handleTileMouseEnter}
 				handleMouseLeave={handleTileMouseLeave}
@@ -92,8 +124,12 @@ export default function BoardElement(props: BoardProps) {
 					counter
 				</div>
 			</header>
-			<div id='board-tiles-container' onContextMenu={(e) => e.preventDefault()}>
+			<div
+				ref={elementRef}
+				id='board-tiles-container'
+				onContextMenu={(e) => e.preventDefault()}>
 				<div
+					onMouseLeave={() => handleBoardMouseLeave}
 					onMouseUp={(e) => handleMouseUp(e)}
 					onMouseDown={(e) => handleMouseDown(e)}
 					id='board-tiles'
