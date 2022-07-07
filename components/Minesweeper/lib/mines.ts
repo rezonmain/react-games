@@ -1,11 +1,13 @@
-import { coordToAddr, getAdjacentTiles } from './adjacent';
-import { Coordinates, Game, Tile } from './mstypes';
+import {
+	coordToAddr,
+	getAdjacentTiles,
+	getAdjacentTilesAddresses,
+} from './adjacent';
+import { Coordinates, Game, Input, Tile } from './mstypes';
 
-export function generateMines(game: Game, event: MouseEvent): Game {
+export function generateMines(input: Input, game: Game): Game {
 	let newTiles = structuredClone(game.board.tiles);
-	const target = event.target as HTMLDivElement;
-	const firstAddr = target.id;
-	console.log(firstAddr);
+	const firstAddr = input.activeTile;
 	const minesAddresses = getRandomAddresses(
 		game.board.mines,
 		game.board.size,
@@ -53,9 +55,29 @@ function setTileProperties(mines: string[], tiles: Tile[], game: Game) {
 	})();
 
 	(function setValues() {
-		mines.forEach((addr) => {
-			const adjacent = getAdjacentTiles(addr, game);
-			adjacent.forEach((tile) => (tile.value += 1));
+		tiles.forEach((tile) => {
+			if (tile.mine) {
+				const adjacent = getAdjacentTilesAddresses(tile.address, game);
+				adjacent.forEach((addr) => {
+					tiles.find((t) => t.address === addr).value += 1;
+				});
+			}
 		});
 	})();
+
+	// Slow dont use
+	// (function setValues() {
+	// 	mines.forEach((addr) => {
+	// 		const adjacent = getAdjacentTiles(addr, game);
+	// 		tiles.forEach((tile) => {
+	// 			for (let i = 0; i < adjacent.length; i++) {
+	// 				const addr = adjacent[i].address;
+	// 				if (tile.address === addr) {
+	// 					tile.value += 1;
+	// 					break;
+	// 				}
+	// 			}
+	// 		});
+	// 	});
+	// })();
 }

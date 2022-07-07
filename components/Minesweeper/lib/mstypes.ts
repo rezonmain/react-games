@@ -47,16 +47,7 @@ export type Board = {
 	mines: number;
 	flags: number;
 	board3BV: number | undefined;
-	activeTile: string | undefined;
-	prevActiveTile: string | undefined;
 };
-
-export enum ActionType {
-	InitGame,
-	// OpenOptions,
-	// OpenStats,
-	Exit,
-}
 
 export enum Difficulty {
 	Beginner,
@@ -65,12 +56,20 @@ export enum Difficulty {
 	Custom,
 }
 
-export interface MenuAction {
-	type: ActionType;
-	board?: BoardSpec;
-}
-
 export interface DispatchAction {
 	type: string;
 	payload?: any;
+}
+
+export type Input = {
+	activeTile: string;
+	prevTile: string;
+	buttons: MB;
+};
+
+export enum MB {
+	None = 0,
+	Left = 1,
+	Right = 2,
+	Both = 3,
 }

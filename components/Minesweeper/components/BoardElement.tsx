@@ -1,5 +1,5 @@
-import { Dispatch, useContext } from 'react';
-import { Board, DispatchAction } from '../lib/mstypes';
+import React, { Dispatch, useContext, useRef } from 'react';
+import { Board, DispatchAction, Input, MB } from '../lib/mstypes';
 import TileElement from './TileElement';
 import { GameContext } from '../Minesweeper';
 
@@ -10,6 +10,47 @@ interface BoardProps {
 
 export default function BoardElement(props: BoardProps) {
 	let game = useContext(GameContext);
+	let inputRef = useRef<Input>({
+		activeTile: '',
+		prevTile: '',
+		buttons: MB.None,
+	});
+
+	const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+		inputRef.current = {
+			...inputRef.current,
+			buttons: e.buttons,
+		};
+		props.dispatch({ type: 'tileMouseDown', payload: inputRef.current });
+	};
+
+	const handleMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
+		if (!game.firstClick && inputRef.current.buttons === MB.Left) {
+			props.dispatch({ type: 'generateMines', payload: inputRef.current });
+			props.dispatch({ type: 'setFirstClick' });
+			props.dispatch({ type: 'tileMouseUp', payload: inputRef.current });
+			// Nothing happens on rigth-up so just update state on left-up
+		} else if (inputRef.current.buttons === MB.Left) {
+			props.dispatch({ type: 'tileMouseUp', payload: inputRef.current });
+		}
+	};
+
+	const handleTileMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+		const target = e.target as HTMLDivElement;
+		inputRef.current = {
+			...inputRef.current,
+			activeTile: target.id,
+		};
+		props.dispatch({ type: 'updateTiles', payload: inputRef.current });
+	};
+
+	const handleTileMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+		const target = e.target as HTMLDivElement;
+		inputRef.current = {
+			...inputRef.current,
+			prevTile: target.id,
+		};
+	};
 
 	const tileElements = props.board.tiles.map((tile) => {
 		return (
@@ -21,23 +62,14 @@ export default function BoardElement(props: BoardProps) {
 				mine={tile.mine}
 				size={props.board.tileSize}
 				dispatch={props.dispatch}
+				handleMouseEnter={handleTileMouseEnter}
+				handleMouseLeave={handleTileMouseLeave}
 			/>
 		);
 	});
 
-	const handleMouseUp = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-		// Generate the mines after first click to avoid hitting a mine on first interaction
-		if (!game.firstClick && e.button === 0) {
-			props.dispatch({ type: 'generateMines', payload: e });
-			props.dispatch({ type: 'setFirstClick' });
-			props.dispatch({ type: 'tileClick', payload: e });
-		} else {
-			props.dispatch({ type: 'tileClick', payload: e });
-		}
-	};
-
 	const styles = {
-		gridTemplateColumns: `repeat(${props.board.size.x}, 1fr)`,
+		gridTemplateColumns: `repeat(${props.board.size.y}, 1fr)`,
 	};
 	return (
 		<div
@@ -60,13 +92,10 @@ export default function BoardElement(props: BoardProps) {
 					counter
 				</div>
 			</header>
-			<div
-				onMouseDown={(e) => props.dispatch({ type: 'tileClick', payload: e })}
-				onMouseUp={(e) => handleMouseUp(e)}
-				onContextMenu={(e) => e.preventDefault()}
-				id='board-tiles-container'
-				className=''>
+			<div id='board-tiles-container' onContextMenu={(e) => e.preventDefault()}>
 				<div
+					onMouseUp={(e) => handleMouseUp(e)}
+					onMouseDown={(e) => handleMouseDown(e)}
 					id='board-tiles'
 					style={styles}
 					className='grid bg-neutral-300 windows-style-deboss border-[6px]'>

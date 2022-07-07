@@ -1,11 +1,11 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 
 export default function useOutsideClick(
-	ref,
+	ref: React.MutableRefObject<HTMLDivElement>,
 	setter: Dispatch<SetStateAction<boolean>>
 ) {
 	useEffect(() => {
-		const handleClick = (e: MouseEvent) => {
+		const handleClick = (e) => {
 			ref.current && !ref.current.contains(e.target) && setter(false);
 		};
 

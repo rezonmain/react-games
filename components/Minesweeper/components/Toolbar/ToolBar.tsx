@@ -1,6 +1,6 @@
 import { Dispatch, useRef, useState } from 'react';
-import useOutsideClick from '../../../lib/hooks/useOutsideClick';
-import { Difficulty, DispatchAction, Game } from '../../../lib/mstypes';
+import useOutsideClick from '../../lib/hooks/useOutsideClick';
+import { Difficulty, DispatchAction, Game } from '../../lib/mstypes';
 import ListItem from './ListItem';
 
 interface ToolBarProps {
@@ -11,7 +11,7 @@ export default function ToolBar(props: ToolBarProps) {
 	const [showDropDown, setShowDropDown] = useState(false);
 
 	// Closes the Game toolbar dialog box when an click outside of it is detected
-	const elementRef = useRef(null);
+	const elementRef = useRef<HTMLDivElement>(null);
 	useOutsideClick(elementRef, setShowDropDown);
 
 	return (

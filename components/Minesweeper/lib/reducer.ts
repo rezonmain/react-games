@@ -1,6 +1,6 @@
 import { newGame } from './init';
 import { generateMines } from './mines';
-import { Difficulty, DispatchAction, Game } from './mstypes';
+import { Difficulty, DispatchAction, Game, Input } from './mstypes';
 import { handleTileLogic } from './tile';
 
 export default function gameReducer(state: Game, action: DispatchAction): Game {
@@ -12,26 +12,8 @@ export default function gameReducer(state: Game, action: DispatchAction): Game {
 		case 'setSavedGame':
 			return payload;
 
-		case 'setActiveTile':
-			return {
-				...state,
-				board: {
-					...state.board,
-					activeTile: payload.id,
-				},
-			};
-
-		case 'setPrevActiveTile':
-			return {
-				...state,
-				board: {
-					...state.board,
-					prevActiveTile: payload.id,
-				},
-			};
-
 		case 'generateMines':
-			return generateMines(state, payload as MouseEvent);
+			return generateMines(payload as Input, state);
 
 		case 'setFirstClick':
 			return {
@@ -39,8 +21,14 @@ export default function gameReducer(state: Game, action: DispatchAction): Game {
 				firstClick: true,
 			};
 
-		case 'tileClick':
-			return handleTileLogic(payload as MouseEvent, state);
+		case 'tileMouseDown':
+			return state;
+
+		case 'tileMouseUp':
+			return state;
+
+		case 'updateTiles':
+			return state;
 
 		case 'exitModal':
 			return state;

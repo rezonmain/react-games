@@ -19,7 +19,7 @@ export function newGame(diff: Difficulty, boardSpec?: BoardSpec): Game {
 			board = newBoard({ size: { x: 16, y: 16 }, mines: 40 });
 			break;
 		case Difficulty.Expert:
-			board = newBoard({ size: { x: 30, y: 16 }, mines: 99 });
+			board = newBoard({ size: { x: 16, y: 30 }, mines: 99 });
 			break;
 		case Difficulty.Custom:
 			board = newBoard(boardSpec);
@@ -42,8 +42,6 @@ export function newBoard(spec: BoardSpec): Board {
 		mines: spec.mines,
 		flags: 0,
 		board3BV: undefined,
-		activeTile: undefined,
-		prevActiveTile: undefined,
 	};
 }
 

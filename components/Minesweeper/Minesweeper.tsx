@@ -1,7 +1,7 @@
 import { useEffect, useReducer, createContext, Context } from 'react';
 import BoardElement from './components/BoardElement';
 import MsWindow from './components/MsWindow/MsWindow';
-import ToolBar from './components/MsWindow/Toolbar/ToolBar';
+import ToolBar from './components/Toolbar/ToolBar';
 import { Difficulty, Game } from './lib/mstypes';
 import gameReducer from './lib/reducer';
 
@@ -13,22 +13,25 @@ export default function Minesweeper() {
 
 	// After first render
 	useEffect(() => {
-		const game = JSON.parse(localStorage.getItem('game'));
-		if (game) {
-			// if game object exists in localstorage use it to render the board
-			dispatch({ type: 'setSavedGame', payload: game });
-		} else {
-			// Otherwise create a default board
-			dispatch({ type: 'newGame', payload: Difficulty.Beginner });
-		}
+		dispatch({ type: 'newGame', payload: Difficulty.Beginner });
+
+		// const game = JSON.parse(localStorage.getItem('game'));
+		// if (game) {
+		// 	// if game object exists in localstorage use it to render the board
+		// 	dispatch({ type: 'setSavedGame', payload: game });
+		// } else {
+		// 	// Otherwise create a default board
+		// 	dispatch({ type: 'newGame', payload: Difficulty.Beginner });
+		// }
 	}, []);
 
-	// Save game to localstorage everytime it updates
-	useEffect(() => {
-		localStorage.setItem('game', JSON.stringify(game));
-	}, [game]);
+	// // Save game to localstorage everytime it updates
+	// useEffect(() => {
+	// 	localStorage.setItem('game', JSON.stringify(game));
+	// }, [game]);
 
 	console.log(game);
+
 	return (
 		<section className='bordered min-w-[580px] w-fit mb-3 mx-auto'>
 			<h3 className='section-title'>Minesweeper</h3>

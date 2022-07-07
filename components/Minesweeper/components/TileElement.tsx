@@ -8,40 +8,18 @@ interface TileProps {
 	mine: boolean;
 	size: number;
 	dispatch: Dispatch<DispatchAction>;
+	handleMouseEnter: (e: React.MouseEvent<HTMLDivElement>) => void;
+	handleMouseLeave: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 export default function TileElement(props: TileProps) {
-	let style: any;
-
-	switch (props.state) {
-		case TileState.Flagged:
-			style = {
-				backgroundColor: 'red',
-			};
-			break;
-		case TileState.Hidden: {
-			style = {
-				backgrounColor: '',
-			};
-			break;
-		}
-	}
-
 	return (
 		<div
+			onMouseEnter={(e) => props.handleMouseEnter(e)}
+			onMouseLeave={(e) => props.handleMouseLeave(e)}
 			id={props.id}
-			onMouseEnter={(e) =>
-				props.dispatch({
-					type: 'setActiveTile',
-					payload: e.target as HTMLDivElement,
-				})
-			}
-			onMouseLeave={(e) => {
-				props.dispatch({
-					type: 'setPrevActiveTile',
-					payload: e.target as HTMLDivElement,
-				});
-			}}
-			style={style}
-			className='windows-style-box aspect-square w-8'></div>
+			style={props.mine ? { backgroundColor: 'red' } : {}}
+			className='windows-style-box aspect-square w-8'>
+			{props.value}
+		</div>
 	);
 }
