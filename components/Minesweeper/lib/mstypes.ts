@@ -47,6 +47,8 @@ export type Board = {
 	mines: number;
 	flags: number;
 	board3BV: number | undefined;
+	activeTile: string | undefined;
+	prevActiveTile: string | undefined;
 };
 
 export enum ActionType {

@@ -19,7 +19,11 @@ export default function ToolBar(props: ToolBarProps) {
 			<div id='drop-down-container relative'>
 				<span
 					onClick={() => setShowDropDown(true)}
-					className='border hover:cursor-pointer border-neutral-300 hover:windows-style-box hover:border px-3 active:windows-style-deboss active:border'>
+					className={
+						showDropDown
+							? ' windows-style-deboss border px-3'
+							: 'border hover:cursor-pointer border-neutral-300 hover:windows-style-box hover:border px-3 active:windows-style-deboss active:border'
+					}>
 					<u>G</u>ame
 				</span>
 				{showDropDown && (
@@ -96,8 +100,6 @@ export default function ToolBar(props: ToolBarProps) {
 									setShowDropDown(false);
 								}}
 							/>
-							{/* <hr className='m-1'></hr>
-						<ListItem selected={false} text='Exit' /> */}
 						</ul>
 					</div>
 				)}

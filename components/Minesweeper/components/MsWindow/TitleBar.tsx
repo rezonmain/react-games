@@ -3,7 +3,6 @@ import { DispatchAction } from '../../lib/mstypes';
 import { Dispatch, useState } from 'react';
 interface TitleBarProps {
 	title: string;
-	dispatch?: Dispatch<DispatchAction>;
 }
 
 export default function TitleBar(props: TitleBarProps) {
@@ -17,7 +16,6 @@ export default function TitleBar(props: TitleBarProps) {
 			</div>
 			<button
 				id='exit-button'
-				onClick={() => props.dispatch({ type: 'exitModal' })}
 				className='windows-style-button text-center w-5 p-0 flex justify-center items-center h-5'>
 				<IoCloseSharp width='20px' height='20px' />
 			</button>

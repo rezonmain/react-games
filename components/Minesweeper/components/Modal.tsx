@@ -3,8 +3,8 @@ making it a modal draggable window */
 
 import { Dispatch, useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
-import { DispatchAction } from '../../lib/mstypes';
-import TitleBar from '../MsWindow/TitleBar';
+import { DispatchAction } from '../lib/mstypes';
+import TitleBar from './MsWindow/TitleBar';
 
 interface ModalProps {
 	as: JSX.Element;

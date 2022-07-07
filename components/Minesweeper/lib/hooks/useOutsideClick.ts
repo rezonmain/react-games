@@ -5,7 +5,6 @@ export default function useOutsideClick(
 	setter: Dispatch<SetStateAction<boolean>>
 ) {
 	useEffect(() => {
-		console.log(ref);
 		const handleClick = (e: MouseEvent) => {
 			ref.current && !ref.current.contains(e.target) && setter(false);
 		};

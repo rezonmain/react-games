@@ -1,6 +1,7 @@
-import { Dispatch } from 'react';
+import { Dispatch, useContext } from 'react';
 import { Board, DispatchAction } from '../lib/mstypes';
 import TileElement from './TileElement';
+import { GameContext } from '../Minesweeper';
 
 interface BoardProps {
 	board: Board;
@@ -8,6 +9,8 @@ interface BoardProps {
 }
 
 export default function BoardElement(props: BoardProps) {
+	let game = useContext(GameContext);
+
 	const tileElements = props.board.tiles.map((tile) => {
 		return (
 			<TileElement
@@ -21,6 +24,17 @@ export default function BoardElement(props: BoardProps) {
 			/>
 		);
 	});
+
+	const handleMouseUp = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+		// Generate the mines after first click to avoid hitting a mine on first interaction
+		if (!game.firstClick && e.button === 0) {
+			props.dispatch({ type: 'generateMines', payload: e });
+			props.dispatch({ type: 'setFirstClick' });
+			props.dispatch({ type: 'tileClick', payload: e });
+		} else {
+			props.dispatch({ type: 'tileClick', payload: e });
+		}
+	};
 
 	const styles = {
 		gridTemplateColumns: `repeat(${props.board.size.x}, 1fr)`,
@@ -46,7 +60,12 @@ export default function BoardElement(props: BoardProps) {
 					counter
 				</div>
 			</header>
-			<div id='board-tiles-container' className=''>
+			<div
+				onMouseDown={(e) => props.dispatch({ type: 'tileClick', payload: e })}
+				onMouseUp={(e) => handleMouseUp(e)}
+				onContextMenu={(e) => e.preventDefault()}
+				id='board-tiles-container'
+				className=''>
 				<div
 					id='board-tiles'
 					style={styles}

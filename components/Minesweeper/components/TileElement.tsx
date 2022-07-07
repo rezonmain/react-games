@@ -1,4 +1,4 @@
-import { Dispatch } from 'react';
+import { Dispatch, useContext } from 'react';
 import { DispatchAction, TileState } from '../lib/mstypes';
 
 interface TileProps {
@@ -10,18 +10,38 @@ interface TileProps {
 	dispatch: Dispatch<DispatchAction>;
 }
 export default function TileElement(props: TileProps) {
-	const style = {
-		width: `${props.size}rem`,
-	};
+	let style: any;
+
+	switch (props.state) {
+		case TileState.Flagged:
+			style = {
+				backgroundColor: 'red',
+			};
+			break;
+		case TileState.Hidden: {
+			style = {
+				backgrounColor: '',
+			};
+			break;
+		}
+	}
+
 	return (
 		<div
 			id={props.id}
-			onMouseDown={(e) => props.dispatch({ type: 'mouseDown', payload: e })}
-			onMouseUp={(e) => props.dispatch({ type: 'mouseUp', payload: e })}
-			onContextMenu={(e) => {
-				e.preventDefault();
+			onMouseEnter={(e) =>
+				props.dispatch({
+					type: 'setActiveTile',
+					payload: e.target as HTMLDivElement,
+				})
+			}
+			onMouseLeave={(e) => {
+				props.dispatch({
+					type: 'setPrevActiveTile',
+					payload: e.target as HTMLDivElement,
+				});
 			}}
 			style={style}
-			className='windows-style-box aspect-square'></div>
+			className='windows-style-box aspect-square w-8'></div>
 	);
 }

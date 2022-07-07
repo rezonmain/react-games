@@ -29,6 +29,7 @@ export function newGame(diff: Difficulty, boardSpec?: BoardSpec): Game {
 		difficulty: diff,
 		board,
 		stats: newStats(),
+		firstClick: false,
 	};
 }
 
@@ -41,6 +42,8 @@ export function newBoard(spec: BoardSpec): Board {
 		mines: spec.mines,
 		flags: 0,
 		board3BV: undefined,
+		activeTile: undefined,
+		prevActiveTile: undefined,
 	};
 }
 

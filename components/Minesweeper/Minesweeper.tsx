@@ -1,20 +1,24 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, createContext, Context } from 'react';
 import BoardElement from './components/BoardElement';
 import MsWindow from './components/MsWindow/MsWindow';
-import { Difficulty } from './lib/mstypes';
+import ToolBar from './components/MsWindow/Toolbar/ToolBar';
+import { Difficulty, Game } from './lib/mstypes';
 import gameReducer from './lib/reducer';
+
+export let GameContext: Context<Game>;
 
 export default function Minesweeper() {
 	const [game, dispatch] = useReducer(gameReducer, undefined);
+	GameContext = createContext(game);
 
 	// After first render
 	useEffect(() => {
 		const game = JSON.parse(localStorage.getItem('game'));
 		if (game) {
-			// if game exists in localstorage use it to render the board
+			// if game object exists in localstorage use it to render the board
 			dispatch({ type: 'setSavedGame', payload: game });
 		} else {
-			// Otherwise crate a default board
+			// Otherwise create a default board
 			dispatch({ type: 'newGame', payload: Difficulty.Beginner });
 		}
 	}, []);
@@ -24,17 +28,17 @@ export default function Minesweeper() {
 		localStorage.setItem('game', JSON.stringify(game));
 	}, [game]);
 
+	console.log(game);
 	return (
 		<section className='bordered min-w-[580px] w-fit mb-3 mx-auto'>
 			<h3 className='section-title'>Minesweeper</h3>
 			{game && (
-				<MsWindow
-					title='Minesweeper'
-					content={<BoardElement board={game.board} dispatch={dispatch} />}
-					dispatch={dispatch}
-					showToolBar={true}
-					game={game}
-				/>
+				<GameContext.Provider value={game}>
+					<MsWindow title='Minesweeper'>
+						<ToolBar dispatch={dispatch} game={game} />
+						<BoardElement board={game.board} dispatch={dispatch} />
+					</MsWindow>
+				</GameContext.Provider>
 			)}
 		</section>
 	);
